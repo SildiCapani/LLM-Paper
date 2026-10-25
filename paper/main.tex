@@ -3,19 +3,15 @@
 %  A Cross-Language and Cross-Platform Empirical Study
 % ---------------------------------------------------------------------
 %  Build:  latexmk -pdf main.tex      (or use LaTeX Workshop in VS Code)
-%  Note:   Generic article layout. Once a target venue is chosen,
-%          switch the document class (e.g. IEEEtran or acmart).
+%  Layout: IEEE conference format (two-column). IEEEtran.cls/.bst are
+%          bundled in this folder (CTAN, v1.8b).
 % =====================================================================
-\documentclass[11pt,a4paper]{article}
+\documentclass[conference]{IEEEtran}
 
 % --- Encoding & fonts -------------------------------------------------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
 \usepackage{microtype}
-
-% --- Layout -----------------------------------------------------------
-\usepackage[margin=2.5cm]{geometry}
 
 % --- Math, tables, figures --------------------------------------------
 \usepackage{amsmath,amssymb}
@@ -25,14 +21,17 @@
 \graphicspath{{figures/}}
 \usepackage{xcolor}
 \usepackage{enumitem}
+\usepackage{fvextra}
+\fvset{breaklines=true,breakanywhere=true}
 
 % --- References -------------------------------------------------------
-\usepackage[numbers,sort&compress]{natbib}
+\usepackage{cite}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalise,noabbrev]{cleveref}
 
 % --- Working notes (set to [disable] for the final version) -----------
-\usepackage[colorinlistoftodos,textsize=footnotesize]{todonotes}
+\setlength{\marginparwidth}{1.6cm}
+\usepackage[colorinlistoftodos,textsize=scriptsize]{todonotes}
 \newcommand{\TODO}[1]{\todo[inline,color=orange!25]{\textbf{TODO:} #1}}
 \newcommand{\TBD}{\textcolor{red}{[TBD]}}
 
@@ -43,10 +42,16 @@
 % ---------------------------------------------------------------------
 \title{Energy Efficiency of LLM-Generated Code:\\
        A Cross-Language and Cross-Platform Empirical Study}
-\author{Brisild Capani\\
-        \TBD{} Affiliation\\
-        \texttt{brisild.capani@aeb.com}}
-\date{\today}
+
+\author{%
+  \IEEEauthorblockN{Brisild Capani}
+  \IEEEauthorblockA{\TBD{} Affiliation\\
+    \texttt{brisild.capani@aeb.com}}
+  \and
+  \IEEEauthorblockN{Seyyid \TBD}
+  \IEEEauthorblockA{\TBD{} Affiliation\\
+    \texttt{\TBD}}
+}
 
 \begin{document}
 \maketitle
@@ -63,11 +68,14 @@
 \input{sections/09-threats}
 \input{sections/10-conclusion}
 
-\bibliographystyle{plainnat}
+\bibliographystyle{IEEEtran}
 \bibliography{references}
 
+\appendix
+\input{sections/11-appendix-prompts}
+
 % Remove for the final version
-\clearpage
+\onecolumn
 \listoftodos[Open TODOs]
 
 \end{document}

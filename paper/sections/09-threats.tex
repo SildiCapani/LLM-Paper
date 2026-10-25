@@ -26,4 +26,11 @@ The effect of an LLM cannot be fully separated from the concrete algorithm it ch
 these strategy differences are, however, part of the phenomenon under study.
 
 \paragraph{Data contamination.}
-Benchmark tasks and reference solutions may be part of the LLMs' training data.
+The EffiBench-X tasks were released between November 2023 and October 2024 and the CLBG
+tasks and their solutions have been public for many years; all studied LLMs were likely
+trained on them. Memorised solutions may therefore inflate correctness and affect
+efficiency. Since all LLMs are exposed to the same tasks, this threat primarily concerns
+absolute results rather than the comparison between models; the contrast between
+algorithm-free (EffiBench-X) and algorithm-prescribed (CLBG) tasks further helps to
+interpret it. \TODO{Optionally add 2--3 problems released after all model cutoffs as a
+contamination check.}

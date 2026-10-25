@@ -1,0 +1,22 @@
+{
+  "task_id": "EB03",
+  "category": "mathematics",
+  "difficulty": "Medium",
+  "title": "Sum of Digit Differences of All Pairs",
+  "title_slug": "sum-of-digit-differences-of-all-pairs",
+  "effibench_id": "3416",
+  "tags": [
+    "array",
+    "hash-table",
+    "math",
+    "counting"
+  ],
+  "url": "https://leetcode.com/problems/sum-of-digit-differences-of-all-pairs",
+  "release_timestamp": 1716092561,
+  "eligible_pool_size": 28,
+  "description_md": "You are given an array `nums` consisting of **positive** integers where all integers have the **same** number of digits.\n\n\nThe **digit difference** between two integers is the *count* of different digits that are in the **same** position in the two integers.\n\n\nReturn the **sum** of the **digit differences** between **all** pairs of integers in `nums`.\n\n\n \n\n\n**Example 1:**\n\n\n\n**Input:** nums \\= \\[13,23,12]\n\n\n**Output:** 4\n\n\n**Explanation:**\\\n\nWe have the following:\\\n\n\\- The digit difference between **1**3 and **2**3 is 1\\.\\\n\n\\- The digit difference between 1**3** and 1**2** is 1\\.\\\n\n\\- The digit difference between **23** and **12** is 2\\.\\\n\nSo the total sum of digit differences between all pairs of integers is `1 + 1 + 2 = 4`.\n\n\n\n**Example 2:**\n\n\n\n**Input:** nums \\= \\[10,10,10,10]\n\n\n**Output:** 0\n\n\n**Explanation:**\\\n\nAll the integers in the array are the same. So the total sum of digit differences between all pairs of integers will be 0\\.\n\n\n\n \n\n\n**Constraints:**\n\n\n- `2 <= nums.length <= 105`\n- `1 <= nums[i] < 109`\n- All integers in `nums` have the same number of digits.\n\n\n",
+  "time_limit_nanos": null,
+  "memory_limit_bytes": null,
+  "source": "EffiBench-X (Apache-2.0), originally LeetCode",
+  "format": "function"
+}

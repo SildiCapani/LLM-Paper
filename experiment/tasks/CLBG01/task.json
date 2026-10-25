@@ -1,0 +1,11 @@
+{
+  "task_id": "CLBG01",
+  "title": "n-body",
+  "category": "numerical simulation (floating point)",
+  "difficulty": "n/a",
+  "format": "program",
+  "source": "Computer Language Benchmarks Game (task specification rewritten in own words)",
+  "url": "https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/nbody.html",
+  "check_input_n": 1000,
+  "measurement_input_n": null
+}

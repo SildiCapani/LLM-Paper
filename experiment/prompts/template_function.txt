@@ -1,0 +1,22 @@
+Solve the following programming problem in {language}.
+
+Complete the code skeleton given below. Your code will be combined with a test harness
+that reads the input, calls your method, and prints the result. Therefore, do not read
+from standard input, do not write to standard output, and do not add a main function.
+
+Requirements:
+- Return the complete `Solution` class, including any import or include statements it needs.
+- Use only the {language} standard library.
+- Do not use multiple threads or processes.
+- {language_note}
+- Respond with exactly one fenced code block containing the code, and nothing else.
+
+Problem:
+
+{problem}
+
+Code skeleton:
+
+```{fence}
+{starter}
+```

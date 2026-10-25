@@ -2,31 +2,61 @@
 \label{sec:methodology}
 
 \subsection{Prompting and Code Generation}
-\TODO{Define the prompt template; it differs between languages only in the target
-language and the required I/O interface. Specify: zero-shot, no energy-related hints
-(baseline), temperature, number of samples per task/LLM/language ($k$), handling of
-non-compiling outputs (no manual repair, or a fixed number of automated retries).}
+All models receive the same zero-shot prompt, instantiated from one of two templates
+(\cref{fig:prompt-templates} in the appendix): a \emph{function} template for EffiBench-X
+tasks, which supplies the problem statement and the language-specific code skeleton, and a
+\emph{program} template for CLBG tasks, which asks for a complete program taking $N$ as a
+command-line argument. Within a template, prompts for different languages differ only in
+the language name, one line stating the language version and compiler command, and the
+code skeleton. Both templates require standard-library-only, single-threaded code and
+deliberately contain no reference to efficiency, speed, or energy, as we study the models'
+default behaviour. No system prompt is used.
+
+EffiBench-X problem statements are converted from the original HTML to Markdown; we use
+the HTML rather than the dataset's Markdown field, in which superscripts are lost (e.g.,
+the constraint $10^5$ appears as ``105''), which could mislead models in their choice of
+algorithm. Two tasks (EB05, EB07) contain illustrative images, which are replaced by the
+placeholder ``[image omitted]''; their examples remain fully specified in text. All 42
+rendered prompts and their SHA-256 hashes are part of the replication package.
+
+Sampling temperature is set to 0.7 for all models that support it; reasoning models that do
+not expose this parameter are queried with provider defaults. For each task, model, and
+language we draw $k=5$ independent samples. The source code is extracted automatically from
+the first fenced code block; no manual or automated repair is applied. All prompts, raw
+responses, model identifiers, timestamps, and token counts are logged.
 
 \subsection{Functional Correctness}
-\TODO{Every generated program is executed against the task's test suite. Only programs
-passing all tests enter the energy analysis. Correctness rates are reported separately
-per LLM and language (\RQ{1}, \RQ{2}).}
+Each program is compiled (C++, Java) and executed against the task's full test suite
+(EffiBench-X: generated tests; CLBG: reference output) inside the same container images used
+for measurement. A program is \emph{correct} if it compiles and passes all tests within the
+time limit. Correctness rates are reported per LLM and language. Only correct programs enter
+the energy analysis. Rank-based analyses (\RQ{4}) are restricted to tasks for which every
+LLM produced at least one correct solution in every language; the mixed-effects analysis
+uses all correct programs.
 
 \subsection{Measurement Procedure}
-\TODO{Describe per run: warm-up, number of repetitions ($n$), randomised execution
-order, cool-down / idle intervals, idle-power baseline, JVM warm-up policy, process
-isolation, minimal background services. Record ambient temperature if possible.}
+Each correct program is executed 10 times per platform on the fixed task input. We measure
+the complete process, including interpreter or JVM start-up, since this reflects how the
+program would be executed in practice; start-up cost of a minimal program per language is
+reported separately. Per run we record energy, wall-clock time, peak resident memory, and
+CPU time. Runs exceeding a timeout of \TBD{}\,min are recorded as timeouts. A pilot study
+(two LLMs, three tasks, all languages) is used to calibrate input sizes and to confirm the
+number of repetitions based on the observed coefficient of variation.
 
 \subsection{Statistical Analysis}
-\TODO{Planned analysis (to be finalised before data collection):
-(i) descriptive statistics (median, IQR) per cell;
-(ii) linear mixed-effects model on $\log(\text{energy})$ with fixed effects LLM,
-language, platform and all interactions, and random intercepts for task (and generated
-solution);
-(iii) Type-III tests / likelihood-ratio tests for interactions, effect sizes, post-hoc
-comparisons with multiplicity correction;
-(iv) rank stability across languages and platforms via Kendall's $\tau$ / Friedman test
-(\RQ{4});
-(v) Spearman correlation between energy, time, and memory (\RQ{5}).
-Check model assumptions; fall back to non-parametric or aligned-rank-transform methods
-if violated.}
+\TODO{Finalise and pre-register before data collection.}
+\begin{enumerate}[leftmargin=*]
+  \item \emph{Descriptive statistics}: median and interquartile range per cell.
+  \item \emph{Main and interaction effects} (\RQ{1}--\RQ{4}): per platform, and jointly on
+        platform-normalised energy, a linear mixed-effects model on log-transformed energy
+        with fixed effects LLM, language, platform and all interactions, and random
+        intercepts for task and for generated program (nested in task). Interactions are
+        tested with likelihood-ratio tests; effect sizes and post-hoc contrasts are
+        reported with Holm correction. If model assumptions are violated, aligned rank
+        transform ANOVA serves as a non-parametric alternative.
+  \item \emph{Rank stability} (\RQ{4}): LLM rankings by median energy are computed per
+        language--platform cell and compared using Kendall's~$W$ (overall concordance) and
+        pairwise Kendall's~$\tau$.
+  \item \emph{Energy, time, and memory} (\RQ{5}): Spearman correlations per language and
+        platform.
+\end{enumerate}

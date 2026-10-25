@@ -1,0 +1,24 @@
+{
+  "task_id": "EB02",
+  "category": "sorting_searching",
+  "difficulty": "Hard",
+  "title": "Kth Smallest Amount With Single Denomination Combination",
+  "title_slug": "kth-smallest-amount-with-single-denomination-combination",
+  "effibench_id": "3375",
+  "tags": [
+    "array",
+    "math",
+    "binary-search",
+    "bit-manipulation",
+    "combinatorics",
+    "number-theory"
+  ],
+  "url": "https://leetcode.com/problems/kth-smallest-amount-with-single-denomination-combination",
+  "release_timestamp": 1713067333,
+  "eligible_pool_size": 26,
+  "description_md": "You are given an integer array `coins` representing coins of different denominations and an integer `k`.\n\n\nYou have an infinite number of coins of each denomination. However, you are **not allowed** to combine coins of different denominations.\n\n\nReturn the `kth` **smallest** amount that can be made using these coins.\n\n\n \n\n\n**Example 1:**\n\n\n\n**Input:** coins \\= \\[3,6,9], k \\= 3\n\n\n**Output:**  9\n\n\n**Explanation:** The given coins can make the following amounts:\\\n\nCoin 3 produces multiples of 3: 3, 6, 9, 12, 15, etc.\\\n\nCoin 6 produces multiples of 6: 6, 12, 18, 24, etc.\\\n\nCoin 9 produces multiples of 9: 9, 18, 27, 36, etc.\\\n\nAll of the coins combined produce: 3, 6, **9**, 12, 15, etc.\n\n\n\n**Example 2:**\n\n\n\n**Input:** coins \\= \\[5,2], k \\= 7\n\n\n**Output:** 12 \n\n\n**Explanation:** The given coins can make the following amounts:\\\n\nCoin 5 produces multiples of 5: 5, 10, 15, 20, etc.\\\n\nCoin 2 produces multiples of 2: 2, 4, 6, 8, 10, 12, etc.\\\n\nAll of the coins combined produce: 2, 4, 5, 6, 8, 10, **12**, 14, 15, etc.\n\n\n\n \n\n\n**Constraints:**\n\n\n- `1 <= coins.length <= 15`\n- `1 <= coins[i] <= 25`\n- `1 <= k <= 2 * 109`\n- `coins` contains pairwise distinct integers.\n\n\n",
+  "time_limit_nanos": null,
+  "memory_limit_bytes": null,
+  "source": "EffiBench-X (Apache-2.0), originally LeetCode",
+  "format": "function"
+}

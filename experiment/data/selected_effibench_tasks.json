@@ -1,0 +1,178 @@
+{
+  "seed": 20261025,
+  "pool_size": 244,
+  "tasks": [
+    {
+      "task_id": "EB01",
+      "category": "sorting_searching",
+      "difficulty": "Medium",
+      "title": "Maximum Total Damage With Spell Casting",
+      "title_slug": "maximum-total-damage-with-spell-casting",
+      "effibench_id": "3437",
+      "tags": [
+        "array",
+        "hash-table",
+        "two-pointers",
+        "binary-search",
+        "dynamic-programming",
+        "sorting",
+        "counting"
+      ],
+      "url": "https://leetcode.com/problems/maximum-total-damage-with-spell-casting",
+      "release_timestamp": 1718510428,
+      "eligible_pool_size": 45
+    },
+    {
+      "task_id": "EB02",
+      "category": "sorting_searching",
+      "difficulty": "Hard",
+      "title": "Kth Smallest Amount With Single Denomination Combination",
+      "title_slug": "kth-smallest-amount-with-single-denomination-combination",
+      "effibench_id": "3375",
+      "tags": [
+        "array",
+        "math",
+        "binary-search",
+        "bit-manipulation",
+        "combinatorics",
+        "number-theory"
+      ],
+      "url": "https://leetcode.com/problems/kth-smallest-amount-with-single-denomination-combination",
+      "release_timestamp": 1713067333,
+      "eligible_pool_size": 26
+    },
+    {
+      "task_id": "EB03",
+      "category": "mathematics",
+      "difficulty": "Medium",
+      "title": "Sum of Digit Differences of All Pairs",
+      "title_slug": "sum-of-digit-differences-of-all-pairs",
+      "effibench_id": "3416",
+      "tags": [
+        "array",
+        "hash-table",
+        "math",
+        "counting"
+      ],
+      "url": "https://leetcode.com/problems/sum-of-digit-differences-of-all-pairs",
+      "release_timestamp": 1716092561,
+      "eligible_pool_size": 28
+    },
+    {
+      "task_id": "EB04",
+      "category": "mathematics",
+      "difficulty": "Hard",
+      "title": "Count the Number of Infection Sequences",
+      "title_slug": "count-the-number-of-infection-sequences",
+      "effibench_id": "3224",
+      "tags": [
+        "array",
+        "math",
+        "combinatorics"
+      ],
+      "url": "https://leetcode.com/problems/count-the-number-of-infection-sequences",
+      "release_timestamp": 1701576582,
+      "eligible_pool_size": 22
+    },
+    {
+      "task_id": "EB05",
+      "category": "string_processing",
+      "difficulty": "Medium",
+      "title": "Find Subtree Sizes After Changes",
+      "title_slug": "find-subtree-sizes-after-changes",
+      "effibench_id": "3576",
+      "tags": [
+        "array",
+        "hash-table",
+        "string",
+        "tree",
+        "depth-first-search"
+      ],
+      "url": "https://leetcode.com/problems/find-subtree-sizes-after-changes",
+      "release_timestamp": 1729958523,
+      "eligible_pool_size": 43
+    },
+    {
+      "task_id": "EB06",
+      "category": "string_processing",
+      "difficulty": "Hard",
+      "title": "Palindrome Rearrangement Queries",
+      "title_slug": "palindrome-rearrangement-queries",
+      "effibench_id": "3203",
+      "tags": [
+        "hash-table",
+        "string",
+        "prefix-sum"
+      ],
+      "url": "https://leetcode.com/problems/palindrome-rearrangement-queries",
+      "release_timestamp": 1703995470,
+      "eligible_pool_size": 20
+    },
+    {
+      "task_id": "EB07",
+      "category": "dynamic_programming_recursion",
+      "difficulty": "Medium",
+      "title": "Maximum Score After Applying Operations on a Tree",
+      "title_slug": "maximum-score-after-applying-operations-on-a-tree",
+      "effibench_id": "3191",
+      "tags": [
+        "dynamic-programming",
+        "tree",
+        "depth-first-search"
+      ],
+      "url": "https://leetcode.com/problems/maximum-score-after-applying-operations-on-a-tree",
+      "release_timestamp": 1699156831,
+      "eligible_pool_size": 28
+    },
+    {
+      "task_id": "EB08",
+      "category": "dynamic_programming_recursion",
+      "difficulty": "Hard",
+      "title": "Count the Number of Powerful Integers",
+      "title_slug": "count-the-number-of-powerful-integers",
+      "effibench_id": "3243",
+      "tags": [
+        "math",
+        "string",
+        "dynamic-programming"
+      ],
+      "url": "https://leetcode.com/problems/count-the-number-of-powerful-integers",
+      "release_timestamp": 1704556903,
+      "eligible_pool_size": 40
+    },
+    {
+      "task_id": "EB09",
+      "category": "data_structures",
+      "difficulty": "Medium",
+      "title": "Minimum Number of Coins for Fruits",
+      "title_slug": "minimum-number-of-coins-for-fruits",
+      "effibench_id": "3209",
+      "tags": [
+        "array",
+        "dynamic-programming",
+        "queue",
+        "heap-priority-queue",
+        "monotonic-queue"
+      ],
+      "url": "https://leetcode.com/problems/minimum-number-of-coins-for-fruits",
+      "release_timestamp": 1700928027,
+      "eligible_pool_size": 23
+    },
+    {
+      "task_id": "EB10",
+      "category": "data_structures",
+      "difficulty": "Hard",
+      "title": "Longest Common Suffix Queries",
+      "title_slug": "longest-common-suffix-queries",
+      "effibench_id": "3376",
+      "tags": [
+        "array",
+        "string",
+        "trie"
+      ],
+      "url": "https://leetcode.com/problems/longest-common-suffix-queries",
+      "release_timestamp": 1711252837,
+      "eligible_pool_size": 25
+    }
+  ]
+}

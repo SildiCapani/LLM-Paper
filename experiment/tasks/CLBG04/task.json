@@ -1,0 +1,11 @@
+{
+  "task_id": "CLBG04",
+  "title": "fannkuch-redux",
+  "category": "permutations / integer arithmetic",
+  "difficulty": "n/a",
+  "format": "program",
+  "source": "Computer Language Benchmarks Game (task specification rewritten in own words)",
+  "url": "https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/fannkuchredux.html",
+  "check_input_n": 7,
+  "measurement_input_n": null
+}

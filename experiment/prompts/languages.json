@@ -1,0 +1,26 @@
+{
+  "python": {
+    "language": "Python",
+    "fence": "python",
+    "effibench_key": "python3",
+    "ext": "py",
+    "language_note_function": "Target Python 3.14 (CPython).",
+    "language_note_program": "Target Python 3.14 (CPython)."
+  },
+  "java": {
+    "language": "Java",
+    "fence": "java",
+    "effibench_key": "java",
+    "ext": "java",
+    "language_note_function": "Target Java 25 (OpenJDK).",
+    "language_note_program": "Target Java 25 (OpenJDK). The public class must be named `Main`."
+  },
+  "cpp": {
+    "language": "C++",
+    "fence": "cpp",
+    "effibench_key": "cpp",
+    "ext": "cpp",
+    "language_note_function": "Target C++20. The code is compiled with `g++ -O2 -std=c++20`.",
+    "language_note_program": "Target C++20. The code is compiled with `g++ -O2 -std=c++20`."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "task_id": "CLBG03",
+  "title": "binary-trees",
+  "category": "memory allocation / recursion",
+  "difficulty": "n/a",
+  "format": "program",
+  "source": "Computer Language Benchmarks Game (task specification rewritten in own words)",
+  "url": "https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/binarytrees.html",
+  "check_input_n": 10,
+  "measurement_input_n": null
+}

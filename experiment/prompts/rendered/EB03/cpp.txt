@@ -1,0 +1,59 @@
+Solve the following programming problem in C++.
+
+Complete the code skeleton given below. Your code will be combined with a test harness
+that reads the input, calls your method, and prints the result. Therefore, do not read
+from standard input, do not write to standard output, and do not add a main function.
+
+Requirements:
+- Return the complete `Solution` class, including any import or include statements it needs.
+- Use only the C++ standard library.
+- Do not use multiple threads or processes.
+- Target C++20. The code is compiled with `g++ -O2 -std=c++20`.
+- Respond with exactly one fenced code block containing the code, and nothing else.
+
+Problem:
+
+You are given an array `nums` consisting of **positive** integers where all integers have the **same** number of digits.
+
+The **digit difference** between two integers is the *count* of different digits that are in the **same** position in the two integers.
+
+Return the **sum** of the **digit differences** between **all** pairs of integers in `nums`.
+
+**Example 1:**
+
+**Input:** nums = [13,23,12]
+
+**Output:** 4
+
+**Explanation:**
+We have the following:
+- The digit difference between **1**3 and **2**3 is 1.
+- The digit difference between 1**3** and 1**2** is 1.
+- The digit difference between **23** and **12** is 2.
+So the total sum of digit differences between all pairs of integers is `1 + 1 + 2 = 4`.
+
+**Example 2:**
+
+**Input:** nums = [10,10,10,10]
+
+**Output:** 0
+
+**Explanation:**
+All the integers in the array are the same. So the total sum of digit differences between all pairs of integers will be 0.
+
+**Constraints:**
+
+- `2 <= nums.length <= 10^5`
+- `1 <= nums[i] < 10^9`
+- All integers in `nums` have the same number of digits.
+
+Code skeleton:
+
+```cpp
+class Solution {
+public:
+    long long sumDigitDifferences(vector<int>& nums) {
+        
+    }
+};
+```

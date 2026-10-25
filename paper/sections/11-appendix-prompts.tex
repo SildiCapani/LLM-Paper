@@ -1,0 +1,43 @@
+\section{Prompt Templates}
+\label{app:prompts}
+
+\Cref{fig:prompt-templates} shows both prompt templates verbatim; they are included directly
+from the experiment repository (\texttt{experiment/prompts/}). Placeholders in braces are
+filled per task and language: \texttt{\{language\}} is \emph{Python}, \emph{Java}, or
+\emph{C++}; \texttt{\{language\_note\}} is given in \cref{tab:language-notes};
+\texttt{\{problem\}} is the problem statement (EffiBench-X) or the task specification
+(CLBG); \texttt{\{starter\}} is the EffiBench-X code skeleton for the respective language.
+\Cref{fig:prompt-example} shows a fully rendered prompt.
+
+\begin{table}[h]
+  \centering
+  \caption{Language-specific line \texttt{\{language\_note\}}.}
+  \label{tab:language-notes}
+  \footnotesize
+  \begin{tabular}{@{}lp{0.72\columnwidth}@{}}
+    \toprule
+    Language & Text \\
+    \midrule
+    Python & Target Python 3.14 (CPython). \\
+    Java   & Target Java 25 (OpenJDK). \newline
+             \emph{Program template only:} The public class must be named \texttt{Main}. \\
+    C++    & Target C++20. The code is compiled with \texttt{g++ -O2 -std=c++20}. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure*}[t]
+  \textbf{\footnotesize (a) Function template (EffiBench-X tasks)}
+  \VerbatimInput[fontsize=\scriptsize,frame=single,framesep=2mm]{../experiment/prompts/template_function.txt}
+  \vspace{1ex}
+  \textbf{\footnotesize (b) Program template (CLBG tasks)}
+  \VerbatimInput[fontsize=\scriptsize,frame=single,framesep=2mm]{../experiment/prompts/template_program.txt}
+  \caption{Prompt templates used for all LLMs.}
+  \label{fig:prompt-templates}
+\end{figure*}
+
+\begin{figure*}[t]
+  \VerbatimInput[fontsize=\scriptsize,frame=single,framesep=2mm]{../experiment/prompts/rendered/EB03/cpp.txt}
+  \caption{Fully rendered prompt for task EB03 (Sum of Digit Differences of All Pairs) in C++.}
+  \label{fig:prompt-example}
+\end{figure*}

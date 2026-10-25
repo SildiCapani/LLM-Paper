@@ -1,0 +1,13 @@
+Write a complete {language} program that solves the following task.
+
+Requirements:
+- The program reads a single integer N from its first command-line argument.
+- It writes its result to standard output, exactly in the format specified below.
+- Use only the {language} standard library.
+- Do not use multiple threads or processes.
+- {language_note}
+- Respond with exactly one fenced code block containing the code, and nothing else.
+
+Task:
+
+{problem}

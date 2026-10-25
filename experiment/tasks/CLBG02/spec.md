@@ -1,0 +1,26 @@
+Compute the spectral norm of an infinite matrix `A`, truncated to size `N x N`, using the
+power method.
+
+**Matrix:** the entries of `A` (0-based indices `i`, `j`) are
+
+```
+A(i, j) = 1 / ((i + j) * (i + j + 1) / 2 + i + 1)
+```
+
+where the division in the denominator is an exact integer division.
+
+**Procedure**
+
+1. Let `u` be a vector of `N` ones.
+2. Repeat 10 times: `v = (A^T A) u`, then `u = (A^T A) v`.
+   Compute `(A^T A) x` as `A^T (A x)`, without storing the matrix explicitly.
+3. Print `sqrt((u . v) / (v . v))`, where `.` is the dot product.
+
+Use double-precision (64-bit) floating point. Print the result with exactly 9 digits
+after the decimal point.
+
+**Example:** for `N = 100` the output is
+
+```
+1.274219991
+```

@@ -1,0 +1,37 @@
+For every permutation of the numbers `0 .. N-1`, count the number of "pancake flips"
+needed until the first element is 0, and report a checksum and the maximum flip count.
+
+**Flips of one permutation:** while the first element `k` is not 0, reverse the order of
+the first `k + 1` elements. The number of reversals performed is the permutation's flip
+count. (The permutation itself is copied before flipping; the original is not modified.)
+
+**Permutation order:** permutations must be visited in exactly the order produced by the
+following procedure, because the checksum depends on it. Starting from
+`perm = [0, 1, ..., N-1]`, `count = [0] * N`, `r = N`:
+
+```
+loop:
+    while r != 1: count[r-1] = r; r = r - 1
+    visit(perm)                       # count flips of a copy of perm
+    loop:
+        if r == N: finished
+        first = perm[0]
+        shift perm[0..r-1] one position to the left  (perm[i] = perm[i+1] for i < r)
+        perm[r] = first
+        count[r] = count[r] - 1
+        if count[r] > 0: break
+        r = r + 1
+```
+
+**Checksum:** number the visited permutations 0, 1, 2, ... in visiting order; add the
+flip count of every even-numbered permutation and subtract the flip count of every
+odd-numbered permutation.
+
+**Output:** two lines, the checksum and then `Pfannkuchen(<N>) = <maximum flip count>`.
+
+**Example:** for `N = 7` the output is
+
+```
+228
+Pfannkuchen(7) = 16
+```

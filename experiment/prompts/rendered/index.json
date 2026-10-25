@@ -1,0 +1,380 @@
+[
+  {
+    "task_id": "CLBG01",
+    "language": "python",
+    "format": "program",
+    "path": "prompts/rendered/CLBG01/python.txt",
+    "sha256": "56f24efb49bcbefb9b7f8cf4f66fd9d557b94128976779fd843c932f333bb01d",
+    "chars": 2694,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG01",
+    "language": "java",
+    "format": "program",
+    "path": "prompts/rendered/CLBG01/java.txt",
+    "sha256": "633e81f13aee6042805ba0254d4db568671095d9c5bc54e51fc05e2c30cbe008",
+    "chars": 2725,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG01",
+    "language": "cpp",
+    "format": "program",
+    "path": "prompts/rendered/CLBG01/cpp.txt",
+    "sha256": "513a2bd480e6601272f067aa206de7392e392ef5ab94c0fc469b521e6435e7da",
+    "chars": 2720,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG02",
+    "language": "python",
+    "format": "program",
+    "path": "prompts/rendered/CLBG02/python.txt",
+    "sha256": "465d4cb050762b69c6db49f5fe34531a8b3e233f052ede14bdc8526f67a094d7",
+    "chars": 1170,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG02",
+    "language": "java",
+    "format": "program",
+    "path": "prompts/rendered/CLBG02/java.txt",
+    "sha256": "90b556f7a02a3936db4a7a5018fc1d39ec6b164f29917fa261df3c7b9466698e",
+    "chars": 1201,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG02",
+    "language": "cpp",
+    "format": "program",
+    "path": "prompts/rendered/CLBG02/cpp.txt",
+    "sha256": "901c6606c1fddda9149959d413e6c1945693116126cfa429c12ce1ffcdd1833d",
+    "chars": 1196,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG03",
+    "language": "python",
+    "format": "program",
+    "path": "prompts/rendered/CLBG03/python.txt",
+    "sha256": "e9b89c51b741e49bf1e27f3a87f7da1275771b7cf83e8601dcf1d723c64c68bb",
+    "chars": 1977,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG03",
+    "language": "java",
+    "format": "program",
+    "path": "prompts/rendered/CLBG03/java.txt",
+    "sha256": "426437704ec8eac86ba1cb9fe097227266153e1b631e5fe1b6820f50f683d35d",
+    "chars": 2008,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG03",
+    "language": "cpp",
+    "format": "program",
+    "path": "prompts/rendered/CLBG03/cpp.txt",
+    "sha256": "69414d9078b215c514651010cc67287d3fe0d9e07fb27aed3440af29d2e1af9f",
+    "chars": 2003,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG04",
+    "language": "python",
+    "format": "program",
+    "path": "prompts/rendered/CLBG04/python.txt",
+    "sha256": "0796a95d9e29d20dd5f1ad6e8093f383de8c2d971c4ee500b68c9d6a9775b452",
+    "chars": 1840,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG04",
+    "language": "java",
+    "format": "program",
+    "path": "prompts/rendered/CLBG04/java.txt",
+    "sha256": "fbdecb4e47eca072583830a4023c9e9f9d581361794f8cd36154de7d1b42aca4",
+    "chars": 1871,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "CLBG04",
+    "language": "cpp",
+    "format": "program",
+    "path": "prompts/rendered/CLBG04/cpp.txt",
+    "sha256": "9ffecb0a4fe77e5c93cf60d9024d5f0c0f91dbc1dbc5974e515acf5778ae1e21",
+    "chars": 1866,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB01",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB01/python.txt",
+    "sha256": "7308c4ebfb97256bbb4188d8af5de1a1532bc6ce2c97a95015cfa971a2a7da8b",
+    "chars": 1643,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB01",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB01/java.txt",
+    "sha256": "27228d6e45385eea9319381245c7a97df2afa4e695b9dc9c80012440c002a807",
+    "chars": 1642,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB01",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB01/cpp.txt",
+    "sha256": "eea2e7c5dfd5687c1d48002247c9b7740043fd7b397d75a1caa71910855aef68",
+    "chars": 1689,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB02",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB02/python.txt",
+    "sha256": "273252b8c7c8dc43b8b9764096204a4c81195506cb39411d3a0e9912b1711b53",
+    "chars": 1868,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB02",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB02/java.txt",
+    "sha256": "c3a9a779ed0e520120c5fe68548d92317d7113b3ffb55bed58b338c0b482d70a",
+    "chars": 1866,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB02",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB02/cpp.txt",
+    "sha256": "1d21921cc3cdb461ea888991b3a3e282dee6ede9cc1db5bdc1d270df085f11c7",
+    "chars": 1913,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB03",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB03/python.txt",
+    "sha256": "74100d93bd1a63b7d99eb5184c21161f6fb04a13ae59cfde3f66fcb4f2ddeaa0",
+    "chars": 1778,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB03",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB03/java.txt",
+    "sha256": "a293ef1de3c93e2ce8b80e437e96ae22f91684e8b4293aadfb13a029a1959d0f",
+    "chars": 1777,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB03",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB03/cpp.txt",
+    "sha256": "62af22aa926febfaa6dbacbc3e1cf6c5c1edba42bc328c3d95670e5d3e1d7a3a",
+    "chars": 1824,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB04",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB04/python.txt",
+    "sha256": "9b50b3510fafa1ef63e6a44b2049d1853d880ed7d1c5ed9876e82ab13c37854b",
+    "chars": 2118,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB04",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB04/java.txt",
+    "sha256": "146ee6898b84e8ccb2149ebbe549fe06fe3673e23e23bb16dfed8aa8addbfa6c",
+    "chars": 2115,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB04",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB04/cpp.txt",
+    "sha256": "2f7cac02f42277a20e33029098a695d5bdcbf0355577f60be7ae11ef5e35a1e2",
+    "chars": 2157,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB05",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB05/python.txt",
+    "sha256": "c279b8a093689fbe72b14c1bd378157124bd406a8e68efd89b161b498c15baa3",
+    "chars": 2323,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB05",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB05/java.txt",
+    "sha256": "f9ba8b2f56555fc2661d636b048783a08e43f16f90ea72c5428d68a1b4769fdf",
+    "chars": 2319,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB05",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB05/cpp.txt",
+    "sha256": "caa384228ad79108b57e293620214617fa065d0021191a73da515fd974fbe790",
+    "chars": 2367,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB06",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB06/python.txt",
+    "sha256": "ba9f9529f1fb62a57587b1ab9a25b89efe21b58ba60e9b9f93685332788e4467",
+    "chars": 3581,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB06",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB06/java.txt",
+    "sha256": "8a1b67877bfb61f622a03e42695cd64defd3902265641e2c396eee3f36e4471d",
+    "chars": 3576,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB06",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB06/cpp.txt",
+    "sha256": "71a68786c84f2a83a3c27f7fe6c08ccb7f2deca95566df8f2132ba57e9bbc61b",
+    "chars": 3627,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB07",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB07/python.txt",
+    "sha256": "4ea2653b5942c970ef0e23c8cf4caf1695743c294f1fba140b272475c297e733",
+    "chars": 2938,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB07",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB07/java.txt",
+    "sha256": "99c30f7bca1f870d59c4097483730461b673c0fab2d04bedc17039ceb48dbd49",
+    "chars": 2928,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB07",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB07/cpp.txt",
+    "sha256": "0349d2fafdcce960d1639e28c90c4410ce42508d2c65112feb8b218dc7c898a1",
+    "chars": 2988,
+    "images_omitted": 2
+  },
+  {
+    "task_id": "EB08",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB08/python.txt",
+    "sha256": "68c5539b382a1808af362e212152217d31d28684a8e9a2cfa5ed1ccb303e8880",
+    "chars": 2560,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB08",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB08/java.txt",
+    "sha256": "846016b805fc46eb1446bc55dc20eed9ab69475c25947ddd1783719f8c0458d6",
+    "chars": 2565,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB08",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB08/cpp.txt",
+    "sha256": "678c1887b60143b3d75857df58eb191a94cb812c14a811d6fa4ea85b77068dad",
+    "chars": 2615,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB09",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB09/python.txt",
+    "sha256": "8b89b719a74593e25a9e26ce1bb7746a8abf2d8e91237b5e8401bf1ee86ae9f7",
+    "chars": 2930,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB09",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB09/java.txt",
+    "sha256": "3d0d29e9a9dded63d364441a3c73ba98f3cc9dcdba32bbd773be6f5f168cc58d",
+    "chars": 2928,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB09",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB09/cpp.txt",
+    "sha256": "9853831e439c25d4018193b9bc3de92e37bace0b7e0f986bccfdb6f98c3fce57",
+    "chars": 2970,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB10",
+    "language": "python",
+    "format": "function",
+    "path": "prompts/rendered/EB10/python.txt",
+    "sha256": "e78da45edd6d6900b95dcd61240f9234e019046ab3487bc32bdbef4c7fb2d913",
+    "chars": 3577,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB10",
+    "language": "java",
+    "format": "function",
+    "path": "prompts/rendered/EB10/java.txt",
+    "sha256": "a3147bf7f025eb262ae63bcf5c0f7680f289e01a95793a88cf49d9d96b1a6052",
+    "chars": 3572,
+    "images_omitted": 0
+  },
+  {
+    "task_id": "EB10",
+    "language": "cpp",
+    "format": "function",
+    "path": "prompts/rendered/EB10/cpp.txt",
+    "sha256": "7f5810aae3ffb953351744e371021d4c0e623820fce8c848037696f1bb49a732",
+    "chars": 3627,
+    "images_omitted": 0
+  }
+]

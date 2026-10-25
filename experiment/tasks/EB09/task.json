@@ -1,0 +1,23 @@
+{
+  "task_id": "EB09",
+  "category": "data_structures",
+  "difficulty": "Medium",
+  "title": "Minimum Number of Coins for Fruits",
+  "title_slug": "minimum-number-of-coins-for-fruits",
+  "effibench_id": "3209",
+  "tags": [
+    "array",
+    "dynamic-programming",
+    "queue",
+    "heap-priority-queue",
+    "monotonic-queue"
+  ],
+  "url": "https://leetcode.com/problems/minimum-number-of-coins-for-fruits",
+  "release_timestamp": 1700928027,
+  "eligible_pool_size": 23,
+  "description_md": "You are given an **0\\-indexed** integer array `prices` where `prices[i]` denotes the number of coins needed to purchase the `(i + 1)th` fruit.\n\n\nThe fruit market has the following reward for each fruit:\n\n\n- If you purchase the `(i + 1)th` fruit at `prices[i]` coins, you can get any number of the next `i` fruits for free.\n\n\n**Note** that even if you **can** take fruit `j` for free, you can still purchase it for `prices[j - 1]` coins to receive its reward.\n\n\nReturn the **minimum** number of coins needed to acquire all the fruits.\n\n\n \n\n\n**Example 1:**\n\n\n\n**Input:** prices \\= \\[3,1,2]\n\n\n**Output:** 4\n\n\n**Explanation:**\n\n\n- Purchase the 1st fruit with `prices[0] = 3` coins, you are allowed to take the 2nd fruit for free.\n- Purchase the 2nd fruit with `prices[1] = 1` coin, you are allowed to take the 3rd fruit for free.\n- Take the 3rd fruit for free.\n\n\nNote that even though you could take the 2nd fruit for free as a reward of buying 1st fruit, you purchase it to receive its reward, which is more optimal.\n\n\n\n**Example 2:**\n\n\n\n**Input:** prices \\= \\[1,10,1,1]\n\n\n**Output:** 2\n\n\n**Explanation:**\n\n\n- Purchase the 1st fruit with `prices[0] = 1` coin, you are allowed to take the 2nd fruit for free.\n- Take the 2nd fruit for free.\n- Purchase the 3rd fruit for `prices[2] = 1` coin, you are allowed to take the 4th fruit for free.\n- Take the 4th fruit for free.\n\n\n\n**Example 3:**\n\n\n\n**Input:** prices \\= \\[26,18,6,12,49,7,45,45]\n\n\n**Output:** 39\n\n\n**Explanation:**\n\n\n- Purchase the 1st fruit with `prices[0] = 26` coin, you are allowed to take the 2nd fruit for free.\n- Take the 2nd fruit for free.\n- Purchase the 3rd fruit for `prices[2] = 6` coin, you are allowed to take the 4th, 5th and 6th (the next three) fruits for free.\n- Take the 4th fruit for free.\n- Take the 5th fruit for free.\n- Purchase the 6th fruit with `prices[5] = 7` coin, you are allowed to take the 8th and 9th fruit for free.\n- Take the 7th fruit for free.\n- Take the 8th fruit for free.\n\n\nNote that even though you could take the 6th fruit for free as a reward of buying 3rd fruit, you purchase it to receive its reward, which is more optimal.\n\n\n\n \n\n\n**Constraints:**\n\n\n- `1 <= prices.length <= 1000`\n- `1 <= prices[i] <= 105`\n\n\n",
+  "time_limit_nanos": null,
+  "memory_limit_bytes": null,
+  "source": "EffiBench-X (Apache-2.0), originally LeetCode",
+  "format": "function"
+}
