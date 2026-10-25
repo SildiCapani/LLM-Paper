@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.23)  25 OCT 2026 22:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.23)  25 OCT 2026 22:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -937,60 +937,57 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (./sections/03-related-work.tex [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.e
 nc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/e
 nc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}]
+[3]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 45.
+(Font)              <10.95> on input line 83.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 45.
-)
-(./sections/04-research-questions.tex
+(Font)              <10> on input line 94.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 18.
- [3{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]) (./sections/05-experim
-ental-setup.tex
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (./sections/06-methodology.tex [4]) (./sections/07-results.tex [5])
+(Font)              <7> on input line 94.
+) (./sections/04-research-questions.tex [4{/usr/share/texmf/fonts/enc/dvips/lm/
+lm-mathsy.enc}]) (./sections/05-experimental-setup.tex)
+(./sections/06-methodology.tex [5]) (./sections/07-results.tex [6])
 (./sections/08-discussion.tex) (./sections/09-threats.tex)
-(./sections/10-conclusion.tex [6]) (build/main.bbl) [7] (build/main.tdo
-[8
+(./sections/10-conclusion.tex) (build/main.bbl [7] [8]) [9] (build/main.tdo
+[10
 
 ])
 \tf@tdo=\write5
 \openout5 = `main.tdo'.
 
- [9] (build/main.aux)
+ [11] (build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 77F04F084ED174C3A136F7B99B55D2FD;5148.
+(rerunfilecheck)             Checksum: CD3EAC67DDBA7B9B71A25089C1589F7A;6023.
  ) 
 Here is how much of TeX's memory you used:
- 26607 strings out of 476129
- 493458 string characters out of 5793185
- 1959975 words of memory out of 5000000
- 47817 multiletter control sequences out of 15000+600000
- 657564 words of font info for 214 fonts, out of 8000000 for 9000
+ 26654 strings out of 476129
+ 494240 string characters out of 5793185
+ 1957975 words of memory out of 5000000
+ 47815 multiletter control sequences out of 15000+600000
+ 658943 words of font info for 228 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 99i,9n,101p,1001b,1014s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,13n,101p,1001b,1014s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/pu
-blic/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/
-fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pf
-b></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri9.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/publ
-ic/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/
-texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on build/main.pdf (9 pages, 378935 bytes).
+blic/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm
+/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/
+fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.p
+fb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/ty
+pe1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publi
+c/lm/lmri9.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/t
+exmf/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+tt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on build/main.pdf (11 pages, 399538 bytes).
 PDF statistics:
- 450 PDF objects out of 1000 (max. 8388607)
- 396 compressed objects within 4 object streams
- 90 named destinations out of 1000 (max. 500000)
- 54509 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 538 PDF objects out of 1000 (max. 8388607)
+ 477 compressed objects within 5 object streams
+ 111 named destinations out of 1000 (max. 500000)
+ 54541 words of extra memory for PDF output out of 61914 (max. 10000000)
 
