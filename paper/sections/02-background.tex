@@ -1,0 +1,20 @@
+\section{Background}
+\label{sec:background}
+
+\subsection{LLM-Based Code Generation}
+\TODO{Short overview: how LLMs generate code, common benchmarks (HumanEval, MBPP,
+EvalPlus, EvoEval, LeetCode-based sets), pass@k as correctness metric. Cite originals.}
+
+\subsection{Software Energy Measurement}
+\TODO{Energy vs.\ power ($E = \int P\,dt$); software-based estimation (Intel/AMD RAPL,
+tools building on it such as Scaphandre, CodeCarbon, perf) vs.\ hardware-based
+measurement (external power meters, INA219/INA226 shunt sensors). Explain which
+components each method captures (package, DRAM, whole system) and why RAPL is not
+available on ARM-based Raspberry~Pi boards.}
+
+\subsection{Energy Efficiency of Programming Languages}
+Pereira et al.~\cite{pereira2017energy} compared 27 programming languages on the Computer
+Language Benchmarks Game and examined how energy, time, and memory relate.
+\TODO{Summarise key methodological points relevant to our study (compiled vs.\
+virtual-machine vs.\ interpreted languages; faster is not always more energy-efficient)
+-- in own words, without anticipating our results.}

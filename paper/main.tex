@@ -1,0 +1,73 @@
+% =====================================================================
+%  Energy Efficiency of LLM-Generated Code:
+%  A Cross-Language and Cross-Platform Empirical Study
+% ---------------------------------------------------------------------
+%  Build:  latexmk -pdf main.tex      (or use LaTeX Workshop in VS Code)
+%  Note:   Generic article layout. Once a target venue is chosen,
+%          switch the document class (e.g. IEEEtran or acmart).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% --- Encoding & fonts -------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Layout -----------------------------------------------------------
+\usepackage[margin=2.5cm]{geometry}
+
+% --- Math, tables, figures --------------------------------------------
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+% --- References -------------------------------------------------------
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% --- Working notes (set to [disable] for the final version) -----------
+\usepackage[colorinlistoftodos,textsize=footnotesize]{todonotes}
+\newcommand{\TODO}[1]{\todo[inline,color=orange!25]{\textbf{TODO:} #1}}
+\newcommand{\TBD}{\textcolor{red}{[TBD]}}
+
+% --- Project-specific macros ------------------------------------------
+\newcommand{\RQ}[1]{\textbf{RQ#1}}
+\newcommand{\HYP}[1]{\textbf{H#1}}
+
+% ---------------------------------------------------------------------
+\title{Energy Efficiency of LLM-Generated Code:\\
+       A Cross-Language and Cross-Platform Empirical Study}
+\author{Brisild Capani\\
+        \TBD{} Affiliation\\
+        \texttt{brisild.capani@aeb.com}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\input{sections/00-abstract}
+\input{sections/01-introduction}
+\input{sections/02-background}
+\input{sections/03-related-work}
+\input{sections/04-research-questions}
+\input{sections/05-experimental-setup}
+\input{sections/06-methodology}
+\input{sections/07-results}
+\input{sections/08-discussion}
+\input{sections/09-threats}
+\input{sections/10-conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+% Remove for the final version
+\clearpage
+\listoftodos[Open TODOs]
+
+\end{document}

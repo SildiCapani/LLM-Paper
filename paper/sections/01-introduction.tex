@@ -1,0 +1,54 @@
+\section{Introduction}
+\label{sec:introduction}
+
+% --- Motivation ---------------------------------------------------------
+LLM-based assistants have become part of everyday software development, generating
+anything from small snippets to complete functions. Benchmarks for code generation
+predominantly measure \emph{functional correctness}, e.g., the share of generated
+solutions that pass a set of unit tests. Non-functional properties such as runtime
+performance and, in particular, energy efficiency are rarely considered, even though
+generated code may be executed many times in production and on a wide range of
+devices, from data-centre servers to resource-constrained embedded systems.
+\TODO{Add 1--2 citations on the ICT/software share of energy consumption and on the
+adoption of AI coding assistants.}
+
+% --- Problem ------------------------------------------------------------
+Early studies indicate that the energy efficiency of LLM-generated code varies
+between models and often falls short of human-written reference
+solutions~\cite{solovyeva2025powerhungry,islam2025evaluating,apsan2025whereare}.
+However, existing studies typically vary only a subset of the factors that plausibly
+influence energy consumption: they either cover several languages on a small number of
+similar platforms~\cite{solovyeva2025powerhungry}, or several heterogeneous platforms
+for a single language~\cite{apsan2025whereare}. It therefore remains unclear whether a
+statement such as ``model~A generates more energy-efficient code than model~B'' holds
+in general, or only for a particular language and execution environment.
+
+% --- Goal & approach ----------------------------------------------------
+This paper addresses this question with a full factorial experiment in which
+\TBD{}~LLMs generate solutions for \TBD{}~programming tasks in Python, Java, and C++.
+All functionally correct solutions are executed on three heterogeneous platforms
+(an x86 desktop PC, an x86 server, and an ARM-based Raspberry~Pi), and their energy
+consumption, execution time, and memory usage are measured under controlled conditions.
+Our central research question is:
+
+\begin{quote}
+\emph{To what extent do the choice of LLM, programming language, and hardware platform
+influence the energy efficiency of LLM-generated code?}
+\end{quote}
+
+% --- Contributions ------------------------------------------------------
+The contributions of this paper are:
+\begin{itemize}[leftmargin=*]
+  \item A full factorial empirical study of LLM-generated code across
+        \TBD{}~LLMs, three programming languages, and three hardware platforms.
+  \item A statistical analysis of main \emph{and interaction} effects, with a particular
+        focus on whether the energy-efficiency ranking of LLMs is stable across
+        languages and platforms.
+  \item An analysis of the relationship between energy, execution time, and memory for
+        generated code.
+  \item A replication package containing tasks, prompts, generated code, measurement
+        scripts, and raw data.
+\end{itemize}
+
+\TODO{Paper outline paragraph (``The remainder of this paper is structured as
+follows\ldots'') once the structure is final.}

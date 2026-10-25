@@ -1,0 +1,32 @@
+\section{Methodology and Data Collection}
+\label{sec:methodology}
+
+\subsection{Prompting and Code Generation}
+\TODO{Define the prompt template; it differs between languages only in the target
+language and the required I/O interface. Specify: zero-shot, no energy-related hints
+(baseline), temperature, number of samples per task/LLM/language ($k$), handling of
+non-compiling outputs (no manual repair, or a fixed number of automated retries).}
+
+\subsection{Functional Correctness}
+\TODO{Every generated program is executed against the task's test suite. Only programs
+passing all tests enter the energy analysis. Correctness rates are reported separately
+per LLM and language (\RQ{1}, \RQ{2}).}
+
+\subsection{Measurement Procedure}
+\TODO{Describe per run: warm-up, number of repetitions ($n$), randomised execution
+order, cool-down / idle intervals, idle-power baseline, JVM warm-up policy, process
+isolation, minimal background services. Record ambient temperature if possible.}
+
+\subsection{Statistical Analysis}
+\TODO{Planned analysis (to be finalised before data collection):
+(i) descriptive statistics (median, IQR) per cell;
+(ii) linear mixed-effects model on $\log(\text{energy})$ with fixed effects LLM,
+language, platform and all interactions, and random intercepts for task (and generated
+solution);
+(iii) Type-III tests / likelihood-ratio tests for interactions, effect sizes, post-hoc
+comparisons with multiplicity correction;
+(iv) rank stability across languages and platforms via Kendall's $\tau$ / Friedman test
+(\RQ{4});
+(v) Spearman correlation between energy, time, and memory (\RQ{5}).
+Check model assumptions; fall back to non-parametric or aligned-rank-transform methods
+if violated.}

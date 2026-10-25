@@ -1,0 +1,37 @@
+\section{Research Questions and Hypotheses}
+\label{sec:rqs}
+
+\begin{description}[leftmargin=1.2cm,style=nextline]
+  \item[\RQ{1}] Which LLMs generate the most energy-efficient code for identical
+        programming tasks?
+  \item[\RQ{2}] How does the energy efficiency of generated code differ between
+        Python, Java, and C++?
+  \item[\RQ{3}] How do energy consumption and execution time of generated code change
+        across a desktop PC, a Raspberry~Pi, and a server?
+  \item[\RQ{4}] Are there statistically significant interaction effects between LLM,
+        programming language, and hardware platform, i.e., does the ranking of LLMs
+        change depending on language and platform?
+  \item[\RQ{5}] How are execution time, energy consumption, and memory usage related?
+\end{description}
+
+\noindent
+Each research question is accompanied by a hypothesis (null hypotheses $H_{x,0}$ state
+the absence of the effect). All hypotheses are tested; none is presupposed to hold.
+
+\begin{description}[leftmargin=1.2cm,style=nextline]
+  \item[\HYP{1} (\RQ{1})] Energy consumption of generated code differs between LLMs
+        (main effect of LLM).
+  \item[\HYP{2} (\RQ{2}, \RQ{4})] The effect of the LLM on energy consumption depends on
+        the programming language (LLM $\times$ language interaction).
+  \item[\HYP{3} (\RQ{3}, \RQ{4})] The effect of the LLM on energy consumption depends on
+        the hardware platform (LLM $\times$ platform interaction).
+  \item[\HYP{4} (\RQ{4})] There is a three-way interaction LLM $\times$ language
+        $\times$ platform.
+  \item[\HYP{5} (\RQ{5})] Execution time and energy consumption are correlated, and the
+        strength of this relation differs between languages and platforms.
+\end{description}
+
+\TODO{Decide whether language and platform main effects (RQ2/RQ3) get their own
+hypotheses. Note: the language main effect is largely expected from prior
+work~\cite{pereira2017energy}; the novelty lies in the interactions.}
+\TODO{Pre-register hypotheses and analysis plan (e.g., OSF) before data collection.}

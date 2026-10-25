@@ -1,0 +1,29 @@
+\section{Threats to Validity}
+\label{sec:threats}
+
+\paragraph{Construct validity.}
+Energy measurement methods differ in which components they capture (CPU package and
+DRAM via RAPL vs.\ whole-board power via external meters), which limits the
+comparability of absolute values across platforms.
+\TODO{Describe mitigation chosen in \cref{sec:setup}.}
+
+\paragraph{Internal validity.}
+Measurements may be influenced by background processes, thermal state, frequency
+scaling, JIT warm-up, and garbage collection. LLM outputs are non-deterministic.
+\TODO{Mitigations: repetitions, randomised order, fixed governor, multiple samples per
+task.}
+
+\paragraph{External validity.}
+Results are limited to the selected LLMs (and their versions at the time of the study),
+tasks, three languages, and three platforms, and may not generalise to other models,
+languages, or architectures, or to larger, real-world codebases.
+
+\paragraph{Conclusion validity.}
+\TODO{Multiple testing, assumption violations, sample size / power.}
+
+\paragraph{Confounding of model and implementation.}
+The effect of an LLM cannot be fully separated from the concrete algorithm it chooses;
+these strategy differences are, however, part of the phenomenon under study.
+
+\paragraph{Data contamination.}
+Benchmark tasks and reference solutions may be part of the LLMs' training data.
