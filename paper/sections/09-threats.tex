@@ -21,6 +21,17 @@ languages, or architectures, or to larger, real-world codebases.
 \paragraph{Conclusion validity.}
 \TODO{Multiple testing, assumption violations, sample size / power.}
 
+\paragraph{Access via coding CLIs.}
+Models are accessed through their vendors' coding CLIs, whose built-in system prompts we
+cannot inspect or align, and whose defaults (e.g., sampling, reasoning effort) differ. The
+factor \emph{LLM} thus measures model and tool jointly. We mitigate agentic effects by
+disabling tools, ignoring user and project configuration, and logging every tool
+invocation; Codex CLI offers no documented switch to disable tools, so it runs in a
+read-only sandbox instead. CLIs and models evolve quickly, so we pin CLI versions and
+record model identifiers and dates. With three levels of the LLM factor, rank-based
+analyses (\RQ{4}) have limited resolution; the interaction terms of the mixed-effects
+model are therefore the primary evidence.
+
 \paragraph{Confounding of model and implementation.}
 The effect of an LLM cannot be fully separated from the concrete algorithm it chooses;
 these strategy differences are, however, part of the phenomenon under study.

@@ -25,9 +25,10 @@ in general, or only for a particular language and execution environment.
 
 % --- Goal & approach ----------------------------------------------------
 This paper addresses this question with a full factorial experiment in which
-\TBD{}~LLMs generate solutions for \TBD{}~programming tasks in Python, Java, and C++.
+three LLMs, accessed through their vendors' official coding CLIs, generate solutions for
+14~programming tasks in Python, Java, and C++.
 All functionally correct solutions are executed on three heterogeneous platforms
-(an x86 desktop PC, an x86 server, and an ARM-based Raspberry~Pi), and their energy
+(an x86 laptop, an x86 server, and an ARM-based Raspberry~Pi), and their energy
 consumption, execution time, and memory usage are measured under controlled conditions.
 Our central research question is:
 
@@ -40,7 +41,8 @@ influence the energy efficiency of LLM-generated code?}
 The contributions of this paper are:
 \begin{itemize}[leftmargin=*]
   \item A full factorial empirical study of LLM-generated code across
-        \TBD{}~LLMs, three programming languages, and three hardware platforms.
+        three LLMs (Claude, GPT, Gemini via their official CLIs), three programming
+        languages, and three hardware platforms.
   \item A statistical analysis of main \emph{and interaction} effects, with a particular
         focus on whether the energy-efficiency ranking of LLMs is stable across
         languages and platforms.

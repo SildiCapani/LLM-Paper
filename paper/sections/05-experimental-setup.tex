@@ -5,41 +5,52 @@
 % Task data, prompts and scripts: experiment/
 
 \subsection{Study Design}
-We use a full factorial design with three fixed factors: \emph{LLM} (six levels),
-\emph{programming language} (Python, Java, C++), and \emph{hardware platform} (desktop PC,
+We use a full factorial design with three fixed factors: \emph{LLM} (three levels),
+\emph{programming language} (Python, Java, C++), and \emph{hardware platform} (laptop,
 server, Raspberry~Pi~5). Programming tasks (14) are treated as a random factor, and each
 task--LLM--language combination is sampled $k=5$ times, yielding
-$6 \times 3 \times 14 \times 5 = 1{,}260$ generated programs. Every functionally correct
+$3 \times 3 \times 14 \times 5 = 630$ generated programs. Every functionally correct
 program is executed on all three platforms. The dependent variables are energy consumption
 (primary), execution time, peak memory usage, and functional correctness.
 
-\subsection{Large Language Models}
-Models were selected according to five criteria: (i)~vendor diversity, (ii)~a balance of
-proprietary and open-weight models, (iii)~coverage of frontier and smaller model classes,
-(iv)~availability of a fixed, versioned model identifier, and (v)~practical relevance as
-indicated by current coding leaderboards. \Cref{tab:llms} lists the selected models; exact
-identifiers and access dates are recorded at generation time.
+\subsection{LLMs and Access via Official Coding CLIs}
+\label{sec:llms}
+We study the flagship models of the three most widely used commercial AI assistants:
+Claude (Anthropic), ChatGPT (OpenAI), and Gemini (Google). Rather than querying the bare
+models through their APIs, we access each model through its vendor's official command-line
+coding agent (Claude Code, Codex CLI, Gemini CLI), authenticated with a regular
+subscription (\cref{tab:llms}). This reflects how developers increasingly obtain generated
+code in practice; the factor \emph{LLM} therefore denotes the combination of model and
+official tool. Open-weight models, which lack a comparable official subscription-based
+coding CLI, are left to future work, so that all levels of the factor share the same mode
+of access.
 
 \begin{table}[t]
   \centering
-  \caption{LLMs under study.}
+  \caption{LLMs and the official CLIs used to access them. Exact model identifiers and
+    CLI versions were recorded at generation time.}
   \label{tab:llms}
   \footnotesize
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}llll@{}}
     \toprule
-    Model & Vendor & Class & Identifier \\
+    Vendor & CLI (version) & Model & Identifier \\
     \midrule
-    Claude Opus 5.5  & Anthropic   & prop., frontier   & \texttt{claude-opus-5-5} \\
-    GPT-6 Astra      & OpenAI      & prop., frontier   & \TBD \\
-    Gemini Pro$^a$   & Google      & prop., frontier   & \TBD \\
-    Kimi K3          & Moonshot AI & open, large       & \TBD \\
-    DeepSeek-V4.1    & DeepSeek    & open, large       & \TBD \\
-    Qwen3.8-27B      & Alibaba     & open, small       & \TBD \\
+    Anthropic & Claude Code (\TBD) & Claude Opus 5.5        & \texttt{claude-opus-5-5} \\
+    OpenAI    & Codex CLI (\TBD)   & GPT flagship$^a$       & \TBD \\
+    Google    & Gemini CLI (\TBD)  & Gemini Pro$^a$         & \TBD \\
     \bottomrule
-    \multicolumn{4}{@{}l}{\scriptsize $^a$ Latest stable Pro version at generation time.}
+    \multicolumn{4}{@{}p{0.95\columnwidth}@{}}{\scriptsize $^a$ Most capable model offered
+      by the CLI for the subscription at generation time.}
   \end{tabular}
 \end{table}
+
+To isolate the models' code generation from agentic behaviour, every request is issued
+non-interactively in a fresh, empty working directory, without user configuration, project
+context files, or session history, and with tool use disabled where the CLI supports it
+(Claude Code, Gemini CLI) or restricted to a read-only sandbox otherwise (Codex CLI). The
+CLIs' built-in system prompts are left unchanged. We log every request's full event stream
+and report whether any tool was invoked. Details are given in \cref{sec:generation}.
 
 \subsection{Programming Tasks}
 \label{sec:tasks}
@@ -121,10 +132,10 @@ multi-architecture container images (amd64/arm64) on all platforms. C++ is compi
   \footnotesize
   \begin{tabular}{@{}llll@{}}
     \toprule
-    & Desktop PC & Server & Raspberry~Pi~5 \\
+    & Laptop & Server & Raspberry~Pi~5 \\
     \midrule
-    CPU / ISA            & \TBD{} (x86-64)  & \TBD{} (x86-64) & Cortex-A76 (Arm64) \\
-    RAM                  & \TBD             & \TBD            & 8\,GB \\
+    CPU / ISA            & Intel Core i7-1185G7 (x86-64) & \TBD{} (x86-64) & Cortex-A76 (Arm64) \\
+    RAM                  & 32\,GB           & \TBD            & 8\,GB \\
     OS / kernel          & \TBD             & \TBD            & \TBD \\
     Python               & \multicolumn{3}{c}{CPython 3.14 (\texttt{python:3.14-slim}) \TBD} \\
     Java                 & \multicolumn{3}{c}{OpenJDK 25 (\texttt{eclipse-temurin:25-jdk}) \TBD} \\

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.23)  25 OCT 2026 22:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.23)  25 OCT 2026 23:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -945,7 +945,7 @@ ine 4.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 42.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -954,7 +954,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -963,16 +963,21 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ))
-(./sections/02-background.tex) (./sections/03-related-work.tex [1{/var/lib/texm
-f/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/d
-vips/base/8r.enc}
+(./sections/02-background.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.
+map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
-]) (./sections/04-research-questions.tex [2])
+])
+(./sections/03-related-work.tex) (./sections/04-research-questions.tex [2])
 (./sections/05-experimental-setup.tex [3]) (./sections/06-methodology.tex
-[4]) (./sections/07-results.tex) (./sections/08-discussion.tex)
-(./sections/09-threats.tex [5]) (./sections/10-conclusion.tex) (build/main.bbl)
-(./sections/11-appendix-prompts.tex
+[4]) (./sections/07-results.tex) (./sections/08-discussion.tex [5])
+(./sections/09-threats.tex) (./sections/10-conclusion.tex
+Underfull \hbox (badness 1874) in paragraph at lines 7--11
+ \T1/ptm/m/it/10 (+20) a) Fu-ture work.: [][] \T1/ptm/m/n/10 (+20) Open-weight 
+mod-els (e.g., Kimi,
+ []
+
+) (build/main.bbl [6]) (./sections/11-appendix-prompts.tex
 ** WARNING: Ignoring useless \section in Appendix (line 1).
 
 Underfull \hbox (badness 5022) in paragraph at lines 4--11
@@ -1179,13 +1184,10 @@ Package textcomp Info: Symbol \textasciigrave not provided by
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family pcr in TS1 encoding.
 (textcomp)             Default family used instead on input line 40.
-) [6] [7] [8]
-(build/main.tdo
-Underfull \vbox (badness 10000) has occurred while \output is active []
+) [7
 
- [9
-
-])
+] [8] [9]
+(build/main.tdo)
 \tf@tdo=\write6
 \openout6 = `main.tdo'.
 
@@ -1201,20 +1203,23 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[10] (build/main.aux)
+[10
+
+
+] (build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 073C5F0ED56697043816F3E5A1DC957F;6205.
+(rerunfilecheck)             Checksum: 561819E7CA9C13371A7979D7DF2E7C29;6312.
  ) 
 Here is how much of TeX's memory you used:
- 28237 strings out of 476129
- 526265 string characters out of 5793185
- 1975975 words of memory out of 5000000
- 49238 multiletter control sequences out of 15000+600000
- 699555 words of font info for 419 fonts, out of 8000000 for 9000
+ 28254 strings out of 476129
+ 526473 string characters out of 5793185
+ 1956975 words of memory out of 5000000
+ 49244 multiletter control sequences out of 15000+600000
+ 699939 words of font info for 425 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  99i,13n,101p,1001b,902s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/smartrollerz/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tctt0
@@ -1234,10 +1239,10 @@ m/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><
 ive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmri8a.pfb>
-Output written on build/main.pdf (10 pages, 243300 bytes).
+Output written on build/main.pdf (10 pages, 246556 bytes).
 PDF statistics:
- 496 PDF objects out of 1000 (max. 8388607)
- 444 compressed objects within 5 object streams
- 120 named destinations out of 1000 (max. 500000)
+ 501 PDF objects out of 1000 (max. 8388607)
+ 449 compressed objects within 5 object streams
+ 122 named destinations out of 1000 (max. 500000)
  72477 words of extra memory for PDF output out of 74296 (max. 10000000)
 

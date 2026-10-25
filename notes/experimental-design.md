@@ -12,14 +12,14 @@ Server noch unklar, LLM-Zugang über einen Mix aus API und Open-Weight-Modellen.
 
 | Faktor | Stufen | Typ |
 |---|---|---|
-| LLM | 6 | fest |
+| LLM (via offizielles CLI) | 3 | fest |
 | Sprache | Python, Java, C++ | fest |
 | Plattform | Desktop-PC, Server, Raspberry Pi 5 | fest |
 | Aufgabe | 14 | zufällig (Random Effect) |
 | Sample | k = 5 Generierungen pro Aufgabe × LLM × Sprache | zufällig (genestet) |
 
-**Umfang:** 6 × 3 × 14 × 5 = **1 260 generierte Programme**. Jedes korrekte Programm wird auf
-3 Plattformen mit je 10 Wiederholungen gemessen, das sind bis zu 37 800 Messungen.
+**Umfang:** 3 × 3 × 14 × 5 = **630 generierte Programme**. Jedes korrekte Programm wird auf
+3 Plattformen mit je 10 Wiederholungen gemessen, das sind bis zu 18 900 Messungen.
 
 **Zeitabschätzung (wird im Pilot kalibriert):** etwa 5 s pro Messung plus Cool-down ergeben etwa
 35–50 h pro x86-Plattform und auf dem Raspberry Pi etwa 2–4× so viel. Machbar, aber sorgfältig
@@ -27,52 +27,65 @@ automatisieren.
 
 ---
 
-## 2. LLM-Auswahl
+## 2. LLM-Auswahl und Zugang (v4: offizielle Coding-CLIs)
 
-### Auswahlkriterien (gehören so ins Paper)
-1. **Diversität der Anbieter**: keine zwei Modelle desselben Herstellers in derselben Klasse.
-2. **Proprietär vs. Open-Weight**: je zur Hälfte. Open-Weight-Modelle sind reproduzierbar, weil
-   die Gewichte fixiert sind.
-3. **Größenklassen**: Frontier-Modelle und kleine bzw. günstige Modelle. Damit lässt sich prüfen,
-   ob Modellgröße mit Effizienz zusammenhängt (Ashraf et al. und Mehditabar et al. haben das schon
-   angerissen).
-4. **Feste Versionen**: Es werden nur Modelle mit datiertem Snapshot bzw. fester Versions-ID
-   verwendet; die ID wird bei jeder Anfrage geloggt.
-5. **Relevanz**: Die Modelle sind in der Praxis verbreitet und auf aktuellen Coding-Leaderboards
-   vertreten.
+### Entscheidung
+Wir testen die **drei verbreitetsten kommerziellen KI-Assistenten**, und zwar jeweils über ihr
+**offizielles Kommandozeilen-Werkzeug (CLI)** und die vorhandenen Pro-Abos. Dadurch entstehen
+keine API-Kosten.
 
-### Vorschlag (Stand Oktober 2026, **Namen und IDs bei der Generierung verifizieren**)
+| # | Anbieter | CLI | Modell (bei Installation festlegen und loggen) | Zugang |
+|---|---|---|---|---|
+| 1 | Anthropic | Claude Code | Claude Opus 5.5 (`claude-opus-5-5`) | Claude-Pro-Abo |
+| 2 | OpenAI | Codex CLI | Flaggschiff-Modell, das Codex für das Abo anbietet (z. B. `gpt-6.1-sol`; prüfen!) | ChatGPT-Abo |
+| 3 | Google | Gemini CLI | Pro-Modell (`-m pro` bzw. exakter Name) | Google-Konto / Google AI Pro |
 
-| # | Klasse | Kandidat | Zugang |
-|---|---|---|---|
-| 1 | proprietär, Frontier | Claude Opus 5.5 (Anthropic) | API |
-| 2 | proprietär, Frontier | GPT-6 Astra (OpenAI) | API |
-| 3 | proprietär, Frontier | aktuelle Gemini-Pro-Version (Google) | API |
-| 4 | Open-Weight, groß | Kimi K3 (Moonshot) *oder* DeepSeek-V4.1 | API (z. B. OpenRouter) |
-| 5 | Open-Weight, groß | DeepSeek-V4.1 *oder* MiMo-V2.6-Pro | API |
-| 6 | Open-Weight, klein | Qwen3.8-27B (Apache 2.0) | API oder lokal |
+**Framing im Paper:** Wir messen nicht das „nackte“ Modell, sondern das Modell **so, wie
+Entwickler es über das offizielle Coding-Werkzeug des Anbieters nutzen** (hohe ökologische
+Validität). Das wird in Setup und Threats to Validity offen beschrieben.
 
-Quellen für die Kandidaten: aktuelle Coding-Leaderboards (llm-stats, BenchLM, whatllm; Oktober
-2026). Diese Ranglisten sind uneinheitlich und dienen nur der Vorauswahl, nicht als
-Qualitätsurteil.
+### Kimi K3 und DeepSeek-V4.1: gestrichen
+- Für sie gibt es keinen gleichwertigen Zugang über ein offizielles Abo-CLI. Über eine API
+  liefen sie unter anderen Bedingungen (kein Agenten-System-Prompt, keine Werkzeuge), damit
+  wäre der Faktor „LLM“ mit dem Faktor „Zugangsweg“ vermischt.
+- Kostenlos sind sie nur unzuverlässig verfügbar (OpenRouter-Gratisvarianten mit Tageslimits,
+  wechselnde Verfügbarkeit).
+- Im Paper kommen Open-Weight-Modelle als **Future Work** vor.
 
-**Hinweis zu Interessenkonflikten:** Das Modell, das dir hier hilft, gehört zur Claude-Familie.
-Die Auswahl folgt den Kriterien oben. Claude sollte im Paper weder bevorzugt noch ausgeschlossen
-werden.
+**Konsequenz:** Der Faktor LLM hat 3 Stufen. Für RQ4 (Rangstabilität) heißt das: Es gibt nur
+3! = 6 mögliche Rangfolgen. Die Analyse bleibt sinnvoll („wechselt der Sieger?“), primär
+stützt sich RQ4 aber auf die Interaktionsterme im Mixed Model.
 
-### Generierungsparameter (Entscheidung)
-- **Zero-Shot** mit standardisiertem Prompt (siehe §5), **keine** Hinweise auf Energie oder
-  Effizienz. Wir messen das Standardverhalten; Prompting untersuchen schon Rekhi, Cappendijk und
-  Apsan.
-- **Temperatur**: 0.7 bei allen Modellen, die das erlauben. Reasoning-Modelle, die keine
-  Temperatur zulassen, laufen mit Anbieter-Default; das wird dokumentiert.
-  Begründung: k = 5 Samples sollen die *Verteilung* des Modellverhaltens abbilden; T = 0 ist
-  bei APIs ohnehin nicht deterministisch.
-- **Reasoning-Aufwand**: auf den Default setzen und loggen.
+### Generierungsprotokoll (für alle drei gleich)
+Grundsatz: **System-Prompt des Werkzeugs bleibt unverändert („as shipped“)**, aber
+**keine Werkzeugnutzung und kein Projektkontext**.
+
+| Regel | Umsetzung |
+|---|---|
+| Leeres Arbeitsverzeichnis pro Anfrage | neues temporäres Verzeichnis, keine CLAUDE.md, AGENTS.md oder GEMINI.md |
+| Keine Benutzer-Konfiguration | Claude: `--setting-sources ""`, `--strict-mcp-config`; Codex: `--ignore-user-config`; Gemini: isoliertes Settings-Verzeichnis |
+| Keine Werkzeuge | Claude: `--tools ""` (offiziell dokumentiert); Gemini: `tools.exclude` bzw. `tools.core` in Settings; Codex: kein dokumentierter Schalter, daher `--sandbox read-only` im leeren Verzeichnis |
+| Werkzeug-Kontrolle | JSON-Logs jeder Anfrage auswerten: Hat das Werkzeug trotzdem Tools aufgerufen? Das wird pro Anfrage protokolliert und berichtet |
+| Keine Sitzungs-Historie | jede Anfrage neu (Claude `--no-session-persistence`, Codex `--ephemeral`) |
+| Modell fest | Claude `--model claude-opus-5-5`, Codex `-m <id>`, Gemini `-m <id>`; tatsächliches Modell aus JSON-Log übernehmen |
+| Sampling / Effort | Default des Werkzeugs, nicht verändert, geloggt |
+| Ausgabe | JSON bzw. stream-JSON (Claude `--output-format json`, Codex `--json -o`, Gemini `-o stream-json`) |
+| Versionen | CLI-Version (`--version`) und Datum jeder Anfrage loggen; CLI-Versionen während der Erhebung **nicht** aktualisieren |
+| Prompt | identischer Prompt-Text (siehe §5), über stdin bzw. `-p` |
+
+> ⚠️ Die genauen Flags für Codex und Gemini (Werkzeuge abschalten, Settings isolieren) sind
+> **noch zu verifizieren**, sobald die CLIs installiert sind. Für Claude Code sind sie in der
+> offiziellen CLI-Referenz dokumentiert.
+
+### Weitere Punkte
+- **Nutzungslimits der Abos:** 210 Anfragen pro Werkzeug, auf mehrere Tage verteilen und
+  Pausen einplanen.
+- **Nutzungsbedingungen:** Nicht-interaktive Nutzung ist bei allen drei eine offizielle
+  Funktion. Trotzdem kurz die Abo-Bedingungen prüfen.
+- **Interessenkonflikt:** Der Assistent, der beim Paper hilft, gehört zur Claude-Familie.
+  Claude darf im Paper weder bevorzugt noch benachteiligt werden.
 - **Keine Nachbearbeitung** außer dem automatischen Extrahieren des Codeblocks. Kompiliert ein
-  Programm nicht oder ist es falsch, zählt es als Fehlschlag (keine Reparaturschleife).
-- Alle Prompts, Rohantworten, Zeitstempel, Modell-IDs und Token-Zahlen werden gespeichert und
-  sind Teil des Replikationspakets.
+  Programm nicht oder ist es falsch, zählt es als Fehlschlag.
 
 ---
 
@@ -244,7 +257,7 @@ Ein Hinweis auf `-O2` ist eine neutrale Information, keine Optimierungsaufforder
 
 ```
 1. Aufgaben auswählen (Seed)  →  tasks/
-2. Generieren (6 LLMs × 3 Sprachen × 14 Aufgaben × k=5)  →  generated/  (+ raw logs)
+2. Generieren (3 CLIs × 3 Sprachen × 14 Aufgaben × k=5)  →  generated/  (+ raw logs)
 3. Korrektheit prüfen (Docker, alle Tests)  →  correctness.csv
 4. Pilot: Eingabegrößen kalibrieren, Messrauschen schätzen (→ Wiederholungen bestätigen)
 5. Messung je Plattform (randomisiert, 10 Wdh.)  →  measurements_<platform>.csv
@@ -267,21 +280,19 @@ k sowie die Zahl der Wiederholungen können begründet werden (Power-Überlegung
 
 ## 8. Offene Entscheidungen (von dir)
 
-- [ ] **Desktop-PC**: welche CPU (Intel oder AMD, Modell)? Davon hängt ab, ob DRAM gemessen werden kann.
+- [x] **Laptop/Desktop**: Intel i7-1185G7 (Laptop), RAPL verfügbar
 - [ ] **Server**: Uni bzw. Firma, Grid'5000 oder Bare-Metal-Cloud?
 - [ ] **Raspberry Pi 5 (8 GB)** beschaffen
 - [ ] **USB-C-Messgerät** (~50 €) zur Kalibrierung: ja oder nein?
-- [ ] Endgültige LLM-Liste: Modelle und exakte IDs am Tag der Generierung festhalten
-- [ ] API-Budget: grob 1 260 Generierungen × ~2–5k Tokens, das ist ein niedriger zweistelliger
-      bis niedriger dreistelliger Eurobetrag, je nach Modell (vor dem Start mit aktuellen Preisen
-      nachrechnen)
+- [ ] CLIs installieren (Claude Code, Codex CLI, Gemini CLI), Flags verifizieren, Modell-IDs festhalten
+- [ ] Abo-Nutzungsbedingungen kurz prüfen
 
 ---
 
 ## Änderungen v2 (2026-10-25)
 
 - **LLMs festgelegt:** Claude Opus 5.5, GPT-6 Astra, Gemini Pro (aktuelle stabile Version), Kimi K3,
-  DeepSeek-V4.1, Qwen3.8-27B. Die exakten IDs werden am Tag der Generierung eingetragen.
+  DeepSeek-V4.1 (Qwen3.8-27B in v3 gestrichen). Die exakten IDs werden am Tag der Generierung eingetragen.
 - **EffiBench-X: Funktions- statt stdio-Format.** Die 285 stdio-Aufgaben haben keine Kategorie-Tags,
   eine stratifizierte Auswahl wäre nicht nachvollziehbar gewesen. Die Funktionsaufgaben (LeetCode)
   haben Tags und einen gemeinsamen I/O-Harness pro Sprache, sodass alle LLMs denselben I/O-Code
@@ -295,3 +306,42 @@ k sowie die Zahl der Wiederholungen können begründet werden (Power-Überlegung
 - **Kontamination:** Die EB-Aufgaben stammen von 11/2023 bis 10/2024 und liegen damit vor allen
   Modell-Cutoffs. Das ist in den Threats to Validity offen dokumentiert. Option: 2–3 Aufgaben ergänzen,
   die nach allen Cutoffs veröffentlicht wurden.
+
+## Änderungen v3 (2026-10-25)
+
+- **Nur noch 5 LLMs**: Qwen3.8-27B gestrichen. Es bleiben Claude Opus 5.5, GPT-6 Astra, Gemini Pro,
+  Kimi K3 und DeepSeek-V4.1. Damit sind es 1 050 Programme. Das Kriterium „Größenklassen“ entfällt;
+  alle fünf sind Frontier-Modelle.
+- **Keine Temperatur** mehr: Anbieter-Defaults für alle (siehe oben).
+
+### Kosten (API ist **nicht** in Pro-Abos enthalten) — *überholt durch v4, siehe unten*
+
+ChatGPT Plus/Pro, Claude Pro und Google AI Pro (Gemini) sind **Chat-Abos**. Die APIs werden
+separat nach Tokens abgerechnet (OpenAI Platform, Anthropic Console, Google AI Studio bzw. Vertex).
+
+Grobe Rechnung pro Modell: 42 Prompts × 5 Samples = **210 Anfragen**, je ~0,8k Input-Tokens und
+~2–8k Output-Tokens (inklusive Reasoning, das mitbezahlt wird).
+
+| Modell | Preis (Input / Output pro 1 Mio. Tokens) | Schätzung für 210 Anfragen |
+|---|---|---|
+| Claude Opus 5.5 | 4 $ / 20 $ (Anthropic, Stand 10/2026) | ca. 10–35 $ |
+| GPT-6 Astra | vor Start auf openai.com/api/pricing prüfen | vermutlich ähnliche Größenordnung |
+| Gemini Pro | vor Start auf ai.google.dev/pricing prüfen | AI Studio hat ein kostenloses Kontingent (Achtung: Daten können dort zum Training genutzt werden) |
+| Kimi K3, DeepSeek-V4.1 | über OpenRouter bzw. Anbieter-API | meist wenige Dollar |
+
+**Gesamt: grob 30–100 $**, für Pilotläufe und Wiederholungen etwas Puffer einplanen.
+Vor dem Start: Preise prüfen und ein **Ausgabenlimit** in jeder Konsole setzen.
+
+**Warum nicht einfach die Chat-Oberflächen?** Dort fehlen feste Modellversionen, und es greifen
+versteckte System-Prompts, „Memory“ und eigene Anweisungen. Dazu kämen rund 630 manuelle
+Copy-&-Paste-Vorgänge. Für die Reproduzierbarkeit, die Gutachter verlangen, ist die API nötig.
+
+## Änderungen v4 (2026-10-25)
+
+- **Kostenloser Weg:** Generierung über Claude Code, Codex CLI und Gemini CLI mit den vorhandenen
+  Abos (siehe §2). Es fallen **keine API-Kosten** an.
+- **Kimi K3 und DeepSeek-V4.1 gestrichen**, damit es nur einen Zugangsweg gibt; Open-Weight-Modelle
+  werden Future Work.
+- **3 × 3 × 14 × 5 = 630 Programme.**
+- **Plattform „Desktop-PC“:** Der vorhandene Rechner ist ein Laptop (Intel i7-1185G7, 8 Threads,
+  32 GB). Im Paper heißt er dann „Laptop“. RAPL ist verfügbar.

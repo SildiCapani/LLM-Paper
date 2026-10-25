@@ -2,6 +2,7 @@
 \label{sec:methodology}
 
 \subsection{Prompting and Code Generation}
+\label{sec:generation}
 All models receive the same zero-shot prompt, instantiated from one of two templates
 (\cref{fig:prompt-templates} in the appendix): a \emph{function} template for EffiBench-X
 tasks, which supplies the problem statement and the language-specific code skeleton, and a
@@ -10,7 +11,7 @@ command-line argument. Within a template, prompts for different languages differ
 the language name, one line stating the language version and compiler command, and the
 code skeleton. Both templates require standard-library-only, single-threaded code and
 deliberately contain no reference to efficiency, speed, or energy, as we study the models'
-default behaviour. No system prompt is used.
+default behaviour. The prompt is passed unchanged to each CLI as the single user message.
 
 EffiBench-X problem statements are converted from the original HTML to Markdown; we use
 the HTML rather than the dataset's Markdown field, in which superscripts are lost (e.g.,
@@ -19,11 +20,22 @@ algorithm. Two tasks (EB05, EB07) contain illustrative images, which are replace
 placeholder ``[image omitted]''; their examples remain fully specified in text. All 42
 rendered prompts and their SHA-256 hashes are part of the replication package.
 
-Sampling temperature is set to 0.7 for all models that support it; reasoning models that do
-not expose this parameter are queried with provider defaults. For each task, model, and
-language we draw $k=5$ independent samples. The source code is extracted automatically from
-the first fenced code block; no manual or automated repair is applied. All prompts, raw
-responses, model identifiers, timestamps, and token counts are logged.
+Each request is issued as a separate, non-interactive CLI invocation (Claude Code:
+\texttt{claude -p}; Codex CLI: \texttt{codex exec}; Gemini CLI: \texttt{gemini -p}) with the
+following controls: a fresh, empty working directory; user and project configuration
+ignored; session persistence disabled; the model fixed explicitly; tool use disabled
+(\texttt{--tools ""} in Claude Code; tool exclusion in the Gemini CLI settings) or, where
+no such option exists, a read-only sandbox (Codex CLI); and structured JSON output. Sampling
+parameters and reasoning effort are left at each tool's defaults, which cannot be set
+uniformly across tools. The CLI versions are pinned for the duration of data collection, and
+the model identifier reported in each response is recorded.
+\TODO{Verify exact Codex/Gemini options after installation and list the final command
+lines in the replication package.}
+
+For each task, model, and language we draw $k=5$ independent samples, each in a new
+session. The source code is extracted automatically from the first fenced code block of the
+final response; no manual or automated repair is applied. All prompts, raw event streams,
+timestamps, and token counts (where reported) are logged.
 
 \subsection{Functional Correctness}
 Each program is compiled (C++, Java) and executed against the task's full test suite

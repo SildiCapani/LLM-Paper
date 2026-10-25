@@ -7,7 +7,7 @@ generiert und noch nichts gemessen** worden. Das ist der nächste Schritt.
 ## Das große Bild in einem Satz
 
 > Wir nehmen 14 Programmieraufgaben, bauen daraus für jede Sprache (Python, Java, C++) einen Prompt,
-> schicken diese 42 Prompts an 6 LLMs, prüfen, ob der generierte Code korrekt ist, und messen
+> schicken diese 42 Prompts an 3 KI-Assistenten (Claude, ChatGPT, Gemini), prüfen, ob der generierte Code korrekt ist, und messen
 > anschließend, wie viel Energie er beim Ausführen verbraucht.
 
 ```
@@ -160,8 +160,8 @@ Skript 5 läuft ohne Zusatzpakete: `python3 scripts/render_prompts.py`.
 
 Folgendes fehlt noch und kommt später in diesen Ordner:
 
-1. **Generierung:** ein Skript, das die 42 Prompts je 5-mal an die 6 LLMs schickt und die
-   Antworten speichert (1 260 Programme)
+1. **Generierung:** ein Skript, das die 42 Prompts je 5-mal an Claude Code, Codex CLI und
+   Gemini CLI schickt (über eure Abos, ohne API-Kosten) und die Antworten speichert (630 Programme)
 2. **Korrektheit:** den generierten Code in Docker kompilieren und testen
 3. **Messung:** die korrekten Programme auf PC, Server und Raspberry Pi ausführen und Energie,
    Zeit und Speicher messen
