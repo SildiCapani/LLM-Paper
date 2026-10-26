@@ -1,0 +1,66 @@
+[
+  {
+    "id": "CLBG01-python-ref",
+    "cmd": [
+      "python3",
+      "-I",
+      "../../tasks/CLBG01/reference/python3.py",
+      "200000"
+    ],
+    "stdin": null,
+    "meta": {
+      "task": "CLBG01",
+      "language": "python",
+      "source": "reference",
+      "n": 200000
+    }
+  },
+  {
+    "id": "CLBG02-python-ref",
+    "cmd": [
+      "python3",
+      "-I",
+      "../../tasks/CLBG02/reference/python3.py",
+      "300"
+    ],
+    "stdin": null,
+    "meta": {
+      "task": "CLBG02",
+      "language": "python",
+      "source": "reference",
+      "n": 300
+    }
+  },
+  {
+    "id": "CLBG03-python-ref",
+    "cmd": [
+      "python3",
+      "-I",
+      "../../tasks/CLBG03/reference/python3.py",
+      "14"
+    ],
+    "stdin": null,
+    "meta": {
+      "task": "CLBG03",
+      "language": "python",
+      "source": "reference",
+      "n": 14
+    }
+  },
+  {
+    "id": "CLBG04-python-ref",
+    "cmd": [
+      "python3",
+      "-I",
+      "../../tasks/CLBG04/reference/python3.py",
+      "9"
+    ],
+    "stdin": null,
+    "meta": {
+      "task": "CLBG04",
+      "language": "python",
+      "source": "reference",
+      "n": 9
+    }
+  }
+]

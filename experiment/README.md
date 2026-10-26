@@ -11,6 +11,8 @@ prompts/template_*.txt      prompt templates (included verbatim in the paper app
 prompts/languages.json      language-specific placeholder values
 prompts/rendered/           42 final prompts (14 tasks x 3 languages) + index.json (SHA-256)
 scripts/                    pipeline scripts (run in this order)
+measure/                    energy/time/memory measurement (Linux RAPL, macOS powermetrics);
+                            see measure/ANLEITUNG.md
 ```
 
 ## Reproduce

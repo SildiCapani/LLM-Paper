@@ -25,6 +25,7 @@ Aufgaben (tasks/)  ──►  Prompts (prompts/)  ──►  LLMs  ──►  ge
 | `prompts/` | Die **Prompt-Vorlagen** und die **42 fertigen Prompts** | Hier sieht man, was die LLMs bekommen |
 | `data/` | Hilfsdaten: Liste aller Aufgaben aus dem Benchmark und welche ausgewählt wurden | Nein |
 | `scripts/` | Python-Skripte, die alles oben automatisch erzeugt haben | Nur, wenn man etwas neu erzeugen will |
+| `measure/` | Das **Messskript** für Energie, Zeit und Speicher (Linux und Mac), mit eigener Anleitung `measure/ANLEITUNG.md` | Ja, zum Messen |
 | `README.md` | Kurze technische Anleitung (Englisch) zum Reproduzieren | Nein |
 | `ERKLAERUNG.md` | Diese Datei | — |
 
@@ -163,6 +164,7 @@ Folgendes fehlt noch und kommt später in diesen Ordner:
 1. **Generierung:** ein Skript, das die 42 Prompts je 5-mal an Claude Code, Codex CLI und
    Gemini CLI schickt (über eure Abos, ohne API-Kosten) und die Antworten speichert (630 Programme)
 2. **Korrektheit:** den generierten Code in Docker kompilieren und testen
-3. **Messung:** die korrekten Programme auf PC, Server und Raspberry Pi ausführen und Energie,
-   Zeit und Speicher messen
+3. **Messung:** die korrekten Programme auf allen Plattformen mit `measure/measure.py` ausführen
+   und Energie, Zeit und Speicher messen. ✅ Das Messskript ist fertig und auf dem Linux-Laptop
+   getestet (zunächst ohne Energie), die Mac-Version nur mit simulierten Daten.
 4. **Auswertung:** Statistik und Diagramme für das Paper
