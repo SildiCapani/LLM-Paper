@@ -1,0 +1,42 @@
+{
+  "started_utc": "2026-10-26T22:47:42.291006+00:00",
+  "platform": {
+    "hostname": "smartrollerz",
+    "system": "Linux",
+    "release": "7.0.0-38-generic",
+    "machine": "x86_64",
+    "cpu_count": "8",
+    "cpu": "11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz",
+    "governor": "powersave",
+    "turbo": "on"
+  },
+  "energy_reader": "rapl",
+  "energy_reader_note": "RAPL counters readable",
+  "idle_power_w_before": {
+    "package-0": 13.989712228713953,
+    "core": 9.385649093917694,
+    "uncore": 0.8384384914371706,
+    "psys": 26.868003288957667
+  },
+  "idle_power_w_after": {
+    "package-0": 15.459584491187895,
+    "core": 10.823245575118674,
+    "uncore": 0.933929910980319,
+    "psys": 29.952864358558426
+  },
+  "args": {
+    "reader": "auto",
+    "command": "run",
+    "jobs": "jobs/clbg_reference_python.json",
+    "out": "results/laptop_clbg_ref_pilot1.csv",
+    "reps": 10,
+    "warmup": 1,
+    "idle": 30,
+    "cooldown": 5,
+    "timeout": 600,
+    "seed": 20261025,
+    "cpus": "2",
+    "allow_no_energy": false
+  },
+  "python": "3.12.15 (main, Oct 13 2026, 11:11:36) [GCC 13.3.0]"
+}

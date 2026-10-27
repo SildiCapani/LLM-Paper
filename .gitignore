@@ -1,0 +1,24 @@
+# --- LaTeX: auxiliary files (regenerated on every build) ---------------
+paper/build/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.tdo
+*.toc
+*.lof
+*.lot
+# paper/main.pdf stays tracked so the current version can be read without compiling.
+
+# --- Python ------------------------------------------------------------
+.venv/
+__pycache__/
+*.pyc
+
+# --- Editors / OS --------------------------------------------------------
+.vscode/
+.DS_Store
