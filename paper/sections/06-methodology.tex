@@ -21,16 +21,19 @@ placeholder ``[image omitted]''; their examples remain fully specified in text. 
 rendered prompts and their SHA-256 hashes are part of the replication package.
 
 Each request is issued as a separate, non-interactive CLI invocation (Claude Code:
-\texttt{claude -p}; Codex CLI: \texttt{codex exec}; Gemini CLI: \texttt{gemini -p}) with the
+\texttt{claude -p}; Codex CLI: \texttt{codex exec}; Antigravity CLI: \texttt{agy -p}) with the
 following controls: a fresh, empty working directory; user and project configuration
 ignored; session persistence disabled; the model fixed explicitly; tool use disabled
-(\texttt{--tools ""} in Claude Code; tool exclusion in the Gemini CLI settings) or, where
-no such option exists, a read-only sandbox (Codex CLI); and structured JSON output. Sampling
-parameters and reasoning effort are left at each tool's defaults, which cannot be set
-uniformly across tools. The CLI versions are pinned for the duration of data collection, and
+(\texttt{--tools ""} in Claude Code) or, where no such option exists, restricted by the
+CLI's sandbox (Codex CLI: read-only sandbox, with web search, shell, image generation,
+browser, and plugin tools switched off via feature flags; Antigravity CLI: \texttt{--sandbox}); and structured JSON output. Reasoning effort is set to the nominal level
+\emph{medium} for all three tools, since Antigravity CLI requires an explicit level as part
+of the model identifier; sampling parameters are left at each tool's defaults, as they
+cannot be set uniformly. The CLI versions are pinned for the duration of data collection, and
 the model identifier reported in each response is recorded.
-\TODO{Verify exact Codex/Gemini options after installation and list the final command
-lines in the replication package.}
+A probe request per tool confirmed that no project or memory files reach the model and that
+the working directory stays empty; the exact command lines are part of the replication
+package.
 
 For each task, model, and language we draw $k=5$ independent samples, each in a new
 session. The source code is extracted automatically from the first fenced code block of the

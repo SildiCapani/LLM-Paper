@@ -35,12 +35,15 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | B4 | 25.10. | **Framing: Wir messen „Modell + offizielles Werkzeug“**, so wie Entwickler es nutzen (ökologische Validität) | Ehrliche Benennung des Faktors „LLM“ | §5, §9 | ✅ §5, §9 |
 | B5 | 25.10. | **Kimi K3 und DeepSeek-V4.1 gestrichen** | Kein vergleichbares Abo-CLI; über eine API wären die Bedingungen andere (Vermischung von Modell und Zugangsweg) | §5, §10 (Future Work) | ✅ §5, §10 |
 | B6 | 25.10. | **Temperatur wird nicht gesetzt**, überall Werkzeug-Default | Die Claude-API lehnt `temperature` seit 21.10.2026 ab; die CLIs lassen keine einheitliche Einstellung zu | §6 | ✅ §6 |
-| B7 | 25.10. | Reasoning-Aufwand (Effort) bleibt auf Default und wird geloggt | Wie B6 | §6 | ✅ §6 |
+| B7 | 25.10. | 🔁 Reasoning-Aufwand (Effort) bleibt auf Default und wird geloggt (ersetzt durch B13) | Wie B6 | — | 🔁 |
 | B8 | 25.10. | **Zero-Shot**, keine Hinweise auf Effizienz, Geschwindigkeit oder Energie im Prompt | Wir messen das Standardverhalten; Prompting untersuchen schon Rekhi, Cappendijk und Apsan | §6 | ✅ §6 |
 | B9 | 25.10. | **k = 5 unabhängige Samples** pro Aufgabe × Sprache × LLM, jeweils in einer neuen Sitzung | Bildet die Streuung des Modellverhaltens ab | §5, §6 | ✅ §5, §6 |
-| B10 | 25.10. | Codex bietet über das Abo eigene Codex-Modelle an (z. B. `gpt-6.1-sol`), nicht zwingend „GPT-6 Astra“ | Modell-ID erst nach der Installation bekannt | §5 Tabelle | ⏳ ID eintragen |
+| B10 | 25.10. / 27.10. | Codex-Modell: **`gpt-6.1-sol`** (GPT-6.1 Sol), das Modell mit höchster Priorität in `codex debug models`; sein Standard-Effort ist ohnehin „medium“ | Stärkstes Modell im Abo, passt zu B13 | §5 Tabelle | ✅ §5 |
 | B11 | 25.10. | Mit 3 LLMs gibt es nur 3! = 6 mögliche Rangfolgen, daher ist **das Mixed Model die Hauptevidenz für RQ4** | Begrenzte Auflösung von Ranganalysen | §6, §9 | ✅ §9 |
 | B12 | 25.10. | **Interessenkonflikt**: Der KI-Assistent, der beim Paper hilft, ist Claude, und Claude ist auch ein Studienobjekt | Transparenz; Claude darf weder bevorzugt noch benachteiligt werden | Erklärung zur KI-Nutzung (siehe G1) | ⏳ |
+| B13 | 27.10. | **Reasoning-Effort einheitlich „medium“** für alle drei Werkzeuge (Claude Code `--effort medium`, Codex `model_reasoning_effort="medium"`, Antigravity über die Modell-ID `…-medium`) | Antigravity verlangt eine Stufe im Modellnamen, die Default-Regel (B7) war damit nicht mehr haltbar. Gleiche nominale Stufe ist fairer als drei unbekannte Defaults; „medium“ ist auch der Default von Claude Opus 5.5. **Einschränkung:** Die Stufen sind herstellerübergreifend nicht gleich kalibriert. | §6, §9 | ✅ §6, §9 |
+| B14 | 27.10. | **Gemini-Modell: `gemini-4-argon-medium`** (Gemini 4 Argon), das stärkste Gemini-Modell laut `agy models` | Flaggschiff-Prinzip wie bei Claude und GPT | §5 Tabelle | ✅ §5 |
+| B15 | 27.10. | Antigravity bietet auch Claude Opus 5.5, Claude Sonnet 5.5 und GPT-OSS 120B an. **Diese werden nicht über Antigravity genutzt**: Claude läuft über sein eigenes Werkzeug (Claude Code) | Prinzip „jedes Modell über das CLI seines Herstellers“ (B4) | — (optional Future Work: gleiches Modell in verschiedenen CLIs) | — |
 
 ## C. Aufgaben und Prompts
 
@@ -87,7 +90,7 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | E8 | 27.10. | **Pilot 1 (Laptop, CLBG-Python-Referenzen, ~1 s pro Lauf)**: Laufzeit streut 1,5–3,3 %, Brutto-Energie 4–6 %, **Netto-Energie 13–29 %** (zu hoch) | Ursache: **14–15 W Leerlauf** durch Hintergrundprogramme, Leerlauf-Drift von 14,0 auf 15,5 W, CPU etwa 80 °C, `powersave` + Turbo aktiv | §6 (Pilotstudie) | ⏳ |
 | E9 | 27.10. | Konsequenz aus E8: **Eingaben auf ca. 5 s pro Lauf kalibrieren**, ohne die Claude-App und ohne Browser messen, `performance`-Modus, Turbo aus | Rauschen verringern | §6 | ⏳ nach Pilot 2 |
 
-## F. Generierung (geplant, Skript noch nicht gebaut)
+## F. Generierung
 
 | ID | Datum | Entscheidung / Beobachtung | Begründung | Paper | Im Paper? |
 |---|---|---|---|---|---|
@@ -98,6 +101,24 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | F5 | 27.10. | **Zufällige Reihenfolge** über Werkzeuge, Aufgaben und Sprachen; Erhebung in kurzem Zeitraum | Serverseitige Updates und Tageszeit-Effekte treffen alle gleich | §6 | ⏳ |
 | F6 | 27.10. | **Wiederholt wird nur bei technischen Fehlern** (Netzwerk, Nutzungslimit), **nie bei falschem Code** | Keine Schönung der Ergebnisse | §6 | ⏳ |
 | F7 | 27.10. | Werkzeugaufrufe werden aus den JSON-Logs ausgewertet und berichtet | Kontrolle, ob die CLIs trotz Verbot Werkzeuge nutzen | §6, §7 | ✅ §5 (angekündigt) |
+| F8 | 27.10. | **Eigener Konfigurationsordner pro CLI** über `CLAUDE_CONFIG_DIR`, `CODEX_HOME` und `GEMINI_CLI_HOME` (`experiment/generate/homes/`); dort liegen nur die Login-Daten | Persönliche Einstellungen, Memory und Plugins der normalen Installation fließen nicht ein; setzt F3 um | §6 (1 Satz), Replikationspaket | ⏳ |
+| F9 | 27.10. | **Arbeitsordner außerhalb des Projekts** (`/tmp/llmgen-…`), pro Anfrage neu und leer | Claude Code und Codex suchen auch in übergeordneten Ordnern nach `CLAUDE.md` bzw. `AGENTS.md` und würden sonst die Projekt-`CLAUDE.md` mitlesen | Replikationspaket | ⏳ |
+| F10 | 27.10. | Zusätzlich abgeschaltet: Laden von CLAUDE.md und Auto-Memory (`CLAUDE_CODE_DISABLE_CLAUDE_MDS`, `CLAUDE_CODE_DISABLE_AUTO_MEMORY`), nicht notwendiger Netzverkehr inkl. Auto-Update (`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`); ~~Gemini: Auto-Update aus, Nutzungsstatistik aus, 12 Werkzeuge ausgeschlossen~~ (🔁 F17: Gemini CLI entfällt) | Doppelte Absicherung von F3/F4 | Replikationspaket | ⏳ |
+| F11 | 27.10. | **Feste zufällige Reihenfolge aller 630 Anfragen** in `generated/plan.json` (Seed 20261025); das Skript ist fortsetzbar | Setzt F5 um; Unterbrechungen durch Nutzungslimits ändern die Reihenfolge nicht | §6 | ⏳ |
+| F12 | 27.10. | Technische Fehler (Absturz, Timeout, leere Antwort) werden bis zu 2× wiederholt; bei **Nutzungslimit** wird das Werkzeug für den Lauf pausiert; „kein Codeblock“ ist ein **endgültiges** Ergebnis (`no_code`) | Setzt F6 um; `no_code` zählt als Fehlschlag in der Korrektheitsrate | §6, §7 | ⏳ |
+| F13 | 27.10. | Übernommen wird der **erste** Codeblock; Sprach-Tag und Anzahl der Blöcke werden protokolliert | Eindeutige, automatische Regel ohne Handarbeit (setzt F1/C12 um) | §6 | ✅ §6 |
+| F14 | 27.10. | **Probe-Anfrage** vor dem Hauptlauf: Jedes CLI wird gefragt, welches Modell es ist, ob es zusätzliche Anweisungen hat und welche Werkzeuge es sieht | Überprüfung der Isolation; nicht Teil der Studiendaten | Replikationspaket | ⏳ |
+| F15 | 27.10. | Generierungsskript mit **Attrappen der CLIs getestet**: Isolation (leerer Ordner außerhalb des Projekts, eigene Konfiguration, leere Werkzeugliste), Wiederholung, Pause bei Limit und Fortsetzen funktionieren. **Die echten JSON-Formate sind noch zu prüfen.** | Qualitätssicherung | — | — |
+| F16 | 27.10. | CLI-Versionen für die Erhebung: Claude Code **2.1.311**, Codex CLI **0.164.0** (npm, Stand 27.10.2026), fest installiert; ~~Gemini CLI 0.65.0~~ → Antigravity CLI, Version unpinbar (F20) | Setzt F4 um | §5 Tabelle | ⏳ |
+| F17 | 27.10. | **Gemini CLI durch Antigravity CLI (`agy`) ersetzt.** Der Login mit dem Google-Konto schlug fehl: „This client is no longer supported for Gemini Code Assist for individuals“. Google hat die Gemini CLI am **18.06.2026** für private Konten, Google AI Pro und Ultra abgeschaltet; die Antigravity CLI ist der offizielle Nachfolger und läuft mit dem AI-Pro-Abo | Kostenloser Zugang bleibt erhalten; Werkzeug-Paar „Gemini-Modell + offizielles Google-CLI“ bleibt gleich | §5 (Fußnote), §6, §9 | ✅ §5, §6, §9 |
+| F18 | 27.10. | Antigravity: **Werkzeuge lassen sich nicht komplett abschalten**; Shell-Befehle sind headless standardmäßig verboten, Dateizugriff nur im Arbeitsordner (der leer ist). Werkzeugaufrufe werden aus `step_update`-Ereignissen gezählt | Wie bei Codex: Kontrolle über Protokoll statt Schalter | §6, §9 | ✅ §6, §9 |
+| F19 | 27.10. | Antigravity: Einstellungen getrennt über eigenes `HOME` (`homes/gemini/.gemini/antigravity-cli/`); **der Login liegt im Schlüsselbund des Betriebssystems** und wird mit der normalen Installation geteilt | Kein Einfluss auf den Kontext; nur die Anmeldung ist geteilt | Replikationspaket | ⏳ |
+| F20 | 27.10. | Antigravity wird über ein Installationsskript installiert (`curl … install.sh`), **eine feste Version lässt sich nicht wählen**; die Version wird pro Sitzung protokolliert (Stand: 1.4.8) | Abweichung von F4/F16 bei diesem Werkzeug | §9 | ⏳ |
+| F21 | 27.10. | Codex: optionale Werkzeuge per Feature-Flags aus (`--disable` für shell_tool, unified_exec, multi_agent, image_generation, browser_use, apps, plugins, view_image u. a.; `web_search="disabled"`). **Nicht abschaltbar:** Sub-Agenten (`spawn_agent`), `apply_patch`, `request_user_input`; `code_mode_host` abzuschalten bricht Codex | So nah wie möglich an „keine Werkzeuge“ wie bei Claude | §6, §9 | ✅ §6, §9 |
+| F22 | 27.10. | Antigravity läuft zusätzlich mit `--sandbox` (Terminal-Einschränkungen). Laut Probe bleiben u. a. `search_web` und Sub-Agenten verfügbar | Keine Abschaltoption; Kontrolle über das Protokoll der Werkzeugaufrufe | §6, §9 | ✅ §6, §9 |
+| F23 | 27.10. | **Probe bestanden** (alle 3 Werkzeuge): keine CLAUDE.md/AGENTS.md/GEMINI.md/Memory im Kontext, Arbeitsordner danach leer, 0 Werkzeugaufrufe. Antigravity hängt automatisch Uhrzeit und „Modellwahl geändert“ an; Claude Code einen kleinen Kontoblock. Codex meldet seine Modell-ID nicht im Ereignisstrom (sie ist per `-m` fest gesetzt) | Isolation ist belegt; die automatischen Zusätze sind Teil des Werkzeugs (Faktor „Modell + Werkzeug“) | §6 | ✅ §6 |
+| F24 | 27.10. | Antigravity-Parser an das echte Format angepasst (Schlüssel `event`, Inhalt verschachtelt unter `init`/`step_update`/`result`) | Die erste Probe lieferte sonst „technical_error“ trotz Antwort | – (nur Skript) | – |
+| F25 | 27.10. | **Pilot-Generierung** (EB03 + CLBG01 × 3 Sprachen × 3 Werkzeuge × 1 = 18 Anfragen): 18/18 `ok`, je genau 1 Codeblock, 0 Werkzeugaufrufe, keine Wiederholungen nötig. Dauer pro Anfrage: Claude 3–14 s, Codex 6–21 s, Gemini 15–38 s | Skript und Protokoll funktionieren mit den echten CLIs; Hauptlauf (~612 Anfragen, ca. 3–4 h reine Laufzeit) kann starten. Korrektheit noch nicht geprüft | §6 (1 Satz) | ⏳ |
 
 ## G. Sonstiges / Formalia
 
@@ -107,12 +128,13 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | G2 | 25.10. | Layout: IEEE-Konferenzformat (zweispaltig, `IEEEtran`) | Typisches Paper-Format; bei Wahl des Zielorts ggf. wechseln | — | ✅ |
 | G3 | 25.10. | Alle Literaturangaben gegen arXiv und Crossref geprüft; die ICSE-Version von Apsan et al. hat einen Zusatzautor (Malavolta) | Korrekte Zitation | Referenzen | ✅ |
 | G4 | 25.10. | Recherche bisher nur über arXiv, Web und Crossref; **Scopus, IEEE Xplore und ACM DL fehlen noch** | Vollständigkeit der Literaturrecherche | §3 | ⏳ |
+| G5 | 27.10. | **Längenvorgabe: ca. 500 Wörter** für das Paper, **ohne Literaturverzeichnis und Abstract**; nicht wesentlich überschreiten | Vorgabe der Aufgabenstellung. Stand 27.10.: ca. 4.200 Wörter (inkl. Prompt-Anhang) → Paper muss stark gekürzt werden | alle Abschnitte | 🔁 durch G6 |
+| G6 | 27.10. | **Längenvorgabe präzisiert: Ziel 500 Wörter, Obergrenze ca. 700–800 Wörter** (ohne Literaturverzeichnis und Abstract); trotzdem alle wichtigen Punkte nennen, jeweils in einem Satz | Leichte Überschreitung ist laut Autor:innen tolerierbar, deutlich mehr nicht. Details wandern in Tabellen und ins Replikationspaket | alle Abschnitte | ⏳ |
 
 ---
 
 ## Offene Punkte fürs Paper (Kurzliste aller ⏳)
 
-- [ ] B10 Codex-Modell-ID in die Tabelle eintragen
 - [ ] B12 + G1 Erklärung zur KI-Nutzung und zum Interessenkonflikt
 - [ ] C2 Diskussion: EB vs. CLBG getrennt interpretieren
 - [ ] C9 binary-trees: Allokation erzwungen
@@ -120,5 +142,9 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 - [ ] D5/D6/D7 Messgrenzen der gewählten Plattformen in §5/§9
 - [ ] E6 Details des Messablaufs
 - [ ] E8/E9 Pilotstudie und Kalibrierung in §6
-- [ ] F1, F3, F5, F6 Generierungsprotokoll explizit in §6
+- [ ] F1, F3, F5, F6, F8–F12 Generierungsprotokoll: 1–2 Sätze in §6, Details ins Replikationspaket (wegen G6)
+- [ ] F16 CLI-Versionen: aus Platzgründen nicht in der LLM-Tabelle → Replikationspaket bzw. 1 Satz in §5
+- [ ] F20 Antigravity-Version nicht fixierbar → §9
+- [ ] F25 Pilot-Generierung: 1 Satz in §6 (optional)
+- [ ] **G6 Paper auf 500 (max. 700–800) Wörter kürzen (ohne Quellen und Abstract)**
 - [ ] G4 Literatursuche in Scopus, IEEE Xplore und ACM DL

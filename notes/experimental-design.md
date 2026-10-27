@@ -38,7 +38,7 @@ keine API-Kosten.
 |---|---|---|---|---|
 | 1 | Anthropic | Claude Code | Claude Opus 5.5 (`claude-opus-5-5`) | Claude-Pro-Abo |
 | 2 | OpenAI | Codex CLI | Flaggschiff-Modell, das Codex für das Abo anbietet (z. B. `gpt-6.1-sol`; prüfen!) | ChatGPT-Abo |
-| 3 | Google | Gemini CLI | Pro-Modell (`-m pro` bzw. exakter Name) | Google-Konto / Google AI Pro |
+| 3 | Google | ~~Gemini CLI~~ → **Antigravity CLI** (`agy`), siehe Protokoll F17 | `gemini-4-argon-medium` (B14) | Google-Konto / Google AI Pro |
 
 **Framing im Paper:** Wir messen nicht das „nackte“ Modell, sondern das Modell **so, wie
 Entwickler es über das offizielle Coding-Werkzeug des Anbieters nutzen** (hohe ökologische
@@ -68,7 +68,8 @@ Grundsatz: **System-Prompt des Werkzeugs bleibt unverändert („as shipped“)*
 | Werkzeug-Kontrolle | JSON-Logs jeder Anfrage auswerten: Hat das Werkzeug trotzdem Tools aufgerufen? Das wird pro Anfrage protokolliert und berichtet |
 | Keine Sitzungs-Historie | jede Anfrage neu (Claude `--no-session-persistence`, Codex `--ephemeral`) |
 | Modell fest | Claude `--model claude-opus-5-5`, Codex `-m <id>`, Gemini `-m <id>`; tatsächliches Modell aus JSON-Log übernehmen |
-| Sampling / Effort | Default des Werkzeugs, nicht verändert, geloggt |
+| Sampling | Default des Werkzeugs, nicht verändert, geloggt |
+| Reasoning-Effort | **einheitlich „medium“** (Protokoll B13) |
 | Ausgabe | JSON bzw. stream-JSON (Claude `--output-format json`, Codex `--json -o`, Gemini `-o stream-json`) |
 | Versionen | CLI-Version (`--version`) und Datum jeder Anfrage loggen; CLI-Versionen während der Erhebung **nicht** aktualisieren |
 | Prompt | identischer Prompt-Text (siehe §5), über stdin bzw. `-p` |
@@ -284,7 +285,7 @@ k sowie die Zahl der Wiederholungen können begründet werden (Power-Überlegung
 - [ ] **Server**: Uni bzw. Firma, Grid'5000 oder Bare-Metal-Cloud?
 - [ ] **Raspberry Pi 5 (8 GB)** beschaffen
 - [ ] **USB-C-Messgerät** (~50 €) zur Kalibrierung: ja oder nein?
-- [ ] CLIs installieren (Claude Code, Codex CLI, Gemini CLI), Flags verifizieren, Modell-IDs festhalten
+- [ ] CLIs installieren (Claude Code, Codex CLI, Antigravity CLI), Flags verifizieren, Modell-IDs festhalten
 - [ ] Abo-Nutzungsbedingungen kurz prüfen
 
 ---

@@ -25,6 +25,8 @@ Aufgaben (tasks/)  ──►  Prompts (prompts/)  ──►  LLMs  ──►  ge
 | `prompts/` | Die **Prompt-Vorlagen** und die **42 fertigen Prompts** | Hier sieht man, was die LLMs bekommen |
 | `data/` | Hilfsdaten: Liste aller Aufgaben aus dem Benchmark und welche ausgewählt wurden | Nein |
 | `scripts/` | Python-Skripte, die alles oben automatisch erzeugt haben | Nur, wenn man etwas neu erzeugen will |
+| `generate/` | Das **Generierungsskript**: schickt die Prompts an Claude Code, Codex CLI und Antigravity CLI (Gemini). Anleitung: `generate/ANLEITUNG.md` | Ja, zum Generieren |
+| `generated/` | Ergebnisse der Generierung: Code, Rohantworten, Protokolle (entsteht beim Lauf; nicht in Git, zu groß — wird separat gesichert) | Nur anschauen |
 | `measure/` | Das **Messskript** für Energie, Zeit und Speicher (Linux und Mac), mit eigener Anleitung `measure/ANLEITUNG.md` | Ja, zum Messen |
 | `README.md` | Kurze technische Anleitung (Englisch) zum Reproduzieren | Nein |
 | `ERKLAERUNG.md` | Diese Datei | — |
@@ -161,8 +163,8 @@ Skript 5 läuft ohne Zusatzpakete: `python3 scripts/render_prompts.py`.
 
 Folgendes fehlt noch und kommt später in diesen Ordner:
 
-1. **Generierung:** ein Skript, das die 42 Prompts je 5-mal an Claude Code, Codex CLI und
-   Gemini CLI schickt (über eure Abos, ohne API-Kosten) und die Antworten speichert (630 Programme)
+1. **Generierung:** ✅ Skript fertig (`generate/`), ein Skript, das die 42 Prompts je 5-mal an Claude Code, Codex CLI und
+   Antigravity CLI (Gemini) schickt (über eure Abos, ohne API-Kosten) und die Antworten speichert (630 Programme)
 2. **Korrektheit:** den generierten Code in Docker kompilieren und testen
 3. **Messung:** die korrekten Programme auf allen Plattformen mit `measure/measure.py` ausführen
    und Energie, Zeit und Speicher messen. ✅ Das Messskript ist fertig und auf dem Linux-Laptop

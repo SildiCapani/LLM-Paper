@@ -18,7 +18,9 @@ program is executed on all three platforms. The dependent variables are energy c
 We study the flagship models of the three most widely used commercial AI assistants:
 Claude (Anthropic), ChatGPT (OpenAI), and Gemini (Google). Rather than querying the bare
 models through their APIs, we access each model through its vendor's official command-line
-coding agent (Claude Code, Codex CLI, Gemini CLI), authenticated with a regular
+coding agent (Claude Code, Codex CLI, Antigravity CLI\footnote{Google's successor to the
+Gemini CLI, which stopped serving individual and Google AI Pro accounts in June 2026.}),
+authenticated with a regular
 subscription (\cref{tab:llms}). This reflects how developers increasingly obtain generated
 code in practice; the factor \emph{LLM} therefore denotes the combination of model and
 official tool. Open-weight models, which lack a comparable official subscription-based
@@ -34,21 +36,21 @@ of access.
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}llll@{}}
     \toprule
-    Vendor & CLI (version) & Model & Identifier \\
+    Vendor & CLI & Model & Identifier \\
     \midrule
-    Anthropic & Claude Code (\TBD) & Claude Opus 5.5        & \texttt{claude-opus-5-5} \\
-    OpenAI    & Codex CLI (\TBD)   & GPT flagship$^a$       & \TBD \\
-    Google    & Gemini CLI (\TBD)  & Gemini Pro$^a$         & \TBD \\
+    Anthropic & Claude Code & Claude Opus 5.5        & {\scriptsize\texttt{claude-opus-5-5}} \\
+    OpenAI    & Codex CLI & GPT-6.1 Sol            & {\scriptsize\texttt{gpt-6.1-sol}} \\
+    Google    & Antigravity CLI & Gemini 4 Argon      & {\scriptsize\texttt{gemini-4-argon-medium}} \\
     \bottomrule
-    \multicolumn{4}{@{}p{0.95\columnwidth}@{}}{\scriptsize $^a$ Most capable model offered
-      by the CLI for the subscription at generation time.}
   \end{tabular}
 \end{table}
 
 To isolate the models' code generation from agentic behaviour, every request is issued
 non-interactively in a fresh, empty working directory, without user configuration, project
 context files, or session history, and with tool use disabled where the CLI supports it
-(Claude Code, Gemini CLI) or restricted to a read-only sandbox otherwise (Codex CLI). The
+(Claude Code) or restricted by the CLI's default policy otherwise (Codex CLI: optional tools such as web search and shell disabled, read-only
+sandbox; Antigravity CLI: sandbox mode, file access limited to the empty
+workspace). The
 CLIs' built-in system prompts are left unchanged. We log every request's full event stream
 and report whether any tool was invoked. Details are given in \cref{sec:generation}.
 

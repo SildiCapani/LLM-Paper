@@ -26,9 +26,13 @@ Models are accessed through their vendors' coding CLIs, whose built-in system pr
 cannot inspect or align, and whose defaults (e.g., sampling, reasoning effort) differ. The
 factor \emph{LLM} thus measures model and tool jointly. We mitigate agentic effects by
 disabling tools, ignoring user and project configuration, and logging every tool
-invocation; Codex CLI offers no documented switch to disable tools, so it runs in a
-read-only sandbox instead. CLIs and models evolve quickly, so we pin CLI versions and
-record model identifiers and dates. With three levels of the LLM factor, rank-based
+invocation; Codex CLI and Antigravity CLI cannot disable all tools (e.g., sub-agents,
+and web search in Antigravity CLI remain available), so they run sandboxed in an empty
+workspace instead, and requests with tool calls are reported. Google's original Gemini CLI could not be used, as it
+stopped serving individual accounts in June 2026. CLIs and models evolve quickly, so we pin CLI versions and
+record model identifiers and dates. The common effort level \emph{medium} is nominal:
+vendors calibrate their effort levels differently, so equal labels do not guarantee equal
+reasoning budgets. With three levels of the LLM factor, rank-based
 analyses (\RQ{4}) have limited resolution; the interaction terms of the mixed-effects
 model are therefore the primary evidence.
 

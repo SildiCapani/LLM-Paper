@@ -22,3 +22,9 @@ __pycache__/
 # --- Editors / OS --------------------------------------------------------
 .vscode/
 .DS_Store
+
+# --- Generation: login credentials of the CLIs (NEVER commit) -----------
+experiment/generate/homes/
+
+# --- Generation output (~170 MB for 630 requests; archived separately as replication package)
+experiment/generated/

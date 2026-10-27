@@ -50,6 +50,11 @@ LLM-Paper/
     ├── prompts/             ← Prompt-Vorlagen + 42 fertige Prompts
     ├── data/                ← Metadaten des Benchmarks + Aufgabenauswahl
     ├── scripts/             ← Skripte, die Aufgaben und Prompts erzeugen
+    ├── generate/            ← Generierungsskript für Claude Code, Codex CLI, Antigravity CLI
+    │   ├── ANLEITUNG.md     ← Installation, Login, Pilot, Hauptlauf (Deutsch)
+    │   ├── generate.py, config.json
+    │   └── homes/           ← Login-Daten der CLIs (NIE in Git!)
+    ├── generated/           ← generierter Code + Rohantworten (entsteht beim Lauf; nicht in Git)
     └── measure/             ← Messskript für Energie, Zeit und Speicher
         ├── ANLEITUNG.md     ← Schritt-für-Schritt-Anleitung zum Messen (Deutsch)
         ├── measure.py, energy.py, test_energy.py
@@ -92,6 +97,7 @@ du dort etwas änderst, ändert sich der Anhang des Papers automatisch mit.
 | wissen, wie das Experiment aufgebaut ist und warum | [notes/experimental-design.md](notes/experimental-design.md) |
 | den Experiment-Ordner verstehen (Aufgaben, Prompts) | [experiment/ERKLAERUNG.md](experiment/ERKLAERUNG.md) |
 | einen Prompt sehen, wie ihn die KI bekommt | [experiment/prompts/rendered/EB03/cpp.txt](experiment/prompts/rendered/EB03/cpp.txt) |
+| Code generieren (CLIs installieren, anmelden, starten) | [experiment/generate/ANLEITUNG.md](experiment/generate/ANLEITUNG.md) |
 | Energie messen | [experiment/measure/ANLEITUNG.md](experiment/measure/ANLEITUNG.md) |
 | das Paper lesen bzw. bearbeiten | [paper/main.tex](paper/main.tex) und [paper/sections/](paper/sections/) |
 
@@ -156,7 +162,8 @@ PDFs steht eine Liste aller TODOs.
 | 42 Prompts erzeugt | ✅ fertig |
 | Messskript (Linux) | ✅ fertig, auf dem Laptop getestet |
 | Messskript (Mac) | ⚠️ gebaut, noch nicht auf echtem Mac getestet |
-| CLIs installieren, Code generieren (630 Programme) | ⏳ offen |
+| Generierungsskript | ✅ fertig, mit Attrappen getestet |
+| CLIs installieren, Probe, Code generieren (630 Programme) | ⏳ offen |
 | Korrektheit prüfen | ⏳ offen |
 | Pilot: Eingabegrößen auf ca. 5 s pro Lauf kalibrieren | ⏳ offen |
 | Hauptmessung auf allen Plattformen | ⏳ offen |

@@ -22,6 +22,11 @@ When a decision changes, mark the old entry 🔁 and add a new one; never silent
 - If the paper states something the experiment no longer does, fix the paper and log it.
 
 ## Conventions
+- **Length limit: target 500 words, hard ceiling about 700–800 words** for the paper body,
+  excluding references and abstract (given requirement). Check the word count after every
+  substantial paper edit (`texcount`) and prefer cutting over adding. Keep all important
+  points, but state each in one sentence; details go to tables and the replication package.
+  See decision G6.
 - Results are hypotheses until measured; never write findings into the paper before data exist.
 - Prompt templates are included verbatim in the paper appendix from `experiment/prompts/`.
 - Verify citations against arXiv/Crossref before adding them to `paper/references.bib`.
