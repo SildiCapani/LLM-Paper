@@ -62,6 +62,9 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | C11 | 25.10. | Prompts unterscheiden sich je Sprache nur in Sprachname, einer Versionszeile und dem Code-Gerüst | Fairness zwischen den Sprachen | §6, App | ✅ |
 | C12 | 25.10. | Alle 42 Prompts mit **SHA-256-Prüfsumme** gespeichert | Belegt, dass die Prompts unverändert blieben | §6 | ✅ §6 |
 | C13 | 25.10. | Prompt-Vorlagen werden **direkt aus `experiment/prompts/`** in den Anhang eingebunden | Paper und Experiment können nicht auseinanderlaufen | App | ✅ |
+| C14 | 28.10. | **Datensatzfehler:** Die C++-Referenz von EB03 nutzt ein nicht initialisiertes Array (`int cntDigits[11][10];`, undefiniertes Verhalten) und liefert mit `-O2` falsche Werte. Behoben mit `= {}` (Kommentar in der Datei) | Referenz dient als Basislinie; minimale Korrektur | Replikationspaket | – |
+| C15 | 28.10. | **Korrektheitstests:** 30 Fälle pro EB-Aufgabe aus dem Datensatz-Generator (Seed 42), **einmal** auf dem Laptop isoliert erzeugt (`python -I`, eigener Ordner; EB04 braucht ein höheres Rekursionslimit, per Aufruf-Wrapper gesetzt). CLBG: offizielle Prüfausgabe. Zusätzlich muss die Ausgabe der großen Eingabe der Referenz entsprechen. Vergleich mit den Datensatz-`evaluator.py` (geprüft: reine Zahlen-/Listenvergleiche). Mutationstest: verfälschte Lösung fällt bei 30/30 durch | Gleiche Tests auf allen Plattformen; Generator-Code läuft nur einmal | §6 | ✅ §6 |
+| C16 | 28.10. | **Große Eingaben für EB selbst erzeugt** (`bench/workloads.py`, Seed 20261025): an der Obergrenze der Constraints, Bäume flach (keine Rekursionsfallen), Strings mit Überlappungen. Die Datensatz-Generatoren liefern nur kleine Fälle | Messbare Laufzeit nötig | §5 Workload | ✅ §5 |
 
 ## D. Plattformen und Energiemessung
 
@@ -70,6 +73,7 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | D1 | 25.10. | Plattform „Desktop-PC“ heißt jetzt **„Laptop“** (Intel i7-1185G7, 8 Threads, 32 GB) | Ehrliche Bezeichnung des vorhandenen Geräts | §5 | ✅ §5 |
 | D2 | 26.10. | Plattformen **noch offen**: RPi 5 und Server (Klärung in 2–3 Tagen); **Mac M4 als ARM-Alternative**; Windows nur im Notfall | Verfügbarkeit | §5 | ⏳ nach Entscheidung |
 | D9 | 28.10. | **Windows: keine Energiemessung** – RAPL ist ohne Kernel-Treiber nicht lesbar (auch nicht in WSL). Falls der Rechner gebraucht wird: Linux-Live-System booten und wie Linux messen | Ein Windows-Treiber wäre eine weitere, ungeprüfte Messmethode | §5 (nur falls genutzt) | ⏳ |
+| D10 | 28.10. | **Raspberry Pi 5:** Energie-Leser `PmicReader` gebaut: pollt `vcgencmd pmic_read_adc` laufend und summiert Strom × Spannung aller Schienen; Verluste vor dem PMIC (USB-C-Eingang) fehlen; das Pollen kostet CPU, ist aber auch im Leerlauf enthalten. Mit Beispieldaten getestet, **auf echtem Pi noch nicht** | Einzige Software-Messmöglichkeit am Pi | §5 | ⏳ nach Test auf dem Pi |
 | D3 | 25.10. | **Absolute Joule werden nicht plattformübergreifend verglichen**, nur Rangfolgen und Verhältnisse | RAPL, powermetrics und PMIC erfassen unterschiedliche Systemteile | §5, §9 | ✅ §5, §9 |
 | D4 | 27.10. | **Laptop-RAPL-Bereiche: package, core, uncore, psys, kein DRAM**. Gemessen wird über die Linux-Powercap-Schnittstelle, nicht über `perf`. | Im Pilot festgestellt; das Paper hatte fälschlich „+DRAM“ und „perf“ genannt (korrigiert) | §5 | ✅ §5 (korrigiert) |
 | D5 | 26.10. | Mac: `powermetrics` liefert **Modell-Schätzungen von Apple**, keine direkte Messung; Abtastung alle 100 ms; Bereich `combined` | Einschränkung der Messgenauigkeit | §5, §9 | ⏳ |
@@ -82,14 +86,19 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | ID | Datum | Entscheidung / Beobachtung | Begründung | Paper | Im Paper? |
 |---|---|---|---|---|---|
 | E1 | 25.10. | **C++ mit `-O2`, ohne Sanitizer** | Solovyeva nutzt `-O0` (unrealistisch); EffiBench-X nutzt ASan (verfälscht Energie) | §5 | ✅ §5 |
-| E2 | 25.10. | **Gleiche Laufzeitversionen auf allen Plattformen** (Python 3.14, OpenJDK 25, GCC 14) | Apsan et al. hatten Python 3.8/3.11/3.12 gemischt (Störfaktor) | §5 | ✅ §5 · ⚠️ Docker vs. nativ (Mac/Windows) noch klären |
+| E2 | 25.10. | **Gleiche Laufzeitversionen auf allen Plattformen** (Python 3.14, OpenJDK 25, GCC 14) | Apsan et al. hatten Python 3.8/3.11/3.12 gemischt (Störfaktor) | §5 | ✅ §5 · Docker vs. nativ entschieden → E11 |
 | E3 | 25.10. | **Gemessen wird der ganze Prozess** inkl. Interpreter- bzw. JVM-Start | So wird ein Programm tatsächlich ausgeführt; der Startaufwand wird separat berichtet | §6 | ✅ §6 |
 | E4 | 25.10. | **Nur korrekte Programme** gehen in die Energieanalyse; Korrektheit wird separat berichtet | Fehlerhafter Code ist oft „effizient“, weil er früh abbricht | §6 | ✅ §6 |
 | E5 | 25.10. | Ranganalysen nur auf Aufgaben, bei denen jedes LLM in jeder Sprache ≥ 1 korrekte Lösung hat; das Mixed Model nutzt alle Daten | Vollständige Zellen für Rangfolgen | §6 | ✅ §6 |
 | E6 | 26.10. | **Messablauf**: Leerlauf (30 s) → Aufwärmlauf → alle Läufe in zufälliger Reihenfolge, 5 s Pause → Leerlauf (30 s); netto = brutto − mittlere Leerlaufleistung × Laufzeit | Drift und Hintergrundlast herausrechnen | §5, §6 | ✅ (Grundzüge) · ⏳ Details |
 | E7 | 26.10. | 10 Wiederholungen pro Programm und Plattform; Kern-Pinning (Linux) | Weniger Varianz | §6 | ✅ |
 | E8 | 27.10. | **Pilot 1 (Laptop, CLBG-Python-Referenzen, ~1 s pro Lauf)**: Laufzeit streut 1,5–3,3 %, Brutto-Energie 4–6 %, **Netto-Energie 13–29 %** (zu hoch) | Ursache: **14–15 W Leerlauf** durch Hintergrundprogramme, Leerlauf-Drift von 14,0 auf 15,5 W, CPU etwa 80 °C, `powersave` + Turbo aktiv | §6 (Pilotstudie) | ⏳ |
-| E9 | 27.10. | Konsequenz aus E8: **Eingaben auf ca. 5 s pro Lauf kalibrieren**, ohne die Claude-App und ohne Browser messen, `performance`-Modus, Turbo aus | Rauschen verringern | §6 | ⏳ nach Pilot 2 |
+| E9 🔁 E10 | 27.10. | Konsequenz aus E8: **Eingaben auf ca. 5 s pro Lauf kalibrieren**, ohne die Claude-App und ohne Browser messen, `performance`-Modus, Turbo aus | Rauschen verringern | §6 | ⏳ nach Pilot 2 |
+| E10 | 28.10. | **Kalibrierung (ersetzt E9):** Pro EB-Aufgabe Wiederholungen **R im selben Prozess**, pro CLBG-Aufgabe **N**, einmal auf dem Laptop: C++ ca. **1 s**, aber keine Referenz über **60 s**. Ergebnis (`bench/data/manifest.json`): EB01 R=78, EB02 4208, EB03 115, EB04 1518, EB05 46, EB06 20, EB07 113, EB08 855051, EB09 2850, EB10 52; CLBG01 N=10⁷, CLBG02 2500, CLBG03 18, CLBG04 10. Gleiche Werte auf allen Plattformen. Bei EB02 und CLBG01/02/04 bleibt C++ unter 1 s (begrenzt durch Java bzw. Python) | 5 s für C++ hätte Python-Läufe von mehreren Minuten bedeutet (Tage pro Plattform) | §5 Workload | ✅ §5 |
+| E11 | 28.10. | **Native Sprachinstallationen statt Docker** (ersetzt die Container-Planung aus E2): gleiche Versionen (Python 3.14, Java 25, GCC 14) auf jeder Plattform installieren; das Skript prüft und protokolliert die Versionen und warnt bei Abweichung | powermetrics (Mac) und PMIC (Pi) sind nur vom Host lesbar; Container auf dem Mac liefen in einer VM | §5 | ✅ §5 |
+| E12 | 28.10. | **Messprotokoll** (`bench/run_platform.py`): 3 Wiederholungen pro Programm (k=5 Samples liefern zusätzliche Replikation), 3 s Pause, Leerlauf 60 s am Anfang und alle 30 min, feste Zufallsreihenfolge (Seed 20261025), Zeitgrenze 10× Referenzdauer, nach Timeout keine weiteren Wiederholungen, Fortsetzen nach Abbruch. Korrektheit wird auf **jeder** Plattform geprüft. Kein Core-Pinning (JVM ist mehrfädig) | Laptop ≈ 8 h statt mehrerer Tage | §5, §6 | ✅ §5, §6 |
+| E13 | 28.10. | **Einschränkung der Wiederholung im Prozess:** einmalige Initialisierung (z. B. statische Tabellen der C++-Referenz von EB04) wird über R Aufrufe verteilt; begünstigt Lösungen mit Cache über Aufrufe hinweg | Ehrlich benennen | §9 | ✅ §9 |
+| E14 | 28.10. | **Testlauf der Pipeline auf dem Laptop** (Python 3.12, Java 21, GCC 13, ohne Energie): alle 664 Programme (630 + 34 Referenzen) kompilieren; **629/630 generierte Programme korrekt** (Ausnahme: Gemini, CLBG04, Python, 1 Sample); alle Referenzen korrekt. Nur Vorab-Ergebnis mit falschen Sprachversionen, **nicht ins Paper** | Pipeline funktioniert | – (erst nach echter Messung) | – |
 
 ## F. Generierung
 
@@ -152,5 +161,8 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 - [ ] F25/F26 Pilot und Abschluss der Generierung: 1 Satz in §6 (Abschluss steht in §7)
 - [ ] F28 Generierungszeit: bei Kürzung (G6) ggf. nur Tabelle behalten
 - [ ] F27 generated/ ins Replikationspaket (Zenodo)
+- [ ] D10 Pi-Messung auf echtem Pi prüfen
+- [ ] E14 Korrektheitsraten nach der echten Messung in §7 eintragen
+- [ ] Sprachversionen auf allen Plattformen installieren (E11), dann §5-Tabelle (TBD) füllen
 - [ ] **G6 Paper auf 500 (max. 700–800) Wörter kürzen (ohne Quellen und Abstract)**
 - [ ] G4 Literatursuche in Scopus, IEEE Xplore und ACM DL

@@ -346,3 +346,12 @@ Copy-&-Paste-Vorgänge. Für die Reproduzierbarkeit, die Gutachter verlangen, is
 - **3 × 3 × 14 × 5 = 630 Programme.**
 - **Plattform „Desktop-PC“:** Der vorhandene Rechner ist ein Laptop (Intel i7-1185G7, 8 Threads,
   32 GB). Im Paper heißt er dann „Laptop“. RAPL ist verfügbar.
+
+## Änderungen v5 (2026-10-28): Ausführung auf den Plattformen
+
+- **Ein Skript pro Plattform** (`experiment/bench/run_platform.py`): bauen → Korrektheit → messen → ZIP. Details und Begründungen im Entscheidungsprotokoll (C14–C16, D10, E10–E14).
+- **Große Eingaben:** EB-Aufgaben bekommen eine eigene Eingabe an der Constraint-Obergrenze, die R-mal im selben Prozess gelöst wird; CLBG über N. Kalibriert auf dem Laptop: C++ ≈ 1 s, keine Referenz > 60 s.
+- **Korrektheit:** 30 Generator-Tests (bzw. CLBG-Prüfausgabe) + große Eingabe, auf jeder Plattform.
+- **Messung:** 3 Wiederholungen, 3 s Pause, Leerlauf alle 30 min, feste Zufallsreihenfolge, fortsetzbar.
+- **Software-Umgebung:** native Installation (Python 3.14, Java 25, GCC 14) statt Docker, weil Mac- und Pi-Energie nur vom Host lesbar sind. Ersetzt den Abschnitt „Software-Umgebung (Entscheidung)“ oben.
+- **Raspberry Pi:** Energie über PMIC (`vcgencmd pmic_read_adc`), Summe aller Schienen.

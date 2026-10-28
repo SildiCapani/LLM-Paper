@@ -42,21 +42,21 @@ timestamps, and token counts (where reported) are logged.
 
 \subsection{Functional Correctness}
 Each program is compiled (C++, Java) and executed against the task's full test suite
-(EffiBench-X: generated tests; CLBG: reference output) inside the same container images used
-for measurement. A program is \emph{correct} if it compiles and passes all tests within the
-time limit. Correctness rates are reported per LLM and language. Only correct programs enter
+on every platform: 30 cases from the EffiBench-X test generator or the official CLBG
+reference output, plus the measurement input, whose output must match the reference
+solution's. A program is \emph{correct} if it compiles and passes all tests within the time
+limit. Correctness rates are reported per LLM and language. Only correct programs enter
 the energy analysis. Rank-based analyses (\RQ{4}) are restricted to tasks for which every
 LLM produced at least one correct solution in every language; the mixed-effects analysis
 uses all correct programs.
 
 \subsection{Measurement Procedure}
-Each correct program is executed 10 times per platform on the fixed task input. We measure
+Each correct program is executed three times per platform on the fixed task input. We measure
 the complete process, including interpreter or JVM start-up, since this reflects how the
 program would be executed in practice; start-up cost of a minimal program per language is
 reported separately. Per run we record energy, wall-clock time, peak resident memory, and
-CPU time. Runs exceeding a timeout of \TBD{}\,min are recorded as timeouts. A pilot study
-(two LLMs, three tasks, all languages) is used to calibrate input sizes and to confirm the
-number of repetitions based on the observed coefficient of variation.
+CPU time. Runs exceeding ten times the reference duration are recorded as timeouts and not
+repeated.
 
 \subsection{Statistical Analysis}
 \TODO{Finalise and pre-register before data collection.}

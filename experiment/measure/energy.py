@@ -240,7 +240,7 @@ def detect_reader(prefer: str = "auto"):
         try:
             return RaplReader(), "RAPL counters readable"
         except PermissionError:
-            note = ("RAPL counters are root-only; see ANLEITUNG.md "
+            note = ("RAPL counters are root-only; see LAUFEN_UND_MESSEN.md "
                     "(sudo chmod a+r ...energy_uj)")
             if prefer == "rapl":
                 raise RuntimeError(note)

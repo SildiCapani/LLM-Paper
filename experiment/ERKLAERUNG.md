@@ -27,6 +27,8 @@ Aufgaben (tasks/)  ──►  Prompts (prompts/)  ──►  LLMs  ──►  ge
 | `scripts/` | Python-Skripte, die alles oben automatisch erzeugt haben | Nur, wenn man etwas neu erzeugen will |
 | `generate/` | Das **Generierungsskript**: schickt die Prompts an Claude Code, Codex CLI und Antigravity CLI (Gemini). Anleitung: `generate/ANLEITUNG.md` | Ja, zum Generieren |
 | `generated/` | Ergebnisse der Generierung: Code, Rohantworten, Protokolle (entsteht beim Lauf; nicht in Git, zu groß — wird separat gesichert) | Nur anschauen |
+| `bench/` | **Plattform-Lauf:** setzt den generierten Code zusammen, prüft die Korrektheit und misst Energie, Zeit und Speicher auf einer Plattform (`run_platform.py`); `prepare.py` erzeugt einmalig Tests und große Eingaben, `make_bundle.py` das ZIP für die Plattformen. Anleitung: `LAUFEN_UND_MESSEN.md` | Ja, zum Messen |
+| `results/` | Ergebnisse der Plattformen (`results/<plattform>/runs.csv` usw.) | Nur anschauen |
 | `measure/` | Das **Messskript** für Energie, Zeit und Speicher (Linux und Mac), mit eigener Anleitung `measure/ANLEITUNG.md` | Ja, zum Messen |
 | `LAUFEN_UND_MESSEN.md` | **Gesamtablauf** nach der Generierung: bauen, testen, messen auf Linux, Server, Mac, Pi (und warum nicht Windows) | Ja, als Fahrplan |
 | `README.md` | Kurze technische Anleitung (Englisch) zum Reproduzieren | Nein |

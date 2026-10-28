@@ -7,7 +7,8 @@
 3. references build the canonical solutions, check them against the tests, and compute
               the expected workload output (C++ reference, cross-checked with Java/Python)
 4. calibrate  choose per task the in-process repetitions R (EB) or the input size N (CLBG)
-              so that the C++ program runs about --target seconds on this machine
+              so that the C++ program runs about --target seconds on this machine, but
+              the slowest reference (usually Python) at most --max-slow seconds
               (EB: C++ reference; CLBG: median of the generated C++ programs passing the
               check, since the CLBG reference exists in Python only)
 
@@ -43,9 +44,9 @@ json.dump(res["cases"], sys.stdout)
 
 # Candidate input sizes for CLBG calibration (ascending).
 CLBG_LADDER = {
-    "CLBG01": [1_000_000, 2_000_000, 5_000_000, 10_000_000, 20_000_000, 50_000_000],
-    "CLBG02": [1000, 2000, 3000, 4000, 5500, 8000],
-    "CLBG03": [16, 17, 18, 19, 20, 21],
+    "CLBG01": [1_000_000, 2_000_000, 3_000_000, 5_000_000, 7_000_000, 10_000_000, 20_000_000],
+    "CLBG02": [1000, 1500, 2000, 2500, 3000, 4000, 5500],
+    "CLBG03": [16, 17, 18, 19, 20],
     "CLBG04": [9, 10, 11, 12],
 }
 
@@ -86,14 +87,19 @@ def make_workloads() -> None:
             print(f"  workload {task}: {(out / f'{task}.txt').stat().st_size / 1e6:.2f} MB")
 
 
-def per_iteration(cmd: list[str], stdin: bytes, r_small: int, timeout: float) -> float:
-    """Seconds per repetition, from t(R) = a + b*R with R = 1 and R = r_small."""
+def per_iteration(cmd: list[str], stdin: bytes, timeout: float) -> float:
+    """Seconds per repetition from t(R) = a + b*R: R grows until t(R) - t(1) >= 0.5 s."""
     t1 = min(run_proc(cmd + ["1"], stdin, timeout)["wall_s"] for _ in range(3))
-    tr = min(run_proc(cmd + [str(r_small)], stdin, timeout)["wall_s"] for _ in range(2))
-    return max((tr - t1) / (r_small - 1), 1e-7)
+    r = 4
+    while True:
+        tr = min(run_proc(cmd + [str(r)], stdin, timeout)["wall_s"] for _ in range(2))
+        if tr - t1 >= 0.5 or r >= 10**8:
+            return max((tr - t1) / (r - 1), 1e-9)
+        r = r * 4 if tr - t1 < 0.05 else int(r * 0.6 / max(tr - t1, 1e-3)) + 1
 
 
-def prepare_eb(task: str, tools: dict, build_root: Path, target: float) -> dict:
+def prepare_eb(task: str, tools: dict, build_root: Path, target: float,
+               max_slow: float) -> dict:
     tests = json.loads((DATA / "tests" / f"{task}.json").read_text())
     wl_path = DATA / "workloads" / f"{task}.txt"
     wl = wl_path.read_bytes()
@@ -125,10 +131,11 @@ def prepare_eb(task: str, tools: dict, build_root: Path, target: float) -> dict:
     exp_path = DATA / "workloads" / f"{task}.expected.txt"
     exp_path.write_text(expected)
 
-    b_cpp = per_iteration(runs["cpp"], wl, 20, 600)
-    reps = max(1, math.ceil(target / b_cpp))
     for lang in LANGS:
-        ref_iter[lang] = b_cpp if lang == "cpp" else per_iteration(runs[lang], wl, 5, 3600)
+        ref_iter[lang] = per_iteration(runs[lang], wl, 3600)
+    # C++ about `target` seconds, but no reference language above `max_python` seconds.
+    reps = max(1, min(math.ceil(target / ref_iter["cpp"]),
+                      math.floor(max_slow / max(ref_iter.values()))))
     print(f"  {task}: R={reps}  per call cpp={ref_iter['cpp'] * 1e3:.2f} ms  "
           f"java={ref_iter['java'] * 1e3:.2f} ms  python={ref_iter['python'] * 1e3:.2f} ms  "
           f"-> est. python {reps * ref_iter['python']:.1f} s")
@@ -141,7 +148,8 @@ def prepare_eb(task: str, tools: dict, build_root: Path, target: float) -> dict:
             "est_ref_seconds_laptop": {l: reps * ref_iter[l] for l in LANGS}}
 
 
-def prepare_clbg(task: str, tools: dict, build_root: Path, target: float) -> dict:
+def prepare_clbg(task: str, tools: dict, build_root: Path, target: float,
+                 max_slow: float) -> dict:
     meta = json.loads((TASKS / task / "task.json").read_text())
     check_n = meta["check_input_n"]
     exp_check = (TASKS / task / "expected" / f"n{check_n}.txt").read_text()
@@ -159,20 +167,27 @@ def prepare_clbg(task: str, tools: dict, build_root: Path, target: float) -> dic
             probes.append(cmd)
     if len(probes) < 3:
         sys.exit(f"{task}: fewer than 3 generated C++ programs pass the check")
-    chosen, median = None, None
+    # Largest N with the Python reference <= max_slow, stopping once C++ reaches target.
+    chosen = None
     for n in CLBG_LADDER[task]:
-        times = [run_proc(cmd + [str(n)], None, 300)["wall_s"] for cmd in probes]
-        median = statistics.median(times)
-        print(f"  {task}: N={n} median C++ {median:.2f} s ({len(probes)} programs)")
-        chosen = n
+        median = statistics.median(run_proc(cmd + [str(n)], None, 300)["wall_s"]
+                                   for cmd in probes)
+        ref = run_proc(ref_cmd + [str(n)], None, 3 * max_slow)
+        print(f"  {task}: N={n} median C++ {median:.2f} s ({len(probes)} programs), "
+              f"python reference {ref['wall_s']:.1f} s")
+        if ref["timed_out"] or ref["wall_s"] > max_slow:
+            break
+        if ref["rc"] != 0:
+            sys.exit(f"{task}: python reference failed at N={n}")
+        chosen = (n, median, ref)
         if median >= target:
             break
-    ref = run_proc(ref_cmd + [str(chosen)], None, 7200)
-    if ref["rc"] != 0 or ref["timed_out"]:
-        sys.exit(f"{task}: python reference failed at N={chosen}")
+    if chosen is None:
+        sys.exit(f"{task}: even the smallest N exceeds the time limit")
+    chosen, median, ref = chosen
     exp_path = DATA / "workloads" / f"{task}.n{chosen}.expected.txt"
     exp_path.write_bytes(ref["out"])
-    print(f"  {task}: N={chosen}, python reference {ref['wall_s']:.1f} s")
+    print(f"  {task}: chosen N={chosen}")
     return {"format": "program", "check_n": check_n,
             "check_expected": f"tasks/{task}/expected/n{check_n}.txt",
             "arg": chosen, "arg_kind": "N",
@@ -185,6 +200,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", type=float, default=1.0,
                     help="seconds the C++ program should run on this machine")
+    ap.add_argument("--max-slow", type=float, default=60.0,
+                    help="upper limit in seconds for the slowest reference language")
     ap.add_argument("--cases", type=int, default=30)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--only", nargs="+", help="restrict calibration to these tasks")
@@ -200,9 +217,10 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         for task in args.only or task_ids():
             fn = prepare_eb if task_format(task) == "function" else prepare_clbg
-            manifest[task] = fn(task, tools, Path(tmp), args.target)
+            manifest[task] = fn(task, tools, Path(tmp), args.target, args.max_slow)
             manifest_path.write_text(json.dumps(manifest, indent=2))
-    manifest["_meta"] = {"target_seconds_cpp_laptop": args.target, "tools": tools,
+    manifest["_meta"] = {"target_seconds_cpp_laptop": args.target,
+                         "max_seconds_slowest_reference": args.max_slow, "tools": tools,
                          "test_cases": args.cases, "test_seed": args.seed}
     manifest_path.write_text(json.dumps(manifest, indent=2))
     print(f"Wrote {manifest_path}")

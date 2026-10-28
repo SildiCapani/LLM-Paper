@@ -56,6 +56,12 @@ LLM-Paper/
     │   ├── generate.py, config.json
     │   └── homes/           ← Login-Daten der CLIs (NIE in Git!)
     ├── generated/           ← generierter Code + Rohantworten (entsteht beim Lauf; nicht in Git)
+    ├── bench/               ← Plattform-Lauf: bauen, testen, messen (run_platform.py), ZIP bauen
+    │   ├── prepare.py       ← einmal auf dem Laptop: Tests, große Eingaben, Kalibrierung
+    │   ├── run_platform.py  ← DAS Skript für jede Plattform
+    │   ├── make_bundle.py   ← erzeugt llm-energy-bundle.zip
+    │   └── data/            ← Testfälle, Eingaben, manifest.json (R/N pro Aufgabe)
+    ├── results/             ← entpackte Ergebnisse der Plattformen (results/<name>/)
     └── measure/             ← Messskript für Energie, Zeit und Speicher
         ├── ANLEITUNG.md     ← Schritt-für-Schritt-Anleitung zum Messen (Deutsch)
         ├── measure.py, energy.py, test_energy.py

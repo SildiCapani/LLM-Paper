@@ -116,15 +116,17 @@ official CLBG reference outputs.
 
 \paragraph{Workload.}
 For each task we fix a single input that is identical across LLMs, languages, and
-platforms: for EffiBench-X tasks a large input produced by the task's test generator, for
-CLBG tasks the parameter $N$. Its size is calibrated in a pilot study such that the C++
-reference solution runs for at least \TBD{}\,s on the server, keeping measurements well
-above the resolution of the energy counters.
+platforms. As the EffiBench-X test generators produce only small cases, we generate one input
+at the upper bound of each task's constraints, which the harness solves $R$ times within one
+process; for CLBG tasks the input is the parameter $N$. $R$ and $N$ are calibrated once on
+the laptop so that the C++ program runs for about 1\,s, capped so that no reference solution
+exceeds 60\,s.
 
 \subsection{Hardware Platforms and Software Environment}
 \Cref{tab:platforms} summarises the platforms. To avoid confounding platform with runtime
-versions, all programs are built and executed in identical, version-pinned
-multi-architecture container images (amd64/arm64) on all platforms. C++ is compiled with
+versions, the same language versions are installed natively on every platform and recorded
+per run; containers are avoided because the energy interfaces of macOS and the Raspberry~Pi
+are accessible only from the host. C++ is compiled with
 \texttt{-O2} and without sanitizers.
 
 \begin{table*}[t]
@@ -139,8 +141,8 @@ multi-architecture container images (amd64/arm64) on all platforms. C++ is compi
     CPU / ISA            & Intel Core i7-1185G7 (x86-64) & \TBD{} (x86-64) & Cortex-A76 (Arm64) \\
     RAM                  & 32\,GB           & \TBD            & 8\,GB \\
     OS / kernel          & \TBD             & \TBD            & \TBD \\
-    Python               & \multicolumn{3}{c}{CPython 3.14 (\texttt{python:3.14-slim}) \TBD} \\
-    Java                 & \multicolumn{3}{c}{OpenJDK 25 (\texttt{eclipse-temurin:25-jdk}) \TBD} \\
+    Python               & \multicolumn{3}{c}{CPython 3.14 \TBD} \\
+    Java                 & \multicolumn{3}{c}{OpenJDK 25 \TBD} \\
     C++                  & \multicolumn{3}{c}{GCC 14, \texttt{-O2 -std=c++20} \TBD} \\
     Energy measurement   & RAPL (\texttt{powercap}) & RAPL (\texttt{powercap}) & PMIC ADCs (\texttt{vcgencmd}) \\
     Measured scope       & CPU package, platform (psys) & CPU package + DRAM  & board input \\
@@ -166,8 +168,8 @@ normalised within each platform.
 
 \paragraph{Controlled conditions.}
 On all platforms, the CPU frequency governor is set to \texttt{performance}, turbo/boost is
-disabled where possible, the measured process is pinned to dedicated cores, and
-non-essential services are stopped. Before each measurement block, idle power is recorded
-for 60\,s; we report both gross and idle-corrected energy. Execution order is randomised
-across LLM, language, and task to prevent drift from being confounded with the factors, with
-a cool-down of \TBD{}\,s between runs; CPU temperature is logged.
+disabled where possible, and non-essential services are stopped. Idle power is recorded
+for 60\,s before measuring and every 30\,min; we report both gross and idle-corrected
+energy. Execution order is randomised across LLM, language, and task to prevent drift from
+being confounded with the factors, with a cool-down of 3\,s between runs; CPU temperature is
+logged.

@@ -1,113 +1,100 @@
-# Anleitung: Generierten Code ausführen und Energie messen
+# Anleitung: Code ausführen und Energie messen (alle Plattformen)
 
-Diese Anleitung beschreibt den Weg von den 630 generierten Programmen bis zu den Messwerten auf
-allen Plattformen. Details zum Messskript selbst stehen in `measure/ANLEITUNG.md`.
+**Kurz:** Du bekommst **eine ZIP-Datei**, entpackst sie auf der Plattform, startest **einen Befehl**,
+und am Ende entsteht **eine Ergebnis-ZIP**, die du mir zurückgibst. Alles dazwischen macht das
+Skript: bauen, testen, messen.
 
-> **Stand 28.10.2026:** Die Generierung ist abgeschlossen (630/630 `ok`, 0 Werkzeugaufrufe).
-> Einige Schritte unten brauchen noch Skripte, die **noch nicht gebaut** sind. Sie sind mit
-> 🛠 markiert. Alles mit ✅ funktioniert schon.
+```
+llm-energy-bundle.zip ──► entpacken ──► python3 run_platform.py run --name <plattform>
+                                             │
+                     1. bauen (630 Programme + Referenzen)
+                     2. Korrektheit prüfen (30 Tests + große Eingabe)
+                     3. messen (Energie, Zeit, Speicher), zufällige Reihenfolge
+                     4. packen ──► results_<plattform>.zip  ──► an mich zurück
+```
+
+| Plattform | Energie-Messung | Stand |
+|---|---|---|
+| Linux-Laptop/PC (Intel/AMD) | RAPL (Zähler im Prozessor) | ✅ getestet |
+| Server (Linux, echter Rechner) | RAPL, meist mit Arbeitsspeicher | ✅ wie Laptop |
+| Mac (Apple Silicon, M4) | powermetrics (Schätzwerte von Apple) | ⚠️ auf echtem Mac noch nicht getestet |
+| Raspberry Pi 5 | PMIC über `vcgencmd` | ⚠️ eingebaut, auf echtem Pi noch nicht getestet |
+| Windows | – | ❌ geht nicht (siehe unten) |
 
 ---
 
-## Der Ablauf im Überblick
+## Schritt 1: Programmiersprachen installieren (einmal pro Plattform)
 
-```
-1. Bauen & testen      2. Workload festlegen   3. Jobs-Datei        4. Messen              5. Auswerten
-(einmal, Linux-PC)     (Pilot, einmal)         (pro Plattform)      (auf JEDER Plattform)  (einmal)
-generated/ ──► nur korrekte ──► große Eingabe ──► jobs/*.json ──► results/<plattform>_*.csv ──► Statistik
-               Programme        pro Aufgabe
-```
+Damit die Plattformen vergleichbar sind, sollen **überall dieselben Versionen** laufen:
+**Python 3.14, Java 25 (OpenJDK), GCC 14.** Das Skript prüft die Versionen und warnt, wenn sie
+abweichen. Es misst trotzdem und schreibt die Versionen in die Ergebnisse.
 
-| Schritt | Wo? | Was passiert? | Stand |
-|---|---|---|---|
-| 1. Bauen & testen | einmal auf dem Linux-Laptop | Java und C++ kompilieren, jedes Programm gegen die Testfälle prüfen. Nur **korrekte** Programme werden gemessen. | 🛠 |
-| 2. Workload | einmal (Pilot) | Pro Aufgabe **eine** große Eingabe festlegen, die bei allen gleich ist (z. B. ≥ 5 s Laufzeit) | 🛠 (CLBG: N steht fest, EB: noch nicht) |
-| 3. Jobs-Datei | pro Plattform | Liste aller zu messenden Programme für `measure.py` | 🛠 |
-| 4. Messen | auf jeder Plattform | `measure.py run …`, Ergebnis als CSV | ✅ Linux, ⚠️ Mac ungetestet, 🛠 Pi, ❌ Windows |
-| 5. Auswerten | einmal | Mixed-Effects-Modell, Rangvergleiche (RQ1–RQ5) | 🛠 |
-
-**Wichtig:** Korrektheit wird **einmal** geprüft, nicht auf jeder Plattform. Gemessen wird dann auf
-allen Plattformen **dieselbe Liste** korrekter Programme mit **derselben Eingabe**.
-
----
-
-## Schritt 0: Projekt auf die Plattform bringen (jede Plattform)
-
-Der generierte Code liegt **nicht in Git** (siehe `.gitignore`). Deshalb zwei Teile kopieren:
+**Linux (Ubuntu 24.04, Laptop und Server)**
 
 ```bash
-# 1. Projekt holen
-git clone <repo-url> LLM-Paper
-
-# 2. Generierten Code vom Laptop kopieren (ca. 17 MB), z. B. per scp/rsync oder USB-Stick
-rsync -a smartrollerz@<laptop-ip>:~/Documents/LLM-Paper/experiment/generated/ LLM-Paper/experiment/generated/
+sudo apt install g++-14 openjdk-25-jdk
+sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt install python3.14
 ```
 
-Auf **jeder** Plattform werden dieselben Versionen der Sprachen benötigt (Python, Java, C++-Compiler).
-Geplant ist dafür ein gemeinsames Docker-Image (amd64 + arm64), damit überall exakt dieselben
-Versionen laufen. 🛠 Das Image ist noch nicht gebaut.
+Falls `openjdk-25-jdk` nicht gefunden wird: Temurin 25 von https://adoptium.net installieren und
+beim Start `--java-home /pfad/zum/jdk-25` angeben.
 
-| Sprache | Version (geplant, siehe Paper, Plattform-Tabelle in §5) |
-|---|---|
-| Python | CPython 3.14 |
-| Java | OpenJDK 25 |
-| C++ | GCC 14, `-O2 -std=c++20` |
+**Raspberry Pi 5 (Raspberry Pi OS 64 Bit, Debian 13)**
+
+```bash
+sudo apt install g++-14 openjdk-25-jdk python3
+```
+
+Python 3.14 gibt es dort nicht als Paket. Am einfachsten über `uv` (offizielle Installationsanleitung
+auf https://docs.astral.sh/uv/), dann `uv python install 3.14` und beim Start
+`--python $(uv python find 3.14)` angeben.
+
+**Mac (Homebrew)**
+
+```bash
+brew install python@3.14 openjdk@25 gcc@14
+```
+
+Beim Start dann `--java-home $(brew --prefix openjdk@25)` angeben. Achtung: `g++` ist auf dem Mac
+eigentlich Clang. Das Skript nimmt automatisch `g++-14` von Homebrew.
 
 ---
 
-## Schritt 1–3 (einmal): Bauen, testen, Jobs erzeugen 🛠
-
-Diese Schritte laufen einmal auf dem Linux-Laptop. Geplante Befehle (Skripte folgen):
+## Schritt 2: Paket entpacken und prüfen
 
 ```bash
-cd ~/Documents/LLM-Paper/experiment
-python3 check/check.py        # 🛠 kompilieren + testen → generated/correctness.csv
-python3 check/make_jobs.py    # 🛠 Jobs-Datei für alle korrekten Programme → measure/jobs/main.json
+unzip llm-energy-bundle.zip
+cd llm-energy/bench
+python3 run_platform.py check
 ```
 
-- EffiBench-Aufgaben (EB01–EB10): Der Code ist nur eine Funktion. Er wird mit dem Rahmenprogramm
-  aus `tasks/EBxx/runner/` zusammengesetzt und gegen die Testfälle geprüft.
-- CLBG-Aufgaben: Die Ausgabe wird mit `tasks/CLBGxx/expected/` verglichen.
-- ⚠️ `test_generator.py` und `evaluator.py` stammen aus dem Datensatz und laufen **nur in einer
-  Sandbox** (Docker), nie direkt.
+`check` zeigt:
+- die gefundenen Sprachversionen,
+- ob Energie messbar ist,
+- wie viel langsamer die Plattform als der Laptop ist,
+- **wie lange die Messung ungefähr dauert.**
+
+Es sollte **keine WARNING** zur Energie mehr erscheinen. **Schick mir beim ersten Mal die Ausgabe von
+`check`**, vor allem vom Mac und vom Pi.
 
 ---
 
-## Schritt 4: Messen auf den Plattformen
+## Schritt 3: Plattform vorbereiten und starten
 
-Allgemein für **alle** Plattformen:
+Allgemein: **Netzteil an, alle anderen Programme zu** (Browser, Chat, Claude-App, Updates), Rechner
+während der Messung **nicht benutzen**, Ruhezustand aus.
 
-- Netzteil anschließen, alle anderen Programme schließen (Browser, Chat, Claude-App, Updates)
-- Rechner nicht anfassen, während gemessen wird
-- Erst `measure.py check`, dann `measure.py run`
-- Ergebnisdateien nach Plattform benennen: `results/<plattform>_main.csv`
-
-Gemessen wird in einer **Messsitzung pro Plattform** mit derselben Jobs-Datei:
-
-```bash
-cd LLM-Paper/experiment/measure
-python3 measure.py check
-python3 measure.py run jobs/main.json --reps 10 --out results/<plattform>_main.csv
-```
-
-> Dauer grob geschätzt: ca. 600 korrekte Programme × 10 Wiederholungen × (5 s Lauf + 5 s Pause)
-> ≈ **17 Stunden pro Plattform**. Das Skript kann noch nicht fortsetzen, wenn man es abbricht.
-> 🛠 Fortsetzen/Aufteilen auf mehrere Abende wird noch eingebaut.
-
-### 4a. Linux-PC / Laptop (Intel/AMD) ✅
-
-Energiequelle: **RAPL** (Zähler im Prozessor). Getestet auf dem i7-1185G7.
+### Linux-Laptop / PC / Server
 
 ```bash
 # Vorbereitung (gilt bis zum Neustart)
 sudo chmod a+r /sys/class/powercap/intel-rapl:*/energy_uj
 sudo cpupower frequency-set -g performance
-echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo     # nur Intel
+echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo      # Intel; AMD: echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
 
-# Prüfen und messen
-cd LLM-Paper/experiment/measure
-python3 measure.py check
-python3 measure.py run jobs/main.json --reps 10 --cpus 2 --out results/laptop_main.csv
+# Starten
+cd llm-energy/bench
+python3 run_platform.py run --name laptop          # Server: --name server
 
 # Danach zurückstellen
 sudo chmod o-r /sys/class/powercap/intel-rapl:*/energy_uj
@@ -115,106 +102,89 @@ echo 0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 sudo cpupower frequency-set -g powersave
 ```
 
-Bei **AMD**-Prozessoren heißt der Turbo-Schalter anders:
-`echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost`.
+**Server:** muss ein **echter Rechner** sein (keine VM oder Cloud, dort gibt es kein RAPL). Man braucht
+sudo, und niemand sonst darf den Server währenddessen belasten.
 
-### 4b. Server (Linux) ✅ (wie 4a, mit Besonderheiten)
+> 🔒 Lesbare Energiezähler sind ein kleines Sicherheitsrisiko (CVE-2020-8694). Deshalb nach der
+> Messung zurückstellen; spätestens ein Neustart macht es automatisch rückgängig.
 
-Energiequelle: **RAPL**, auf Servern meist **mit DRAM-Bereich** (Arbeitsspeicher).
-
-- ⚠️ Es muss ein **echter Rechner** sein (bare metal). In einer **virtuellen Maschine oder Cloud-Instanz
-  gibt es kein RAPL**. Dann bricht `check` mit „No energy reader available“ ab.
-- Man braucht **sudo-Rechte** (für chmod, Governor, Turbo). Sonst den Admin bitten.
-- Bei **zwei Prozessoren** (2 Sockel) zeigt `check` `package-0` und `package-1`. Das Programm mit
-  `--cpus` auf einen Kern **im Sockel 0** pinnen.
-- Während der Messung dürfen **keine anderen Nutzer oder Dienste** Last erzeugen
-  (`htop` prüfen, Cronjobs pausieren).
+### Mac (M4)
 
 ```bash
-python3 measure.py check            # erwartet: package-0, (package-1), dram
-python3 measure.py run jobs/main.json --reps 10 --cpus 2 --out results/server_main.csv
+# Stromsparmodus aus, Netzteil an
+sudo -v                                            # Passwort einmal eingeben
+cd llm-energy/bench
+caffeinate -i python3 run_platform.py run --name mac --java-home $(brew --prefix openjdk@25)
 ```
 
-Bitte die Ausgabe von `check` und `lscpu` an mich schicken; dann trage ich den Server ins Paper ein.
+`powermetrics` wird beim Start einmal mit sudo gestartet und läuft dann durch.
 
-### 4c. Mac (Apple Silicon, M4) ⚠️ noch nicht auf echtem Mac getestet
+### Raspberry Pi 5
 
-Energiequelle: **powermetrics** (Schätzwerte von Apple, alle 100 ms).
+Mit **offiziellem 27-W-Netzteil** und **aktivem Kühler**, am besten **ohne Bildschirm per SSH**:
 
 ```bash
-# Netzteil an, Stromsparmodus aus, andere Programme schließen
-sudo -v
-cd LLM-Paper/experiment/measure
-python3 measure.py check            # erwartet: powermetrics, Bereiche cpu, gpu, ane, combined
-sudo -v && caffeinate -i python3 measure.py run jobs/main.json --reps 10 --out results/mac_main.csv
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+vcgencmd pmic_read_adc                             # muss Zeilen mit ..._A und ..._V zeigen
+cd llm-energy/bench
+nohup python3 run_platform.py run --name pi > pi.log 2>&1 &
+tail -f pi.log                                     # Fortschritt ansehen (Strg+C beendet nur die Anzeige)
 ```
 
-- `--cpus` gibt es auf dem Mac nicht.
-- `sudo -v` läuft nach einigen Minuten ab. Für eine lange Messung vorher einmalig
-  `sudo visudo` → `Defaults timestamp_timeout=600` setzen (oder in Blöcken messen).
-- **Beim ersten Mal** die Ausgabe von `check` an mich schicken.
+`nohup` sorgt dafür, dass die Messung weiterläuft, wenn die SSH-Verbindung abbricht.
 
-### 4d. Raspberry Pi 5 🛠 Messung noch nicht eingebaut
+### Windows ❌
 
-Energiequelle: **PMIC** (Strom- und Spannungsmesser auf der Platine), abgefragt über `vcgencmd`.
-
-```bash
-# Prüfen, ob die Werte lesbar sind (Raspberry Pi OS, 64 Bit)
-vcgencmd pmic_read_adc
-```
-
-- Der Leser für `energy.py` ist **noch nicht gebaut**. Schick mir die Ausgabe des Befehls oben,
-  dann baue ich ihn passend ein.
-- Den Pi mit dem **offiziellen 27-W-Netzteil** und **aktivem Kühler** betreiben, sonst drosselt er.
-- Governor auf `performance`: `echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor`
-- Ohne Bildschirm/Desktop messen (per SSH), damit der Grundverbrauch klein bleibt.
-
-### 4e. Windows ❌ keine Energiemessung möglich
-
-Windows gibt die RAPL-Zähler **nicht ohne Kernel-Treiber** frei; auch WSL sieht sie nicht.
-Optionen:
-
-| Option | Bewertung |
-|---|---|
-| Windows-Rechner nicht verwenden | Empfohlen. Laut Design nur im Notfall (Entscheidungsprotokoll D2). |
-| Linux vom USB-Stick starten (Live-System) und wie 4a messen | Gut, wenn der Rechner als weitere x86-Plattform gebraucht wird |
-| Nur Zeit und Speicher messen: `--allow-no-energy` | Nur als Zusatz; keine Energie, also nicht für die Hauptfragen |
+Windows gibt die Energiezähler nicht ohne Spezialtreiber frei, auch nicht unter WSL. Das Skript
+bricht dort ab. Wenn der Rechner unbedingt gebraucht wird: **Linux vom USB-Stick starten**
+(Ubuntu Live) und wie beim Linux-Laptop messen.
 
 ---
 
-## Schritt 5: Ergebnisse zurückbringen
+## Unterbrechen und fortsetzen
 
-Die CSV- und JSON-Dateien aus `measure/results/` von jeder Plattform auf den Laptop kopieren
-(gleicher Ordner, Dateinamen mit Plattform-Präfix). Sie sind klein und dürfen in Git.
+- **Strg+C** stoppt jederzeit. **Derselbe Befehl** macht dort weiter, wo es aufgehört hat. Fertige
+  Messungen werden nie wiederholt.
+- Bauen und Testen werden beim Fortsetzen übersprungen, wenn sie schon fertig sind.
+- Die Messung über mehrere Abende verteilen ist in Ordnung. Vor jedem Neustart die Vorbereitung
+  (chmod, Governor, Turbo) wiederholen, weil ein Neustart sie zurücksetzt.
 
-```bash
-rsync -a <plattform>:LLM-Paper/experiment/measure/results/ ~/Documents/LLM-Paper/experiment/measure/results/
-```
+---
 
-**Nie** absolute Joule zwischen Plattformen vergleichen: Jede Plattform misst einen anderen Bereich
-(Prozessor, Platine, Schätzung). Verglichen werden Rangfolgen und Verhältnisse innerhalb einer Plattform.
+## Was am Ende herauskommt
+
+Im Ordner `llm-energy/` liegt **`results_<name>.zip`**. **Diese Datei schickst du mir.** Darin:
+
+| Datei | Inhalt |
+|---|---|
+| `environment_*.json` | Rechner, Betriebssystem, Sprachversionen, Energiemessung, Warnungen |
+| `build.csv` | Welche Programme sich kompilieren ließen |
+| `correctness.csv` | Welche Programme korrekt sind (`pass`) und warum nicht (`wrong`, `too_slow`, …) |
+| `runs.csv` | **Die Messwerte**: eine Zeile pro Lauf mit Energie (brutto und netto), Zeit, Speicher |
+| `idle.csv` | Grundverbrauch im Leerlauf, alle 30 Minuten gemessen |
+| `log.txt` | Protokoll des Ablaufs |
+
+---
+
+## Was das Skript genau tut (fürs Paper)
+
+| Schritt | Details |
+|---|---|
+| Bauen | EB-Aufgaben: generierte Funktion + Rahmenprogramm aus EffiBench-X + Standard-Imports + Wiederholungsschleife. CLBG: Programm unverändert. C++: `g++ -O2 -std=c++20`, Java: `javac`. |
+| Korrektheit | 30 kleine Testfälle pro EB-Aufgabe (aus dem Datensatz-Generator, einmal auf dem Laptop erzeugt) bzw. die offizielle CLBG-Prüfausgabe, danach einmal die große Eingabe. Nur `pass` wird gemessen. |
+| Große Eingabe | EB: eine Eingabe an der Obergrenze der Aufgabe, die **R-mal im selben Prozess** gelöst wird. CLBG: Parameter N. R und N sind auf allen Plattformen gleich (kalibriert auf dem Laptop). |
+| Messen | Leerlauf 60 s, danach alle Läufe in fester Zufallsreihenfolge, 3 s Pause dazwischen, Leerlauf alle 30 min. Ein Programm, das die Zeitgrenze überschreitet, wird nicht weiter wiederholt. |
 
 ---
 
 ## Checkliste pro Plattform
 
-| | Linux-Laptop | Server | Mac M4 | Raspberry Pi 5 |
+| | Laptop | Server | Mac M4 | Pi 5 |
 |---|---|---|---|---|
-| Projekt + `generated/` kopiert | | | | |
-| Gleiche Sprachversionen (Docker) | | | | |
-| `measure.py check` ohne WARNING | | | | |
+| Python 3.14 / Java 25 / GCC 14 installiert | | | | |
+| `check` ohne Energie-WARNING | | | | |
+| Ausgabe von `check` an Brisild/Claude geschickt | | | | |
 | Governor/Turbo eingestellt | | | – | |
-| Andere Programme geschlossen | | | | |
-| Messung fertig, CSV zurückkopiert | | | | |
+| Messung fertig | | | | |
+| `results_<name>.zip` zurückgeschickt | | | | |
 | Einstellungen zurückgestellt | | | – | |
-
----
-
-## Was noch gebaut werden muss (Reihenfolge)
-
-1. 🛠 **Korrektheitsprüfung** (`check/check.py`): bauen + testen in Docker
-2. 🛠 **Workload-Kalibrierung** für EB01–EB10 (große Eingabe pro Aufgabe)
-3. 🛠 **Jobs-Erzeugung** (`check/make_jobs.py`) und **Fortsetzen** in `measure.py`
-4. 🛠 **Docker-Image** mit festen Sprachversionen (amd64 + arm64)
-5. 🛠 **Pi-Leser** in `energy.py` (sobald die `vcgencmd`-Ausgabe vorliegt)
-6. 🛠 **Auswertung** (Statistik für RQ1–RQ5)

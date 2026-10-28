@@ -1,4 +1,92 @@
 {
+  "CLBG01": {
+    "format": "program",
+    "check_n": 1000,
+    "check_expected": "tasks/CLBG01/expected/n1000.txt",
+    "arg": 10000000,
+    "arg_kind": "N",
+    "workload_expected": "bench/data/workloads/CLBG01.n10000000.expected.txt",
+    "est_ref_seconds_laptop": {
+      "cpp_generated_median": 0.43868354599544546,
+      "python": 54.00466310099728
+    }
+  },
+  "CLBG02": {
+    "format": "program",
+    "check_n": 100,
+    "check_expected": "tasks/CLBG02/expected/n100.txt",
+    "arg": 2500,
+    "arg_kind": "N",
+    "workload_expected": "bench/data/workloads/CLBG02.n2500.expected.txt",
+    "est_ref_seconds_laptop": {
+      "cpp_generated_median": 0.23670419799600495,
+      "python": 54.27931379200163
+    }
+  },
+  "CLBG03": {
+    "format": "program",
+    "check_n": 10,
+    "check_expected": "tasks/CLBG03/expected/n10.txt",
+    "arg": 18,
+    "arg_kind": "N",
+    "workload_expected": "bench/data/workloads/CLBG03.n18.expected.txt",
+    "est_ref_seconds_laptop": {
+      "cpp_generated_median": 1.7308470220013987,
+      "python": 52.99956960000418
+    }
+  },
+  "CLBG04": {
+    "format": "program",
+    "check_n": 7,
+    "check_expected": "tasks/CLBG04/expected/n7.txt",
+    "arg": 10,
+    "arg_kind": "N",
+    "workload_expected": "bench/data/workloads/CLBG04.n10.expected.txt",
+    "est_ref_seconds_laptop": {
+      "cpp_generated_median": 0.250982033998298,
+      "python": 11.058885346996249
+    }
+  },
+  "EB01": {
+    "format": "function",
+    "tests": "bench/data/tests/EB01.json",
+    "tests_sha256": "cf6ec6990a93b7a6443cd56a58d0ef4020f66241a73424dbc141a24b0b9f93c9",
+    "workload": "bench/data/workloads/EB01.txt",
+    "workload_sha256": "63f545aef0f7db99a36754d99222961cf582e62c87b7867091242eb3a2945f85",
+    "workload_expected": "bench/data/workloads/EB01.expected.txt",
+    "arg": 78,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.10679257228600493,
+      "java": 0.05259545459994115,
+      "cpp": 0.01295307688007597
+    },
+    "est_ref_seconds_laptop": {
+      "python": 8.329820638308384,
+      "java": 4.10244545879541,
+      "cpp": 1.0103399966459257
+    }
+  },
+  "EB02": {
+    "format": "function",
+    "tests": "bench/data/tests/EB02.json",
+    "tests_sha256": "ae98a31118e3acad42334cece88facc900dba0723778ef11104cd6c38590e1f1",
+    "workload": "bench/data/workloads/EB02.txt",
+    "workload_sha256": "51a9216bac2fa800e6ba693162b78b37c47871df99caca3556f128e168aa8716",
+    "workload_expected": "bench/data/workloads/EB02.expected.txt",
+    "arg": 4208,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 4.683339137102626e-05,
+      "java": 0.014257461333330959,
+      "cpp": 1.7441393856701445e-06
+    },
+    "est_ref_seconds_laptop": {
+      "python": 0.1970749108892785,
+      "java": 59.995397290656676,
+      "cpp": 0.007339338534899968
+    }
+  },
   "EB03": {
     "format": "function",
     "tests": "bench/data/tests/EB03.json",
@@ -6,21 +94,162 @@
     "workload": "bench/data/workloads/EB03.txt",
     "workload_sha256": "c48546e963c7a8a8ccced864930107b466e6f7912ae97043b8340262b17a6e3f",
     "workload_expected": "bench/data/workloads/EB03.expected.txt",
-    "arg": 184,
+    "arg": 115,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.07579253675066866,
-      "java": 0.02057067574787652,
-      "cpp": 0.005446389999920747
+      "python": 0.13200797559984495,
+      "java": 0.015193000474937435,
+      "cpp": 0.008736901776309855
     },
     "est_ref_seconds_laptop": {
-      "python": 13.945826762123033,
-      "java": 3.78500433760928,
-      "cpp": 1.0021357599854175
+      "python": 15.18091719398217,
+      "java": 1.747195054617805,
+      "cpp": 1.0047437042756333
+    }
+  },
+  "EB04": {
+    "format": "function",
+    "tests": "bench/data/tests/EB04.json",
+    "tests_sha256": "6150658f3ba1ce1e947efcfc8bd6ec2ae3ee11ecefa4b70048ae987b514b18a9",
+    "workload": "bench/data/workloads/EB04.txt",
+    "workload_sha256": "d1eaaa54752353567cc25a2136a13237db0c171221f55159285ad5f39296cb79",
+    "workload_expected": "bench/data/workloads/EB04.expected.txt",
+    "arg": 1518,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.03949971205849365,
+      "java": 0.0035081244024207456,
+      "cpp": 0.00018985905813479894
+    },
+    "est_ref_seconds_laptop": {
+      "python": 59.960562904793356,
+      "java": 5.325332842874692,
+      "cpp": 0.2882060502486248
+    }
+  },
+  "EB05": {
+    "format": "function",
+    "tests": "bench/data/tests/EB05.json",
+    "tests_sha256": "4b695e71738e1a5f5da822d852edd6d623c09136174031780037e8f819757141",
+    "workload": "bench/data/workloads/EB05.txt",
+    "workload_sha256": "966826215e1af8e155ba97f97665cc7848396e6fc7b6f1beaa85fc9940f3811f",
+    "workload_expected": "bench/data/workloads/EB05.expected.txt",
+    "arg": 46,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.3484358346662096,
+      "java": 0.12266248220112175,
+      "cpp": 0.022062192064514683
+    },
+    "est_ref_seconds_laptop": {
+      "python": 16.02804839464564,
+      "java": 5.6424741812516,
+      "cpp": 1.0148608349676753
+    }
+  },
+  "EB06": {
+    "format": "function",
+    "tests": "bench/data/tests/EB06.json",
+    "tests_sha256": "063bd05a96f5f5afdc71732cded6c32aac8dd3d590d206e821a9471f5c0f747e",
+    "workload": "bench/data/workloads/EB06.txt",
+    "workload_sha256": "465ea305497507de3d70d7f4d25cfd51c251a72b23691649f6fc61565d480e8e",
+    "workload_expected": "bench/data/workloads/EB06.expected.txt",
+    "arg": 20,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.20110423266790653,
+      "java": 0.057672324599843706,
+      "cpp": 0.05126727176908529
+    },
+    "est_ref_seconds_laptop": {
+      "python": 4.022084653358131,
+      "java": 1.153446491996874,
+      "cpp": 1.0253454353817057
+    }
+  },
+  "EB07": {
+    "format": "function",
+    "tests": "bench/data/tests/EB07.json",
+    "tests_sha256": "a613cf184f688d8e937df16eb0851e993d561a5175af314cfddd3f23b24a2e51",
+    "workload": "bench/data/workloads/EB07.txt",
+    "workload_sha256": "7c66ea15ca9eaf13a9383e15461ca3efff5b5e2e8a7a5c032d39e2e080c0281e",
+    "workload_expected": "bench/data/workloads/EB07.expected.txt",
+    "arg": 113,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.050083304529835004,
+      "java": 0.0230684974545015,
+      "cpp": 0.00888536621307855
+    },
+    "est_ref_seconds_laptop": {
+      "python": 5.6594134118713555,
+      "java": 2.6067402123586696,
+      "cpp": 1.0040463820778762
+    }
+  },
+  "EB08": {
+    "format": "function",
+    "tests": "bench/data/tests/EB08.json",
+    "tests_sha256": "58abf0bfb2dd588c16977efdc039c0dbd2d277d944b781a99ed5120f1fbd723e",
+    "workload": "bench/data/workloads/EB08.txt",
+    "workload_sha256": "8e1bc7b775c833cd5f3022305103b3d09d4a01586d3eb1e87b83966c35b34ab7",
+    "workload_expected": "bench/data/workloads/EB08.expected.txt",
+    "arg": 855051,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 4.909723953391601e-05,
+      "java": 3.782448642771808e-05,
+      "cpp": 1.1695220601198121e-06
+    },
+    "est_ref_seconds_laptop": {
+      "python": 41.98064376071442,
+      "java": 32.341864944506774,
+      "cpp": 1.0000010070275054
+    }
+  },
+  "EB09": {
+    "format": "function",
+    "tests": "bench/data/tests/EB09.json",
+    "tests_sha256": "3512fa1f948fa8b1d881085f5df2726f1544eb54f191547ace724feef780a179",
+    "workload": "bench/data/workloads/EB09.txt",
+    "workload_sha256": "3ece0fa5010836985f65dd0d4ef0bf6b1b1a4f405145c7c5afe18e9c15a0a1a0",
+    "workload_expected": "bench/data/workloads/EB09.expected.txt",
+    "arg": 2850,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.0011167705674047061,
+      "java": 0.003790017959691862,
+      "cpp": 0.0003509808602144896
+    },
+    "est_ref_seconds_laptop": {
+      "python": 3.1827961171034125,
+      "java": 10.801551185121808,
+      "cpp": 1.0002954516112954
+    }
+  },
+  "EB10": {
+    "format": "function",
+    "tests": "bench/data/tests/EB10.json",
+    "tests_sha256": "72a78d19777785dc17b9d571b0124fc8d08eedcde751ca72e12a414de32820a6",
+    "workload": "bench/data/workloads/EB10.txt",
+    "workload_sha256": "6d28a04be16f5819acf2b60d198a3287b82e0ec44ff6b781329468e9603f1ae9",
+    "workload_expected": "bench/data/workloads/EB10.expected.txt",
+    "arg": 52,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.26228908633250586,
+      "java": 0.09473316012463329,
+      "cpp": 0.01956306709751782
+    },
+    "est_ref_seconds_laptop": {
+      "python": 13.639032489290305,
+      "java": 4.926124326480931,
+      "cpp": 1.0172794890709267
     }
   },
   "_meta": {
     "target_seconds_cpp_laptop": 1.0,
+    "max_seconds_slowest_reference": 60.0,
     "tools": {
       "paths": {
         "python": "/home/smartrollerz/.pyenv/versions/3.12.15/bin/python3",

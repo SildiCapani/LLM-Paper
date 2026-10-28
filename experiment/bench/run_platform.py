@@ -150,7 +150,7 @@ def phase_correctness(built, manifest, out, workers, factor) -> dict[str, dict]:
         row = {"program_id": b["program_id"], "tests_passed": 0, "tests_total": 0,
                "workload_ok": 0, "workload_wall_s": "", "workload_out_sha256": "",
                "detail": ""}
-        if b["compiled"] != "1":
+        if str(b["compiled"]) != "1":
             return {**row, "status": "compile_error", "detail": b["message"][-300:]}
         cmd = json.loads(b["run_cmd"])
         evaluate = evaluator(task)
@@ -177,6 +177,7 @@ def phase_correctness(built, manifest, out, workers, factor) -> dict[str, dict]:
                                                          else 1)) * factor
         r = run_proc(cmd + wl_args, wl_in, limit)
         row["workload_wall_s"] = round(r["wall_s"], 3)
+        row["workload_out_sha256"] = hashlib.sha256(r["out"]).hexdigest()
         if r["timed_out"]:
             return {**row, "status": "too_slow", "detail": f"workload > {limit:.0f} s"}
         expected = (ROOT / m["workload_expected"]).read_text()
@@ -207,6 +208,8 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
     done = {(r["program_id"], r["rep"]) for r in prev}
     skipped = {r["program_id"] for r in prev if r["timed_out"] == "True"}
     todo = [(b, rep) for b, rep in schedule if (b["program_id"], str(rep)) not in done]
+    if args.max_runs:
+        todo = todo[:args.max_runs]
     log(f"Phase 3/4 measure: {len(passing)} programs x {args.reps} reps, "
         f"{len(done)} runs done, {len(todo)} to go", out)
     domains = reader.domains
@@ -384,7 +387,7 @@ def main() -> None:
     for name, fn in (("check", cmd_check), ("run", cmd_run)):
         p = sub.add_parser(name)
         p.set_defaults(func=fn)
-        p.add_argument("--reps", type=int, default=5)
+        p.add_argument("--reps", type=int, default=3)
         p.add_argument("--cooldown", type=float, default=3.0, help="seconds between runs")
         p.add_argument("--python", help="interpreter for the programs (default: python3.14)")
         p.add_argument("--java-home", help="JDK directory (default: JAVA_HOME or PATH)")
@@ -400,6 +403,7 @@ def main() -> None:
             p.add_argument("--cpus", type=lambda s: [int(c) for c in s.split(",")],
                            help="pin programs to these CPUs (Linux), e.g. 2,3")
             p.add_argument("--workers", type=int, help="parallel jobs for build/correctness")
+            p.add_argument("--max-runs", type=int, help="stop after N measured runs (testing)")
     args = ap.parse_args()
     args.func(args)
 

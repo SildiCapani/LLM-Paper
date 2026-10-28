@@ -11,7 +11,8 @@ comparability of absolute values across platforms.
 Measurements may be influenced by background processes, thermal state, frequency
 scaling, JIT warm-up, and garbage collection. LLM outputs are non-deterministic.
 \TODO{Mitigations: repetitions, randomised order, fixed governor, multiple samples per
-task.}
+task.} Solving an EffiBench-X input repeatedly within one process amortises one-time
+initialisation, such as precomputed tables, which favours solutions that cache across calls.
 
 \paragraph{External validity.}
 Results are limited to the selected LLMs (and their versions at the time of the study),
