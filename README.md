@@ -45,6 +45,7 @@ LLM-Paper/
 │
 └── experiment/              ← alles für das Experiment (Daten, Prompts, Skripte)
     ├── ERKLAERUNG.md        ← ausführliche Erklärung dieses Ordners (Deutsch)
+    ├── LAUFEN_UND_MESSEN.md ← Gesamtablauf: bauen, testen, messen auf allen Plattformen
     ├── README.md            ← technische Kurzanleitung (Englisch)
     ├── tasks/               ← die 14 Programmieraufgaben
     ├── prompts/             ← Prompt-Vorlagen + 42 fertige Prompts
@@ -98,7 +99,8 @@ du dort etwas änderst, ändert sich der Anhang des Papers automatisch mit.
 | den Experiment-Ordner verstehen (Aufgaben, Prompts) | [experiment/ERKLAERUNG.md](experiment/ERKLAERUNG.md) |
 | einen Prompt sehen, wie ihn die KI bekommt | [experiment/prompts/rendered/EB03/cpp.txt](experiment/prompts/rendered/EB03/cpp.txt) |
 | Code generieren (CLIs installieren, anmelden, starten) | [experiment/generate/ANLEITUNG.md](experiment/generate/ANLEITUNG.md) |
-| Energie messen | [experiment/measure/ANLEITUNG.md](experiment/measure/ANLEITUNG.md) |
+| Code ausführen und messen auf allen Plattformen (Gesamtablauf) | [experiment/LAUFEN_UND_MESSEN.md](experiment/LAUFEN_UND_MESSEN.md) |
+| Energie messen (Details zum Messskript) | [experiment/measure/ANLEITUNG.md](experiment/measure/ANLEITUNG.md) |
 | das Paper lesen bzw. bearbeiten | [paper/main.tex](paper/main.tex) und [paper/sections/](paper/sections/) |
 
 ---

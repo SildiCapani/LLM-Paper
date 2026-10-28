@@ -28,6 +28,7 @@ Aufgaben (tasks/)  ──►  Prompts (prompts/)  ──►  LLMs  ──►  ge
 | `generate/` | Das **Generierungsskript**: schickt die Prompts an Claude Code, Codex CLI und Antigravity CLI (Gemini). Anleitung: `generate/ANLEITUNG.md` | Ja, zum Generieren |
 | `generated/` | Ergebnisse der Generierung: Code, Rohantworten, Protokolle (entsteht beim Lauf; nicht in Git, zu groß — wird separat gesichert) | Nur anschauen |
 | `measure/` | Das **Messskript** für Energie, Zeit und Speicher (Linux und Mac), mit eigener Anleitung `measure/ANLEITUNG.md` | Ja, zum Messen |
+| `LAUFEN_UND_MESSEN.md` | **Gesamtablauf** nach der Generierung: bauen, testen, messen auf Linux, Server, Mac, Pi (und warum nicht Windows) | Ja, als Fahrplan |
 | `README.md` | Kurze technische Anleitung (Englisch) zum Reproduzieren | Nein |
 | `ERKLAERUNG.md` | Diese Datei | — |
 

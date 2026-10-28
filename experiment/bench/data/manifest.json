@@ -1,0 +1,46 @@
+{
+  "EB03": {
+    "format": "function",
+    "tests": "bench/data/tests/EB03.json",
+    "tests_sha256": "1218ce43001be2d1938273573fd47ce30be279f74ea4febf84b210fb979940dc",
+    "workload": "bench/data/workloads/EB03.txt",
+    "workload_sha256": "c48546e963c7a8a8ccced864930107b466e6f7912ae97043b8340262b17a6e3f",
+    "workload_expected": "bench/data/workloads/EB03.expected.txt",
+    "arg": 184,
+    "arg_kind": "repetitions",
+    "ref_seconds_per_call_laptop": {
+      "python": 0.07579253675066866,
+      "java": 0.02057067574787652,
+      "cpp": 0.005446389999920747
+    },
+    "est_ref_seconds_laptop": {
+      "python": 13.945826762123033,
+      "java": 3.78500433760928,
+      "cpp": 1.0021357599854175
+    }
+  },
+  "_meta": {
+    "target_seconds_cpp_laptop": 1.0,
+    "tools": {
+      "paths": {
+        "python": "/home/smartrollerz/.pyenv/versions/3.12.15/bin/python3",
+        "java": "/usr/bin/java",
+        "javac": "/usr/bin/javac",
+        "cxx": "/usr/bin/g++-13"
+      },
+      "versions": {
+        "python": "Python 3.12.15",
+        "java": "openjdk version \"21.0.12.1\" 2026-08-18",
+        "javac": "javac 21.0.12.1",
+        "cxx": "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+      },
+      "warnings": [
+        "python version 3.12 differs from planned 3.14",
+        "java version 21 differs from planned 25",
+        "cxx version 13 differs from planned 14"
+      ]
+    },
+    "test_cases": 30,
+    "test_seed": 42
+  }
+}

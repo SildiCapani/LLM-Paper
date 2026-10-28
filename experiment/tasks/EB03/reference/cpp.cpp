@@ -7,7 +7,7 @@ static auto _ = [](){
 class Solution {
 public:
     long long sumDigitDifferences(vector<int>& nums) {
-        int cntDigits[11][10];
+        int cntDigits[11][10] = {};  // fix: was uninitialised (UB), see decision log C14
         for (auto n : nums) {
             int i = 0;
             while (n) {

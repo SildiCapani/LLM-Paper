@@ -7,7 +7,7 @@ Every reader implements the same interface:
     reader.stop() -> dict     -> energy in joules per domain for the interval
 
 Linux (Intel/AMD RAPL via /sys/class/powercap) reads cumulative hardware counters
-before and after the interval. macOS (Apple Silicon) samples `powermetrics` in the
+before and after the interval. Raspberry Pi 5 (no RAPL) polls the PMIC via `vcgencmd`. macOS (Apple Silicon) samples `powermetrics` in the
 background and integrates the reported power over the interval. `NullReader` measures
 nothing and is used when no energy interface is available (time/memory only).
 """
@@ -17,6 +17,7 @@ import glob
 import os
 import platform
 import re
+import shutil
 import subprocess
 import threading
 import time
@@ -159,10 +160,83 @@ class PowermetricsReader:
         self._proc.terminate()
 
 
+class PmicReader:
+    """Raspberry Pi 5 power-management IC via `vcgencmd pmic_read_adc`.
+
+    The command prints one current ("..._A current(i)=x A") and one voltage
+    ("..._V volt(j)=y V") per supply rail. A background thread polls it continuously;
+    board power is the sum of current x voltage over all rails that report both. stop()
+    integrates the samples (piecewise constant) over the interval. Rails before the PMIC
+    (e.g. USB-C input losses) are not covered, and the polling itself costs some CPU,
+    which is part of the idle baseline as well.
+    """
+
+    name = "pmic"
+    domains = ["board"]
+    _line = re.compile(r"^\s*(\S+)_([AV])\s+(?:current|volt)\(\d+\)=([\d.]+)[AV]")
+
+    def __init__(self) -> None:
+        self._samples: list[tuple[float, float]] = []  # (monotonic time, watts)
+        self._lock = threading.Lock()
+        self._stop = threading.Event()
+        watts = self._read()
+        if watts is None:
+            raise RuntimeError("vcgencmd pmic_read_adc gave no usable output")
+        threading.Thread(target=self._poll, daemon=True).start()
+        self._t0 = 0.0
+
+    @classmethod
+    def parse(cls, text: str) -> float | None:
+        amps, volts = {}, {}
+        for line in text.splitlines():
+            m = cls._line.match(line)
+            if m:
+                (amps if m.group(2) == "A" else volts)[m.group(1)] = float(m.group(3))
+        rails = set(amps) & set(volts)
+        return sum(amps[r] * volts[r] for r in rails) if rails else None
+
+    def _read(self) -> float | None:
+        p = subprocess.run(["vcgencmd", "pmic_read_adc"], capture_output=True, text=True)
+        return self.parse(p.stdout) if p.returncode == 0 else None
+
+    def _poll(self) -> None:
+        while not self._stop.is_set():
+            watts = self._read()
+            if watts is not None:
+                with self._lock:
+                    self._samples.append((time.monotonic(), watts))
+                    if len(self._samples) > 200_000:
+                        del self._samples[:100_000]
+
+    def start(self) -> None:
+        self._t0 = time.monotonic()
+
+    def stop(self) -> dict[str, float]:
+        t1 = time.monotonic()
+        deadline = t1 + 1.0
+        while time.monotonic() < deadline:  # wait for one sample after t1
+            with self._lock:
+                if self._samples and self._samples[-1][0] >= t1:
+                    break
+            time.sleep(0.01)
+        with self._lock:
+            samples = list(self._samples)
+        energy = 0.0
+        for (ta, wa), (tb, _) in zip(samples, samples[1:]):
+            overlap = min(tb, t1) - max(ta, self._t0)
+            if overlap > 0:
+                energy += wa * overlap
+        return {"board": energy}
+
+    def close(self) -> None:
+        self._stop.set()
+
+
 def detect_reader(prefer: str = "auto"):
     """Return the best available energy reader and a note explaining the choice."""
     system = platform.system()
-    if prefer in ("auto", "rapl") and system == "Linux" and RAPL_ROOT.exists():
+    if prefer in ("auto", "rapl") and system == "Linux" and glob.glob(
+            str(RAPL_ROOT / "intel-rapl:*")):
         try:
             return RaplReader(), "RAPL counters readable"
         except PermissionError:
@@ -173,6 +247,13 @@ def detect_reader(prefer: str = "auto"):
         except RuntimeError as e:
             note = str(e)
             if prefer == "rapl":
+                raise
+    elif prefer in ("auto", "pmic") and system == "Linux" and shutil.which("vcgencmd"):
+        try:
+            return PmicReader(), "Raspberry Pi PMIC via vcgencmd"
+        except RuntimeError as e:
+            note = str(e)
+            if prefer == "pmic":
                 raise
     elif prefer in ("auto", "powermetrics") and system == "Darwin":
         try:

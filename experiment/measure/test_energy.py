@@ -75,5 +75,21 @@ class PowermetricsParserTest(unittest.TestCase):
         self.assertAlmostEqual(result["cpu"], 2.0 * 0.2, places=6)
 
 
+class PmicParserTest(unittest.TestCase):
+    def test_parse(self):
+        from energy import PmicReader
+        sample = """     3V7_WL_SW_A current(0)=0.10000000A
+     3V3_SYS_A current(1)=0.20000000A
+     VDD_CORE_A current(7)=2.00000000A
+     3V7_WL_SW_V volt(8)=3.70000000V
+     3V3_SYS_V volt(9)=3.30000000V
+     VDD_CORE_V volt(15)=0.80000000V
+     EXT5V_V volt(24)=5.10000000V
+"""
+        self.assertAlmostEqual(PmicReader.parse(sample), 0.1 * 3.7 + 0.2 * 3.3 + 2.0 * 0.8)
+        self.assertIsNone(PmicReader.parse("garbage"))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+

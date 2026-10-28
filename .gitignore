@@ -26,5 +26,12 @@ __pycache__/
 # --- Generation: login credentials of the CLIs (NEVER commit) -----------
 experiment/generate/homes/
 
-# --- Generation output (~170 MB for 630 requests; archived separately as replication package)
+# --- Generation output (archived separately as replication package)
 experiment/generated/
+
+# --- Platform runs (experiment/bench) ----------------------------------
+# Workload inputs are regenerated deterministically by prepare.py (SHA-256 in manifest.json)
+experiment/bench/data/workloads/
+experiment/llm-energy-bundle.zip
+experiment/results_*.zip
+experiment/results/_work_*/

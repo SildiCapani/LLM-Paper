@@ -69,6 +69,7 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 |---|---|---|---|---|---|
 | D1 | 25.10. | Plattform „Desktop-PC“ heißt jetzt **„Laptop“** (Intel i7-1185G7, 8 Threads, 32 GB) | Ehrliche Bezeichnung des vorhandenen Geräts | §5 | ✅ §5 |
 | D2 | 26.10. | Plattformen **noch offen**: RPi 5 und Server (Klärung in 2–3 Tagen); **Mac M4 als ARM-Alternative**; Windows nur im Notfall | Verfügbarkeit | §5 | ⏳ nach Entscheidung |
+| D9 | 28.10. | **Windows: keine Energiemessung** – RAPL ist ohne Kernel-Treiber nicht lesbar (auch nicht in WSL). Falls der Rechner gebraucht wird: Linux-Live-System booten und wie Linux messen | Ein Windows-Treiber wäre eine weitere, ungeprüfte Messmethode | §5 (nur falls genutzt) | ⏳ |
 | D3 | 25.10. | **Absolute Joule werden nicht plattformübergreifend verglichen**, nur Rangfolgen und Verhältnisse | RAPL, powermetrics und PMIC erfassen unterschiedliche Systemteile | §5, §9 | ✅ §5, §9 |
 | D4 | 27.10. | **Laptop-RAPL-Bereiche: package, core, uncore, psys, kein DRAM**. Gemessen wird über die Linux-Powercap-Schnittstelle, nicht über `perf`. | Im Pilot festgestellt; das Paper hatte fälschlich „+DRAM“ und „perf“ genannt (korrigiert) | §5 | ✅ §5 (korrigiert) |
 | D5 | 26.10. | Mac: `powermetrics` liefert **Modell-Schätzungen von Apple**, keine direkte Messung; Abtastung alle 100 ms; Bereich `combined` | Einschränkung der Messgenauigkeit | §5, §9 | ⏳ |
@@ -119,6 +120,9 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 | F23 | 27.10. | **Probe bestanden** (alle 3 Werkzeuge): keine CLAUDE.md/AGENTS.md/GEMINI.md/Memory im Kontext, Arbeitsordner danach leer, 0 Werkzeugaufrufe. Antigravity hängt automatisch Uhrzeit und „Modellwahl geändert“ an; Claude Code einen kleinen Kontoblock. Codex meldet seine Modell-ID nicht im Ereignisstrom (sie ist per `-m` fest gesetzt) | Isolation ist belegt; die automatischen Zusätze sind Teil des Werkzeugs (Faktor „Modell + Werkzeug“) | §6 | ✅ §6 |
 | F24 | 27.10. | Antigravity-Parser an das echte Format angepasst (Schlüssel `event`, Inhalt verschachtelt unter `init`/`step_update`/`result`) | Die erste Probe lieferte sonst „technical_error“ trotz Antwort | – (nur Skript) | – |
 | F25 | 27.10. | **Pilot-Generierung** (EB03 + CLBG01 × 3 Sprachen × 3 Werkzeuge × 1 = 18 Anfragen): 18/18 `ok`, je genau 1 Codeblock, 0 Werkzeugaufrufe, keine Wiederholungen nötig. Dauer pro Anfrage: Claude 3–14 s, Codex 6–21 s, Gemini 15–38 s | Skript und Protokoll funktionieren mit den echten CLIs; Hauptlauf (~612 Anfragen, ca. 3–4 h reine Laufzeit) kann starten. Korrektheit noch nicht geprüft | §6 (1 Satz) | ⏳ |
+| F26 | 28.10. | **Generierung abgeschlossen:** 630/630 Anfragen `ok` (je 210 pro LLM), 0 Werkzeugaufrufe, kein `no_code`. Zeitraum 27.10. 14:06 – 28.10. 09:27 UTC. Umfang `generated/` ca. 17 MB | Datensatz vollständig; Korrektheit noch ungeprüft | §6 (1 Satz) | ⏳ |
+| F27 | 28.10. | `experiment/generated/` liegt **nicht in Git** (.gitignore), wird zum Messen per rsync auf die Plattformen kopiert und separat gesichert (später Zenodo) | Wunsch der Autoren: Repo schlank halten | Replikationspaket | ⏳ |
+| F28 | 28.10. | **Generierungszeit** (Wanduhrzeit des CLI-Aufrufs, letzter Versuch) als beschreibendes Ergebnis: Mittel ± SD Claude 7,1 ± 3,7 s, GPT 15,1 ± 5,9 s, Gemini 17,4 ± 13,8 s (Max. 191 s); CLBG bei allen langsamer als EB. Nur deskriptiv, kein eigener Test | Enthält Netzwerk und Serverlast beim Hersteller → misst Reaktionszeit des Werkzeugs, nicht Rechenaufwand des Modells. Token-Zahlen nicht vergleichbar (Claude meldet Eingabe-Tokens ohne Cache, keine getrennten Denk-Tokens) | §7 Tab. „Generation time“ | ✅ §7 |
 
 ## G. Sonstiges / Formalia
 
@@ -145,6 +149,8 @@ Paper-Kapitel: `§1` Introduction · `§3` Related Work · `§4` RQs · `§5` Se
 - [ ] F1, F3, F5, F6, F8–F12 Generierungsprotokoll: 1–2 Sätze in §6, Details ins Replikationspaket (wegen G6)
 - [ ] F16 CLI-Versionen: aus Platzgründen nicht in der LLM-Tabelle → Replikationspaket bzw. 1 Satz in §5
 - [ ] F20 Antigravity-Version nicht fixierbar → §9
-- [ ] F25 Pilot-Generierung: 1 Satz in §6 (optional)
+- [ ] F25/F26 Pilot und Abschluss der Generierung: 1 Satz in §6 (Abschluss steht in §7)
+- [ ] F28 Generierungszeit: bei Kürzung (G6) ggf. nur Tabelle behalten
+- [ ] F27 generated/ ins Replikationspaket (Zenodo)
 - [ ] **G6 Paper auf 500 (max. 700–800) Wörter kürzen (ohne Quellen und Abstract)**
 - [ ] G4 Literatursuche in Scopus, IEEE Xplore und ACM DL

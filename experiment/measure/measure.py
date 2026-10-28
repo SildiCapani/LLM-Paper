@@ -1,4 +1,4 @@
-"""Measure energy, time and memory of programs (Linux: RAPL, macOS: powermetrics).
+"""Measure energy, time and memory of programs (Linux: RAPL, Pi: PMIC, macOS: powermetrics).
 
 Usage:
     python3 measure.py check
@@ -211,7 +211,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--reader", default="auto",
-                        choices=["auto", "rapl", "powermetrics", "none"])
+                        choices=["auto", "rapl", "pmic", "powermetrics", "none"])
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("check", help="show platform info and energy reader status")
     run = sub.add_parser("run", help="measure all jobs of a jobs file")
