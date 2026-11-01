@@ -120,7 +120,7 @@ platforms. As the EffiBench-X test generators produce only small cases, we gener
 at the upper bound of each task's constraints, which the harness solves $R$ times within one
 process; for CLBG tasks the input is the parameter $N$. $R$ and $N$ are calibrated once on
 the laptop so that the C++ program runs for about 1\,s, capped so that no reference solution
-exceeds 60\,s.
+exceeds 10\,s.
 
 \subsection{Hardware Platforms and Software Environment}
 \Cref{tab:platforms} summarises the platforms. To avoid confounding platform with runtime
@@ -171,5 +171,5 @@ On all platforms, the CPU frequency governor is set to \texttt{performance}, tur
 disabled where possible, and non-essential services are stopped. Idle power is recorded
 for 60\,s before measuring and every 30\,min; we report both gross and idle-corrected
 energy. Execution order is randomised across LLM, language, and task to prevent drift from
-being confounded with the factors, with a cool-down of 3\,s between runs; CPU temperature is
+being confounded with the factors, with a cool-down of 1\,s between runs; CPU temperature is
 logged.

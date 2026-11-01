@@ -10,6 +10,9 @@ Phases (each one is skipped when its result file is complete):
                   with idle baselines; one CSV row per run, appended immediately
   4. pack         results/<name>/ -> results_<name>.zip (send this file back)
 
+`run` keeps the machine awake (systemd-inhibit on Linux, caffeinate on macOS) and logs a
+WARNING plus a fresh idle baseline when a run starts much later than expected (suspend).
+
 Absolute energy values are platform-specific; compare rankings and ratios only.
 """
 from __future__ import annotations
@@ -40,6 +43,7 @@ from measure import measure_idle, run_once  # noqa: E402
 
 RESULTS = ROOT / "results"
 SEED = 20261025
+GAP_S = 120          # unexpected pause between two runs that counts as a suspend/stall
 
 
 def log(msg: str, out: Path | None = None) -> None:
@@ -215,7 +219,8 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
     domains = reader.domains
     app = Appender(path, ["run_utc", "program_id", "llm", "task", "lang", "sample", "source",
                           "rep", "arg", "exit_code", "timed_out", "wall_s", "user_s",
-                          "sys_s", "maxrss_mb", "temp_before_c", "output_same"]
+                          "sys_s", "maxrss_mb", "temp_before_c", "load1_before",
+                          "gap_before_s", "output_same"]
                    + [f"energy_{d}_j" for d in domains]
                    + [f"net_energy_{d}_j" for d in domains] + ["idle_ref_utc"])
     idle_app = Appender(out / "idle.csv", ["utc", "seconds"]
@@ -231,10 +236,15 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
         return
     log(f"  idle baseline {args.idle} s ...", out)
     idle_power, idle_utc, last_idle = idle(args.idle), datetime.now(timezone.utc), time.time()
-    t_start, durations = time.time(), []
+    t_start, durations, t_next = time.time(), [], time.time()
     for i, (b, rep) in enumerate(todo, 1):
         if b["program_id"] in skipped:
             continue
+        gap = time.time() - t_next
+        if gap > GAP_S:
+            log(f"WARNING: {gap / 60:.0f} min pause before run {i} (suspend?); "
+                "new idle baseline", out)
+            last_idle = 0.0
         if time.time() - last_idle > args.idle_every * 60:
             idle_power, idle_utc, last_idle = idle(args.idle / 2), datetime.now(
                 timezone.utc), time.time()
@@ -242,6 +252,7 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
         cmd = json.loads(b["run_cmd"]) + [str(m["arg"])]
         stdin = str(ROOT / m["workload"]) if m["format"] == "function" else None
         limit = max(60.0, 10 * est_seconds(m, b["lang"])) * factor
+        load1 = os.getloadavg()[0]
         r = run_once({"cmd": cmd, "stdin": stdin}, ROOT, reader, args.cpus, limit)
         same = r["stdout_sha256"] == correct[b["program_id"]]["workload_out_sha256"]
         row = {"run_utc": datetime.now(timezone.utc).isoformat(), "program_id": b["program_id"],
@@ -249,6 +260,7 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
                "source": b["source"], "rep": rep, "arg": m["arg"],
                **{k: r[k] for k in ("exit_code", "timed_out", "wall_s", "user_s", "sys_s",
                                     "maxrss_mb", "temp_before_c")},
+               "load1_before": round(load1, 2), "gap_before_s": round(max(gap, 0.0), 1),
                "output_same": int(same), "idle_ref_utc": idle_utc.isoformat()}
         for d in domains:
             row[f"energy_{d}_j"] = r["energy"].get(d)
@@ -264,6 +276,7 @@ def phase_measure(built, correct, manifest, out, args, reader, factor) -> None:
               f"{' TIMEOUT' if r['timed_out'] else ''}{'' if same else ' OUTPUT-DIFF'}"
               f"  (ETA {eta:.1f} h)", flush=True)
         time.sleep(args.cooldown)
+        t_next = time.time()
     idle(args.idle)
     log(f"  measurement finished after {(time.time() - t_start) / 3600:.1f} h", out)
 
@@ -346,9 +359,30 @@ def cmd_check(args) -> None:
         reader.close()
 
 
+def stay_awake() -> None:
+    """Re-run this process under an inhibitor so the machine cannot suspend mid-measurement."""
+    if os.environ.get("LLM_ENERGY_AWAKE"):
+        return
+    os.environ["LLM_ENERGY_AWAKE"] = "1"
+    argv = [sys.executable, "-u", *sys.argv]
+    if shutil.which("systemd-inhibit"):
+        pre = ["systemd-inhibit", "--what=sleep:idle", "--who=llm-energy",
+               "--why=energy measurement", "--mode=block"]
+    elif shutil.which("caffeinate"):
+        pre = ["caffeinate", "-i", "-s"]
+    else:
+        print("WARNING: cannot prevent suspend; disable sleep manually", flush=True)
+        return
+    try:
+        os.execvp(pre[0], pre + argv)
+    except OSError as e:
+        print(f"WARNING: cannot prevent suspend ({e}); disable sleep manually", flush=True)
+
+
 def cmd_run(args) -> None:
     if platform.system() == "Windows":
         sys.exit("Windows is not supported (no energy counters); see LAUFEN_UND_MESSEN.md.")
+    stay_awake()
     out = RESULTS / args.name
     work = RESULTS / f"_work_{args.name}"
     out.mkdir(parents=True, exist_ok=True)
@@ -388,7 +422,7 @@ def main() -> None:
         p = sub.add_parser(name)
         p.set_defaults(func=fn)
         p.add_argument("--reps", type=int, default=3)
-        p.add_argument("--cooldown", type=float, default=3.0, help="seconds between runs")
+        p.add_argument("--cooldown", type=float, default=1.0, help="seconds between runs")
         p.add_argument("--python", help="interpreter for the programs (default: python3.14)")
         p.add_argument("--java-home", help="JDK directory (default: JAVA_HOME or PATH)")
         p.add_argument("--cxx", help="C++ compiler (default: g++-14, then g++)")

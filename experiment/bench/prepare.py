@@ -10,7 +10,10 @@
               so that the C++ program runs about --target seconds on this machine, but
               the slowest reference (usually Python) at most --max-slow seconds
               (EB: C++ reference; CLBG: median of the generated C++ programs passing the
-              check, since the CLBG reference exists in Python only)
+              check, since the CLBG reference exists in Python only). CLBG sizes grow in
+              coarse steps: if C++ would stay below --min-fast seconds, the next larger N
+              is taken even though Python then exceeds --max-slow
+Calibrate in the measurement state (governor performance, turbo off).
 
 Everything ends up in data/manifest.json (paths relative to experiment/), which run_platform.py uses on every platform.
 """
@@ -44,10 +47,11 @@ json.dump(res["cases"], sys.stdout)
 
 # Candidate input sizes for CLBG calibration (ascending).
 CLBG_LADDER = {
-    "CLBG01": [1_000_000, 2_000_000, 3_000_000, 5_000_000, 7_000_000, 10_000_000, 20_000_000],
-    "CLBG02": [1000, 1500, 2000, 2500, 3000, 4000, 5500],
-    "CLBG03": [16, 17, 18, 19, 20],
-    "CLBG04": [9, 10, 11, 12],
+    "CLBG01": [250_000, 500_000, 1_000_000, 1_500_000, 2_000_000, 3_000_000, 5_000_000,
+               7_000_000, 10_000_000],
+    "CLBG02": [500, 750, 1000, 1250, 1500, 2000, 2500, 3000],
+    "CLBG03": [13, 14, 15, 16, 17, 18],
+    "CLBG04": [8, 9, 10, 11],
 }
 
 
@@ -133,7 +137,7 @@ def prepare_eb(task: str, tools: dict, build_root: Path, target: float,
 
     for lang in LANGS:
         ref_iter[lang] = per_iteration(runs[lang], wl, 3600)
-    # C++ about `target` seconds, but no reference language above `max_python` seconds.
+    # C++ about `target` seconds, but no reference language above `max_slow` seconds.
     reps = max(1, min(math.ceil(target / ref_iter["cpp"]),
                       math.floor(max_slow / max(ref_iter.values()))))
     print(f"  {task}: R={reps}  per call cpp={ref_iter['cpp'] * 1e3:.2f} ms  "
@@ -149,7 +153,7 @@ def prepare_eb(task: str, tools: dict, build_root: Path, target: float,
 
 
 def prepare_clbg(task: str, tools: dict, build_root: Path, target: float,
-                 max_slow: float) -> dict:
+                 max_slow: float, min_fast: float) -> dict:
     meta = json.loads((TASKS / task / "task.json").read_text())
     check_n = meta["check_input_n"]
     exp_check = (TASKS / task / "expected" / f"n{check_n}.txt").read_text()
@@ -167,20 +171,22 @@ def prepare_clbg(task: str, tools: dict, build_root: Path, target: float,
             probes.append(cmd)
     if len(probes) < 3:
         sys.exit(f"{task}: fewer than 3 generated C++ programs pass the check")
-    # Largest N with the Python reference <= max_slow, stopping once C++ reaches target.
+    # Largest N with the Python reference <= max_slow, stopping once C++ reaches target;
+    # one step beyond max_slow if C++ would otherwise stay below min_fast.
     chosen = None
     for n in CLBG_LADDER[task]:
         median = statistics.median(run_proc(cmd + [str(n)], None, 300)["wall_s"]
                                    for cmd in probes)
-        ref = run_proc(ref_cmd + [str(n)], None, 3 * max_slow)
+        ref = run_proc(ref_cmd + [str(n)], None, 10 * max_slow)
         print(f"  {task}: N={n} median C++ {median:.2f} s ({len(probes)} programs), "
               f"python reference {ref['wall_s']:.1f} s")
-        if ref["timed_out"] or ref["wall_s"] > max_slow:
+        if ref["rc"] != 0 or ref["timed_out"]:
             break
-        if ref["rc"] != 0:
-            sys.exit(f"{task}: python reference failed at N={n}")
+        too_slow = ref["wall_s"] > max_slow
+        if too_slow and (chosen is None or chosen[1] >= min_fast):
+            break
         chosen = (n, median, ref)
-        if median >= target:
+        if median >= target or too_slow:
             break
     if chosen is None:
         sys.exit(f"{task}: even the smallest N exceeds the time limit")
@@ -200,8 +206,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", type=float, default=1.0,
                     help="seconds the C++ program should run on this machine")
-    ap.add_argument("--max-slow", type=float, default=60.0,
+    ap.add_argument("--max-slow", type=float, default=10.0,
                     help="upper limit in seconds for the slowest reference language")
+    ap.add_argument("--min-fast", type=float, default=0.2,
+                    help="CLBG: lower limit in seconds for the median C++ program")
+    ap.add_argument("--skip-data", action="store_true",
+                    help="reuse existing test cases and workloads (calibration only)")
     ap.add_argument("--cases", type=int, default=30)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--only", nargs="+", help="restrict calibration to these tasks")
@@ -209,18 +219,23 @@ def main() -> None:
     tools = detect_tools()
     for w in tools["warnings"]:
         print("WARNING:", w)
-    print("1/4 test cases"); make_tests(args.cases, args.seed)
-    print("2/4 workloads"); make_workloads()
+    if not args.skip_data:
+        print("1/4 test cases"); make_tests(args.cases, args.seed)
+        print("2/4 workloads"); make_workloads()
     print("3+4/4 references and calibration")
     manifest_path = DATA / "manifest.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     with tempfile.TemporaryDirectory() as tmp:
         for task in args.only or task_ids():
-            fn = prepare_eb if task_format(task) == "function" else prepare_clbg
-            manifest[task] = fn(task, tools, Path(tmp), args.target, args.max_slow)
+            if task_format(task) == "function":
+                manifest[task] = prepare_eb(task, tools, Path(tmp), args.target, args.max_slow)
+            else:
+                manifest[task] = prepare_clbg(task, tools, Path(tmp), args.target,
+                                              args.max_slow, args.min_fast)
             manifest_path.write_text(json.dumps(manifest, indent=2))
     manifest["_meta"] = {"target_seconds_cpp_laptop": args.target,
-                         "max_seconds_slowest_reference": args.max_slow, "tools": tools,
+                         "max_seconds_slowest_reference": args.max_slow,
+                         "min_seconds_cpp_clbg": args.min_fast, "tools": tools,
                          "test_cases": args.cases, "test_seed": args.seed}
     manifest_path.write_text(json.dumps(manifest, indent=2))
     print(f"Wrote {manifest_path}")

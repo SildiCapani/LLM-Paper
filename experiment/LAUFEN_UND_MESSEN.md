@@ -82,7 +82,9 @@ Es sollte **keine WARNING** zur Energie mehr erscheinen. **Schick mir beim erste
 ## Schritt 3: Plattform vorbereiten und starten
 
 Allgemein: **Netzteil an, alle anderen Programme zu** (Browser, Chat, Claude-App, Updates), Rechner
-während der Messung **nicht benutzen**, Ruhezustand aus.
+während der Messung **nicht benutzen**, **Deckel offen lassen**. Den Ruhezustand verhindert das
+Skript selbst (Linux: `systemd-inhibit`, Mac: `caffeinate`); beim Zuklappen schlafen viele Laptops
+trotzdem ein. Wenn es doch eine Pause gab, steht eine WARNING im Log.
 
 ### Linux-Laptop / PC / Server
 
@@ -114,7 +116,7 @@ sudo, und niemand sonst darf den Server währenddessen belasten.
 # Stromsparmodus aus, Netzteil an
 sudo -v                                            # Passwort einmal eingeben
 cd llm-energy/bench
-caffeinate -i python3 run_platform.py run --name mac --java-home $(brew --prefix openjdk@25)
+python3 run_platform.py run --name mac --java-home $(brew --prefix openjdk@25)
 ```
 
 `powermetrics` wird beim Start einmal mit sudo gestartet und läuft dann durch.
@@ -173,7 +175,7 @@ Im Ordner `llm-energy/` liegt **`results_<name>.zip`**. **Diese Datei schickst d
 | Bauen | EB-Aufgaben: generierte Funktion + Rahmenprogramm aus EffiBench-X + Standard-Imports + Wiederholungsschleife. CLBG: Programm unverändert. C++: `g++ -O2 -std=c++20`, Java: `javac`. |
 | Korrektheit | 30 kleine Testfälle pro EB-Aufgabe (aus dem Datensatz-Generator, einmal auf dem Laptop erzeugt) bzw. die offizielle CLBG-Prüfausgabe, danach einmal die große Eingabe. Nur `pass` wird gemessen. |
 | Große Eingabe | EB: eine Eingabe an der Obergrenze der Aufgabe, die **R-mal im selben Prozess** gelöst wird. CLBG: Parameter N. R und N sind auf allen Plattformen gleich (kalibriert auf dem Laptop). |
-| Messen | Leerlauf 60 s, danach alle Läufe in fester Zufallsreihenfolge, 3 s Pause dazwischen, Leerlauf alle 30 min. Ein Programm, das die Zeitgrenze überschreitet, wird nicht weiter wiederholt. |
+| Messen | Leerlauf 60 s, danach alle Läufe in fester Zufallsreihenfolge, 1 s Pause dazwischen, Leerlauf alle 30 min. Ein Programm, das die Zeitgrenze überschreitet, wird nicht weiter wiederholt. |
 
 ---
 

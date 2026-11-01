@@ -350,8 +350,16 @@ Copy-&-Paste-Vorgänge. Für die Reproduzierbarkeit, die Gutachter verlangen, is
 ## Änderungen v5 (2026-10-28): Ausführung auf den Plattformen
 
 - **Ein Skript pro Plattform** (`experiment/bench/run_platform.py`): bauen → Korrektheit → messen → ZIP. Details und Begründungen im Entscheidungsprotokoll (C14–C16, D10, E10–E14).
-- **Große Eingaben:** EB-Aufgaben bekommen eine eigene Eingabe an der Constraint-Obergrenze, die R-mal im selben Prozess gelöst wird; CLBG über N. Kalibriert auf dem Laptop: C++ ≈ 1 s, keine Referenz > 60 s.
+- **Große Eingaben:** EB-Aufgaben bekommen eine eigene Eingabe an der Constraint-Obergrenze, die R-mal im selben Prozess gelöst wird; CLBG über N. Kalibriert auf dem Laptop: C++ ≈ 1 s, keine Referenz > 60 s. **→ v6: 10 s**
 - **Korrektheit:** 30 Generator-Tests (bzw. CLBG-Prüfausgabe) + große Eingabe, auf jeder Plattform.
-- **Messung:** 3 Wiederholungen, 3 s Pause, Leerlauf alle 30 min, feste Zufallsreihenfolge, fortsetzbar.
+- **Messung:** 3 Wiederholungen, 3 s Pause (**→ v6: 1 s**), Leerlauf alle 30 min, feste Zufallsreihenfolge, fortsetzbar.
 - **Software-Umgebung:** native Installation (Python 3.14, Java 25, GCC 14) statt Docker, weil Mac- und Pi-Energie nur vom Host lesbar sind. Ersetzt den Abschnitt „Software-Umgebung (Entscheidung)“ oben.
 - **Raspberry Pi:** Energie über PMIC (`vcgencmd pmic_read_adc`), Summe aller Schienen.
+
+## Änderungen v6 (2026-10-31): kürzere Messung
+
+- Erste Laptop-Messung dauerte ~7 h reine Messzeit (fast 80 % Python) und war durch einen Ruhezustand zur Hälfte unbrauchbar (E15).
+- **Neue Kalibrierung:** langsamste Referenz höchstens **10 s** statt 60 s; CLBG: einen Schritt größer, falls C++ sonst unter 0,2 s bliebe. Kalibriert im Messzustand (Turbo aus, Governor performance).
+- **Pause 1 s** statt 3 s. 3 Wiederholungen und 5 Samples bleiben.
+- **Ruhezustand wird verhindert** (systemd-inhibit / caffeinate); Lücken zwischen Läufen werden erkannt und protokolliert, dazu die Systemlast vor jedem Lauf.
+- Erwartete Messzeit Laptop ≈ 2,5–3 h. Details: E16, E17.

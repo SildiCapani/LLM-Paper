@@ -3,36 +3,36 @@
     "format": "program",
     "check_n": 1000,
     "check_expected": "tasks/CLBG01/expected/n1000.txt",
-    "arg": 10000000,
+    "arg": 1000000,
     "arg_kind": "N",
-    "workload_expected": "bench/data/workloads/CLBG01.n10000000.expected.txt",
+    "workload_expected": "bench/data/workloads/CLBG01.n1000000.expected.txt",
     "est_ref_seconds_laptop": {
-      "cpp_generated_median": 0.43868354599544546,
-      "python": 54.00466310099728
+      "cpp_generated_median": 0.11708325899962801,
+      "python": 10.650963098996726
     }
   },
   "CLBG02": {
     "format": "program",
     "check_n": 100,
     "check_expected": "tasks/CLBG02/expected/n100.txt",
-    "arg": 2500,
+    "arg": 1000,
     "arg_kind": "N",
-    "workload_expected": "bench/data/workloads/CLBG02.n2500.expected.txt",
+    "workload_expected": "bench/data/workloads/CLBG02.n1000.expected.txt",
     "est_ref_seconds_laptop": {
-      "cpp_generated_median": 0.23670419799600495,
-      "python": 54.27931379200163
+      "cpp_generated_median": 0.09556324600271182,
+      "python": 12.259804312998313
     }
   },
   "CLBG03": {
     "format": "program",
     "check_n": 10,
     "check_expected": "tasks/CLBG03/expected/n10.txt",
-    "arg": 18,
+    "arg": 16,
     "arg_kind": "N",
-    "workload_expected": "bench/data/workloads/CLBG03.n18.expected.txt",
+    "workload_expected": "bench/data/workloads/CLBG03.n16.expected.txt",
     "est_ref_seconds_laptop": {
-      "cpp_generated_median": 1.7308470220013987,
-      "python": 52.99956960000418
+      "cpp_generated_median": 0.5302889510057867,
+      "python": 6.064903849000984
     }
   },
   "CLBG04": {
@@ -43,8 +43,8 @@
     "arg_kind": "N",
     "workload_expected": "bench/data/workloads/CLBG04.n10.expected.txt",
     "est_ref_seconds_laptop": {
-      "cpp_generated_median": 0.250982033998298,
-      "python": 11.058885346996249
+      "cpp_generated_median": 0.3857884520039079,
+      "python": 9.728497668002092
     }
   },
   "EB01": {
@@ -54,17 +54,17 @@
     "workload": "bench/data/workloads/EB01.txt",
     "workload_sha256": "63f545aef0f7db99a36754d99222961cf582e62c87b7867091242eb3a2945f85",
     "workload_expected": "bench/data/workloads/EB01.expected.txt",
-    "arg": 78,
+    "arg": 48,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.10679257228600493,
-      "java": 0.05259545459994115,
-      "cpp": 0.01295307688007597
+      "python": 0.10255010242898217,
+      "java": 0.058669083499989935,
+      "cpp": 0.02098592648670436
     },
     "est_ref_seconds_laptop": {
-      "python": 8.329820638308384,
-      "java": 4.10244545879541,
-      "cpp": 1.0103399966459257
+      "python": 4.9224049165911445,
+      "java": 2.8161160079995167,
+      "cpp": 1.0073244713618092
     }
   },
   "EB02": {
@@ -74,17 +74,17 @@
     "workload": "bench/data/workloads/EB02.txt",
     "workload_sha256": "51a9216bac2fa800e6ba693162b78b37c47871df99caca3556f128e168aa8716",
     "workload_expected": "bench/data/workloads/EB02.expected.txt",
-    "arg": 4208,
+    "arg": 419,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 4.683339137102626e-05,
-      "java": 0.014257461333330959,
-      "cpp": 1.7441393856701445e-06
+      "python": 5.384277363911833e-05,
+      "java": 0.0238612763213106,
+      "cpp": 2.4766776414320796e-06
     },
     "est_ref_seconds_laptop": {
-      "python": 0.1970749108892785,
-      "java": 59.995397290656676,
-      "cpp": 0.007339338534899968
+      "python": 0.022560122154790578,
+      "java": 9.997874778629141,
+      "cpp": 0.0010377279317600413
     }
   },
   "EB03": {
@@ -94,17 +94,17 @@
     "workload": "bench/data/workloads/EB03.txt",
     "workload_sha256": "c48546e963c7a8a8ccced864930107b466e6f7912ae97043b8340262b17a6e3f",
     "workload_expected": "bench/data/workloads/EB03.expected.txt",
-    "arg": 115,
+    "arg": 76,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.13200797559984495,
-      "java": 0.015193000474937435,
-      "cpp": 0.008736901776309855
+      "python": 0.11465189649970853,
+      "java": 0.02197445292320201,
+      "cpp": 0.013224102020861514
     },
     "est_ref_seconds_laptop": {
-      "python": 15.18091719398217,
-      "java": 1.747195054617805,
-      "cpp": 1.0047437042756333
+      "python": 8.713544133977848,
+      "java": 1.6700584221633528,
+      "cpp": 1.0050317535854751
     }
   },
   "EB04": {
@@ -114,17 +114,17 @@
     "workload": "bench/data/workloads/EB04.txt",
     "workload_sha256": "d1eaaa54752353567cc25a2136a13237db0c171221f55159285ad5f39296cb79",
     "workload_expected": "bench/data/workloads/EB04.expected.txt",
-    "arg": 1518,
+    "arg": 176,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.03949971205849365,
-      "java": 0.0035081244024207456,
-      "cpp": 0.00018985905813479894
+      "python": 0.056745530614884604,
+      "java": 0.005113497194408275,
+      "cpp": 0.0003104001829088418
     },
     "est_ref_seconds_laptop": {
-      "python": 59.960562904793356,
-      "java": 5.325332842874692,
-      "cpp": 0.2882060502486248
+      "python": 9.98721338821969,
+      "java": 0.8999755062158564,
+      "cpp": 0.05463043219195615
     }
   },
   "EB05": {
@@ -134,17 +134,17 @@
     "workload": "bench/data/workloads/EB05.txt",
     "workload_sha256": "966826215e1af8e155ba97f97665cc7848396e6fc7b6f1beaa85fc9940f3811f",
     "workload_expected": "bench/data/workloads/EB05.expected.txt",
-    "arg": 46,
+    "arg": 33,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.3484358346662096,
-      "java": 0.12266248220112175,
-      "cpp": 0.022062192064514683
+      "python": 0.2989700296675437,
+      "java": 0.08639293683275658,
+      "cpp": 0.024066804030470932
     },
     "est_ref_seconds_laptop": {
-      "python": 16.02804839464564,
-      "java": 5.6424741812516,
-      "cpp": 1.0148608349676753
+      "python": 9.866010979028943,
+      "java": 2.850966915480967,
+      "cpp": 0.7942045330055407
     }
   },
   "EB06": {
@@ -154,17 +154,17 @@
     "workload": "bench/data/workloads/EB06.txt",
     "workload_sha256": "465ea305497507de3d70d7f4d25cfd51c251a72b23691649f6fc61565d480e8e",
     "workload_expected": "bench/data/workloads/EB06.expected.txt",
-    "arg": 20,
+    "arg": 13,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.20110423266790653,
-      "java": 0.057672324599843706,
-      "cpp": 0.05126727176908529
+      "python": 0.1962835386657389,
+      "java": 0.06069893066726056,
+      "cpp": 0.0807438644446342
     },
     "est_ref_seconds_laptop": {
-      "python": 4.022084653358131,
-      "java": 1.153446491996874,
-      "cpp": 1.0253454353817057
+      "python": 2.5516860026546055,
+      "java": 0.7890860986743873,
+      "cpp": 1.0496702377802447
     }
   },
   "EB07": {
@@ -174,17 +174,17 @@
     "workload": "bench/data/workloads/EB07.txt",
     "workload_sha256": "7c66ea15ca9eaf13a9383e15461ca3efff5b5e2e8a7a5c032d39e2e080c0281e",
     "workload_expected": "bench/data/workloads/EB07.expected.txt",
-    "arg": 113,
+    "arg": 92,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.050083304529835004,
-      "java": 0.0230684974545015,
-      "cpp": 0.00888536621307855
+      "python": 0.053481350714199447,
+      "java": 0.01995005932154267,
+      "cpp": 0.010959745465415522
     },
     "est_ref_seconds_laptop": {
-      "python": 5.6594134118713555,
-      "java": 2.6067402123586696,
-      "cpp": 1.0040463820778762
+      "python": 4.920284265706349,
+      "java": 1.8354054575819256,
+      "cpp": 1.008296582818228
     }
   },
   "EB08": {
@@ -194,17 +194,17 @@
     "workload": "bench/data/workloads/EB08.txt",
     "workload_sha256": "8e1bc7b775c833cd5f3022305103b3d09d4a01586d3eb1e87b83966c35b34ab7",
     "workload_expected": "bench/data/workloads/EB08.expected.txt",
-    "arg": 855051,
+    "arg": 178754,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 4.909723953391601e-05,
-      "java": 3.782448642771808e-05,
-      "cpp": 1.1695220601198121e-06
+      "python": 5.5942649418078105e-05,
+      "java": 4.145433215653488e-05,
+      "cpp": 1.8903921749937386e-06
     },
     "est_ref_seconds_laptop": {
-      "python": 41.98064376071442,
-      "java": 32.341864944506774,
-      "cpp": 1.0000010070275054
+      "python": 9.999972354079134,
+      "java": 7.410127690309237,
+      "cpp": 0.3379151628488307
     }
   },
   "EB09": {
@@ -214,17 +214,17 @@
     "workload": "bench/data/workloads/EB09.txt",
     "workload_sha256": "3ece0fa5010836985f65dd0d4ef0bf6b1b1a4f405145c7c5afe18e9c15a0a1a0",
     "workload_expected": "bench/data/workloads/EB09.expected.txt",
-    "arg": 2850,
+    "arg": 1781,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.0011167705674047061,
-      "java": 0.003790017959691862,
-      "cpp": 0.0003509808602144896
+      "python": 0.0011105021515175528,
+      "java": 0.004814377177583389,
+      "cpp": 0.0005617461571720175
     },
     "est_ref_seconds_laptop": {
-      "python": 3.1827961171034125,
-      "java": 10.801551185121808,
-      "cpp": 1.0002954516112954
+      "python": 1.9778043318527616,
+      "java": 8.574405753276016,
+      "cpp": 1.000469905923363
     }
   },
   "EB10": {
@@ -234,40 +234,37 @@
     "workload": "bench/data/workloads/EB10.txt",
     "workload_sha256": "6d28a04be16f5819acf2b60d198a3287b82e0ec44ff6b781329468e9603f1ae9",
     "workload_expected": "bench/data/workloads/EB10.expected.txt",
-    "arg": 52,
+    "arg": 33,
     "arg_kind": "repetitions",
     "ref_seconds_per_call_laptop": {
-      "python": 0.26228908633250586,
-      "java": 0.09473316012463329,
-      "cpp": 0.01956306709751782
+      "python": 0.29448056866628275,
+      "java": 0.08968035999987478,
+      "cpp": 0.02237841126471347
     },
     "est_ref_seconds_laptop": {
-      "python": 13.639032489290305,
-      "java": 4.926124326480931,
-      "cpp": 1.0172794890709267
+      "python": 9.71785876598733,
+      "java": 2.959451879995868,
+      "cpp": 0.7384875717355446
     }
   },
   "_meta": {
     "target_seconds_cpp_laptop": 1.0,
-    "max_seconds_slowest_reference": 60.0,
+    "max_seconds_slowest_reference": 10.0,
+    "min_seconds_cpp_clbg": 0.2,
     "tools": {
       "paths": {
-        "python": "/home/smartrollerz/.pyenv/versions/3.12.15/bin/python3",
+        "python": "/usr/bin/python3.14",
         "java": "/usr/bin/java",
         "javac": "/usr/bin/javac",
-        "cxx": "/usr/bin/g++-13"
+        "cxx": "/usr/bin/g++-14"
       },
       "versions": {
-        "python": "Python 3.12.15",
-        "java": "openjdk version \"21.0.12.1\" 2026-08-18",
-        "javac": "javac 21.0.12.1",
-        "cxx": "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+        "python": "Python 3.14.10",
+        "java": "openjdk version \"25.0.4.1\" 2026-08-18",
+        "javac": "javac 25.0.4.1",
+        "cxx": "g++-14 (Ubuntu 14.2.0-4ubuntu2~24.04.1) 14.2.0"
       },
-      "warnings": [
-        "python version 3.12 differs from planned 3.14",
-        "java version 21 differs from planned 25",
-        "cxx version 13 differs from planned 14"
-      ]
+      "warnings": []
     },
     "test_cases": 30,
     "test_seed": 42
