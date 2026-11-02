@@ -1,0 +1,7 @@
+[13:14:42] Platform Apple M4, energy: powermetrics, speed factor 1.00
+[13:14:42] Phase 1/4 build: 0 done, 664 to build
+[13:15:43] Phase 2/4 correctness: 0 done, 664 to check
+[13:17:26]   correctness: {'pass': 662, 'wrong': 2}
+[13:17:26] Phase 3/4 measure: 662 programs x 3 reps, 0 runs done, 1986 to go
+[13:17:26]   idle baseline 60 s ...
+[14:21:49]   measurement finished after 1.1 h

@@ -35,3 +35,4 @@ experiment/bench/data/workloads/
 experiment/llm-energy-bundle.zip
 experiment/results_*.zip
 experiment/results/_work_*/
+experiment/analysis/.venv/

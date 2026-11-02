@@ -1,0 +1,8 @@
+[13:07:36] Platform 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, energy: rapl, speed factor 1.00
+[13:07:36] Phase 1/4 build: 0 done, 664 to build
+[13:11:44] Phase 2/4 correctness: 0 done, 664 to check
+[13:15:59]   correctness: {'pass': 663, 'wrong': 1}
+[13:15:59] Phase 3/4 measure: 663 programs x 3 reps, 0 runs done, 1989 to go
+[13:15:59]   idle baseline 60 s ...
+[15:24:35]   measurement finished after 2.1 h
+[15:24:35] Phase 4/4 done. Send this file back: /home/smartrollerz/Documents/LLM-Paper/experiment/results_laptop.zip

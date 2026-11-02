@@ -363,3 +363,8 @@ Copy-&-Paste-Vorgänge. Für die Reproduzierbarkeit, die Gutachter verlangen, is
 - **Pause 1 s** statt 3 s. 3 Wiederholungen und 5 Samples bleiben.
 - **Ruhezustand wird verhindert** (systemd-inhibit / caffeinate); Lücken zwischen Läufen werden erkannt und protokolliert, dazu die Systemlast vor jedem Lauf.
 - Erwartete Messzeit Laptop ≈ 2,5–3 h. Details: E16, E17.
+
+## Änderungen v7 (2026-11-02): Mac als vierte Plattform
+
+- Der Mac M4 wurde gemessen und ist jetzt eine eigene Plattform (Laptop, Server, Mac, Pi). Energie: `powermetrics` (`combined`, Modellschätzung, 100 ms). Governor/Turbo lassen sich auf dem Mac nicht festlegen.
+- Mac-Wiederholungen streuen stärker (CV 12 % statt 2,6 %); Aussagen nur über Verhältnisse und Rangfolgen (D3). Details: D11, E19, E20.

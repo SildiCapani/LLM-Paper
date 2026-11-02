@@ -291,11 +291,28 @@ def platform_info() -> dict[str, str]:
         no_turbo = Path("/sys/devices/system/cpu/intel_pstate/no_turbo")
         if no_turbo.exists():
             info["turbo"] = "off" if no_turbo.read_text().strip() == "1" else "on"
-    elif info["system"] == "Darwin":
         try:
-            info["cpu"] = subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"],
-                                         capture_output=True, text=True).stdout.strip()
+            for line in Path("/proc/meminfo").read_text().splitlines():
+                if line.startswith("MemTotal:"):
+                    info["ram_gb"] = f"{int(line.split()[1]) / 1024**2:.1f}"
+                    break
+            for line in Path("/etc/os-release").read_text().splitlines():
+                if line.startswith("PRETTY_NAME="):
+                    info["os"] = line.split("=", 1)[1].strip('"')
+                    break
+            model = Path("/proc/device-tree/model")  # e.g. Raspberry Pi 5
+            if model.exists():
+                info["board"] = model.read_text().strip("\x00\n ")
         except OSError:
+            pass
+    elif info["system"] == "Darwin":
+        def sysctl(*cmd: str) -> str:
+            return subprocess.run(list(cmd), capture_output=True, text=True).stdout.strip()
+        try:
+            info["cpu"] = sysctl("sysctl", "-n", "machdep.cpu.brand_string")
+            info["ram_gb"] = f"{int(sysctl('sysctl', '-n', 'hw.memsize')) / 1024**3:.1f}"
+            info["os"] = "macOS " + sysctl("sw_vers", "-productVersion")
+        except (OSError, ValueError):
             pass
     return info
 

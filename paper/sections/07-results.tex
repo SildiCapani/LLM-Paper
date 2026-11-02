@@ -1,16 +1,11 @@
 \section{Results}
 \label{sec:results}
 
-% Results are filled in only after data collection and analysis.
-% No statements about specific models or combinations before then.
+% Laptop and Mac measured so far; server and Raspberry Pi follow.
 
-\subsection{Code Generation}
-All 630 requests returned a response with exactly one code block (two after one technical
-retry), and no tool was invoked. \Cref{tab:gentime} reports the wall-clock time per request
-as observed by the CLI call. It includes network latency and vendor-side load and
-therefore describes the tools' responsiveness, not the models' computational cost.
-Claude Code answered fastest, Antigravity CLI slowest and most variably (maximum 191\,s);
-for all three, CLBG tasks took longer than EffiBench-X tasks.
+\paragraph{Generation.}
+All 630 requests returned one code block without tool use. Claude Code answered fastest,
+Antigravity CLI slowest (\cref{tab:gentime}); times include network latency.
 
 \begin{table}[t]
   \centering
@@ -28,20 +23,36 @@ for all three, CLBG tasks took longer than EffiBench-X tasks.
   \end{tabular}
 \end{table}
 
-\subsection{Functional Correctness}
-\TODO{Correctness rates per LLM $\times$ language.}
+\paragraph{Measurements.}
+Of 630 programs, 629 were correct on the laptop and 628 on the Mac, where one Java program printed decimals in the system's German locale.
+Repetitions varied by 2.6\,\% (laptop) and 12\,\% (Mac; median coefficient of variation).
+Generated Python consumed 11 (Mac: 16) times as much energy as C++ (geometric mean over
+tasks), Java 2.5 (2.6) times (\cref{fig:languages}). Single algorithmic choices dominate the
+LLM comparison (\cref{fig:llms}): Claude's C++ solutions for EB02 used 150--300 times
+the others' energy. Relative to the task median, Gemini's programs used 0.90, GPT's 1.00,
+and Claude's 1.29 on the laptop (Mac: 0.90, 1.01, 1.32). Program energies correlate across
+platforms ($r=0.974$, log; \cref{fig:platforms}); energy and time correlate with
+$r=0.997$ (laptop) and 0.963 (Mac).
+\TODO{Server and Raspberry~Pi; mixed-effects models for RQ3/RQ4.}
 
-\subsection{RQ1: Differences between LLMs}
-\TODO{}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{laptop_languages}
+  \caption{Median energy per run of generated programs (laptop).}
+  \label{fig:languages}
+\end{figure}
 
-\subsection{RQ2: Differences between Programming Languages}
-\TODO{}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{llms}
+  \caption{Program energy relative to its task--language median; large markers:
+    geometric means.}
+  \label{fig:llms}
+\end{figure}
 
-\subsection{RQ3: Differences between Hardware Platforms}
-\TODO{}
-
-\subsection{RQ4: Interaction Effects and Rank Stability}
-\TODO{}
-
-\subsection{RQ5: Relation of Energy, Time, and Memory}
-\TODO{}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{platforms}
+  \caption{Energy per program on laptop and Mac (different scopes).}
+  \label{fig:platforms}
+\end{figure}

@@ -62,6 +62,7 @@ LLM-Paper/
     │   ├── make_bundle.py   ← erzeugt llm-energy-bundle.zip
     │   └── data/            ← Testfälle, Eingaben, manifest.json (R/N pro Aufgabe)
     ├── results/             ← entpackte Ergebnisse der Plattformen (results/<name>/)
+    ├── analysis/            ← Grafiken fürs Paper (plot_platform.py → paper/figures/)
     └── measure/             ← Messskript für Energie, Zeit und Speicher
         ├── ANLEITUNG.md     ← Schritt-für-Schritt-Anleitung zum Messen (Deutsch)
         ├── measure.py, energy.py, test_energy.py
@@ -149,7 +150,7 @@ cd experiment/measure && python3 measure.py check
 | `04-research-questions.tex` | Forschungsfragen + Hypothesen | ✅ ausgearbeitet |
 | `05-experimental-setup.tex` | Setup (LLMs, Aufgaben, Hardware) | ✅ ausgearbeitet, Hardware teils `[TBD]` |
 | `06-methodology.tex` | Methodik (Prompts, Messung, Statistik) | ✅ ausgearbeitet |
-| `07-results.tex` | Ergebnisse | leer (nach dem Experiment) |
+| `07-results.tex` | Ergebnisse | Generierung, Laptop und Mac; Server/Pi offen |
 | `08-discussion.tex` | Diskussion | leer (nach dem Experiment) |
 | `09-threats.tex` | Threats to Validity | großteils ausgearbeitet |
 | `10-conclusion.tex` | Fazit + Future Work | Entwurf |

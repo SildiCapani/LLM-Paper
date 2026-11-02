@@ -1,0 +1,56 @@
+{
+  "platform": {
+    "hostname": "smartrollerz",
+    "system": "Linux",
+    "release": "7.0.0-42-generic",
+    "machine": "x86_64",
+    "cpu_count": "8",
+    "cpu": "11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz",
+    "governor": "performance",
+    "turbo": "off"
+  },
+  "tools": {
+    "paths": {
+      "python": "/usr/bin/python3.14",
+      "java": "/usr/bin/java",
+      "javac": "/usr/bin/javac",
+      "cxx": "/usr/bin/g++-14"
+    },
+    "versions": {
+      "python": "Python 3.14.10",
+      "java": "openjdk version \"25.0.4.1\" 2026-08-18",
+      "javac": "javac 25.0.4.1",
+      "cxx": "g++-14 (Ubuntu 14.2.0-4ubuntu2~24.04.1) 14.2.0"
+    },
+    "warnings": []
+  },
+  "energy_reader": "rapl",
+  "energy_domains": [
+    "package-0",
+    "core",
+    "uncore",
+    "psys"
+  ],
+  "energy_note": "RAPL counters readable",
+  "cpu_temp_c": 52.0,
+  "started_utc": "2026-11-01T12:07:36.327604+00:00",
+  "speed_factor": 1.0,
+  "args": {
+    "command": "run",
+    "reps": 3,
+    "cooldown": 1.0,
+    "python": null,
+    "java_home": null,
+    "cxx": null,
+    "no_energy": false,
+    "name": "laptop",
+    "idle": 60,
+    "idle_every": 30,
+    "cpus": null,
+    "workers": null,
+    "max_runs": null
+  },
+  "manifest_sha256": "c8785440170c9bdcb6b4a205cc1cc8761e052965975f1a0033ff0db2cf7bf58f",
+  "warnings": [],
+  "python_orchestrator": "3.12.15 (main, Oct 13 2026, 11:11:36) [GCC 13.3.0]"
+}

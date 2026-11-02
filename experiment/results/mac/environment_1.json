@@ -1,0 +1,54 @@
+{
+  "platform": {
+    "hostname": "Mac.fritz.box",
+    "system": "Darwin",
+    "release": "25.3.0",
+    "machine": "arm64",
+    "cpu_count": "10",
+    "cpu": "Apple M4"
+  },
+  "tools": {
+    "paths": {
+      "python": "/opt/homebrew/bin/python3.14",
+      "java": "/opt/homebrew/opt/openjdk@25/bin/java",
+      "javac": "/opt/homebrew/opt/openjdk@25/bin/javac",
+      "cxx": "/opt/homebrew/bin/g++-14"
+    },
+    "versions": {
+      "python": "Python 3.14.10",
+      "java": "openjdk version \"25.0.5.0.3\" 2026-10-24",
+      "javac": "javac 25.0.5.0.3",
+      "cxx": "g++-14 (Homebrew GCC 14.4.0) 14.4.0"
+    },
+    "warnings": []
+  },
+  "energy_reader": "powermetrics",
+  "energy_domains": [
+    "cpu",
+    "gpu",
+    "ane",
+    "combined"
+  ],
+  "energy_note": "powermetrics running",
+  "cpu_temp_c": null,
+  "started_utc": "2026-11-02T12:14:42.773669+00:00",
+  "speed_factor": 1.0,
+  "args": {
+    "command": "run",
+    "reps": 3,
+    "cooldown": 1.0,
+    "python": null,
+    "java_home": "/opt/homebrew/opt/openjdk@25",
+    "cxx": null,
+    "no_energy": false,
+    "name": "mac",
+    "idle": 60,
+    "idle_every": 30,
+    "cpus": null,
+    "workers": null,
+    "max_runs": null
+  },
+  "manifest_sha256": "c8785440170c9bdcb6b4a205cc1cc8761e052965975f1a0033ff0db2cf7bf58f",
+  "warnings": [],
+  "python_orchestrator": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]"
+}

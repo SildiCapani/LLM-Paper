@@ -18,6 +18,7 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{placeins}  % \FloatBarrier before the references (G10)
 \graphicspath{{figures/}}
 \usepackage{xcolor}
 \usepackage{enumitem}
@@ -45,12 +46,12 @@
 
 \author{%
   \IEEEauthorblockN{Brisild Capani}
-  \IEEEauthorblockA{\TBD{} Affiliation\\
-    \texttt{brisild.capani@aeb.com}}
+  \IEEEauthorblockA{DHBW Stuttgart\\
+    \texttt{inf24039@lehre.dhbw-stuttgart.de}}
   \and
-  \IEEEauthorblockN{Seyyid \TBD}
-  \IEEEauthorblockA{\TBD{} Affiliation\\
-    \texttt{\TBD}}
+  \IEEEauthorblockN{Seyyid Bachri Oglou}
+  \IEEEauthorblockA{DHBW Stuttgart\\
+    \texttt{inf24071@lehre.dhbw-stuttgart.de}}
 }
 
 \begin{document}
@@ -58,16 +59,17 @@
 
 \input{sections/00-abstract}
 \input{sections/01-introduction}
-\input{sections/02-background}
+% \input{sections/02-background}  % merged/cut for the word limit (G6/G7)
 \input{sections/03-related-work}
-\input{sections/04-research-questions}
+% \input{sections/04-research-questions}  % merged/cut for the word limit (G6/G7)
 \input{sections/05-experimental-setup}
-\input{sections/06-methodology}
+% \input{sections/06-methodology}  % merged/cut for the word limit (G6/G7)
 \input{sections/07-results}
-\input{sections/08-discussion}
+% \input{sections/08-discussion}  % merged/cut for the word limit (G6/G7)
 \input{sections/09-threats}
 \input{sections/10-conclusion}
 
+\FloatBarrier
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 
