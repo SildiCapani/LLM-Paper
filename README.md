@@ -41,6 +41,7 @@ LLM-Paper/
 ├── notes/                   ← Arbeitsnotizen (Deutsch), Grundlage für das Paper
 │   ├── entscheidungsprotokoll.md ← ALLE Entscheidungen + Beobachtungen, mit Paper-Stelle
 │   ├── literature-review.md ← Literaturrecherche + Begründung der Forschungslücke
+│   ├── prompts-und-aufgaben.md ← Erklärung: woher die 14 Aufgaben kommen, wie die Prompts aussehen
 │   └── experimental-design.md ← komplettes Experimentdesign mit allen Entscheidungen
 │
 └── experiment/              ← alles für das Experiment (Daten, Prompts, Skripte)
@@ -102,6 +103,7 @@ du dort etwas änderst, ändert sich der Anhang des Papers automatisch mit.
 |---|---|
 | **beim Schreiben nichts vergessen**: jede Entscheidung mit Begründung und Paper-Stelle | [notes/entscheidungsprotokoll.md](notes/entscheidungsprotokoll.md) |
 | verstehen, warum es dieses Paper braucht | [notes/literature-review.md](notes/literature-review.md) |
+| verstehen, welche Aufgaben die LLMs gelöst haben und wie die Prompts aussehen | [notes/prompts-und-aufgaben.md](notes/prompts-und-aufgaben.md) |
 | wissen, wie das Experiment aufgebaut ist und warum | [notes/experimental-design.md](notes/experimental-design.md) |
 | den Experiment-Ordner verstehen (Aufgaben, Prompts) | [experiment/ERKLAERUNG.md](experiment/ERKLAERUNG.md) |
 | einen Prompt sehen, wie ihn die KI bekommt | [experiment/prompts/rendered/EB03/cpp.txt](experiment/prompts/rendered/EB03/cpp.txt) |

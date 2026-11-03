@@ -26,11 +26,14 @@ Antigravity CLI slowest (\cref{tab:gentime}); times include network latency.
 \paragraph{Measurements.}
 Of 630 programs, 629 were correct on the laptop and 628 on the Mac, where one Java program printed decimals in the system's German locale.
 Repetitions varied by 2.6\,\% (laptop) and 12\,\% (Mac; median coefficient of variation).
-Generated Python consumed 11 (Mac: 16) times as much energy as C++ (geometric mean over
-tasks), Java 2.5 (2.6) times (\cref{fig:languages}). Single algorithmic choices dominate the
-LLM comparison (\cref{fig:llms}): Claude's C++ solutions for EB02 used 150--300 times
-the others' energy. Relative to the task median, Gemini's programs used 0.90, GPT's 1.00,
-and Claude's 1.29 on the laptop (Mac: 0.90, 1.01, 1.32). Program energies correlate across
+Generated Python consumed 11 (Mac: 16) times as much energy as C++, Java 2.5 (2.6) times
+(geometric means over tasks; \cref{fig:languages}). On the CLBG tasks our Python gap is half
+the 57 times reported by Pereira et al.~\cite{pereira2017energy} (\cref{fig:literature}). Single algorithmic choices dominate the
+LLM comparison (\cref{fig:llms}): in all five samples, Claude's C++ solutions for EB02 used
+150--300 times the others' energy. Relative to the task median, Gemini's programs used 0.90, GPT's 1.00,
+and Claude's 1.29 on the laptop (Mac: 0.90, 1.01, 1.32); Gemini led in C++ and Java, Gemini
+and GPT tied in Python (\cref{fig:heatmap}), and differences arise in few tasks
+(\cref{fig:tasks}). Program energies correlate across
 platforms ($r=0.974$, log; \cref{fig:platforms}); energy and time correlate with
 $r=0.997$ (laptop) and 0.963 (Mac).
 \TODO{Server and Raspberry~Pi; mixed-effects models for RQ3/RQ4.}
@@ -41,6 +44,28 @@ $r=0.997$ (laptop) and 0.963 (Mac).
   \caption{Median energy per run of generated programs (laptop).}
   \label{fig:languages}
 \end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{languages_literature}
+  \caption{Java and Python energy relative to C++: generated code, EffiBench-X references,
+    and Pereira et al.~\cite{pereira2017energy}.}
+  \label{fig:literature}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{llm_heatmap}
+  \caption{Geometric mean of program energy relative to the task median; bold: lowest.}
+  \label{fig:heatmap}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{llm_tasks}
+  \caption{Median of each LLM's five samples relative to the task median.}
+  \label{fig:tasks}
+\end{figure*}
 
 \begin{figure}[t]
   \centering

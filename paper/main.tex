@@ -18,7 +18,12 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{graphicx}
-\usepackage{placeins}  % \FloatBarrier before the references (G10)
+\usepackage{placeins}  % \FloatBarrier before the appendix (G13)
+% Allow several floats per page; the paper has more floats than text (G13).
+\setcounter{dbltopnumber}{3}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.05}
 \graphicspath{{figures/}}
 \usepackage{xcolor}
 \usepackage{enumitem}
@@ -69,10 +74,10 @@
 \input{sections/09-threats}
 \input{sections/10-conclusion}
 
-\FloatBarrier
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 
+\FloatBarrier
 \appendix
 \input{sections/11-appendix-prompts}
 

@@ -1,9 +1,9 @@
 \section{Threats to Validity}
 \label{sec:threats}
 
-RAPL, PMIC, and \texttt{powermetrics} (model estimates) capture
-different scopes, so absolute values are not compared across platforms. The CLIs' hidden system prompts and differently calibrated effort levels make
-\emph{LLM} a model--tool factor; models and CLIs evolve, so we record versions and dates.
+Energy interfaces differ in scope (\texttt{powermetrics} only estimates), so absolute
+values are not compared across platforms. Hidden system prompts and effort levels make
+\emph{LLM} a model--tool factor; we record versions and dates.
 All tasks are public and may be memorised. Solving an input repeatedly in one process
 amortises one-time initialisation, and the 10\,s cap leaves some C++ runs below 0.1\,s,
 where start-up weighs more. Results may not generalise to other models, languages, or

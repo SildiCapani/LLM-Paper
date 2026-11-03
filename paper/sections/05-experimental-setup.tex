@@ -2,13 +2,13 @@
 \label{sec:setup}
 
 \paragraph{Design.}
-LLM, language, and platform are fully crossed; tasks are a random factor, and each
-task--LLM--language cell is sampled five times ($3\times3\times14\times5=630$ programs).
+LLM, language, and platform are fully crossed; each task--LLM--language cell is
+sampled five times ($3\times3\times14\times5=630$ programs).
 We measure energy, time, peak memory, and correctness.
 
 \paragraph{LLMs.}
-We use the flagship models of Anthropic, OpenAI, and Google through their official coding
-CLIs (\cref{tab:llms}), so \emph{LLM} denotes model and tool jointly. Requests run
+Flagship models run through their vendors' coding CLIs (\cref{tab:llms}), so \emph{LLM}
+denotes model and tool jointly. Requests run
 non-interactively in an empty directory with tools disabled or sandboxed and effort
 \emph{medium}. The same zero-shot prompt (\cref{fig:prompt-templates}) never mentions
 efficiency; code is used unrepaired.
@@ -82,11 +82,11 @@ power every 30\,min.
     & Laptop & Server & Mac & Raspberry~Pi~5 \\
     \midrule
     CPU / ISA            & Intel i7-1185G7 (x86-64) & \TBD{} (x86-64) & Apple M4 (Arm64) & Cortex-A76 (Arm64) \\
-    RAM                  & 32\,GB           & 16\,GB             & \TBD & 8\,GB \\
+    RAM                  & 32\,GB           & \TBD            & 16\,GB & 8\,GB \\
     OS / kernel          & Ubuntu 24.04, Linux 7.0 & \TBD            & macOS 26.3 & \TBD \\
-    Python               & \multicolumn{4}{c}{CPython 3.14 (laptop, Mac: 3.14.10)} \\
-    Java                 & \multicolumn{4}{c}{OpenJDK 25 (laptop: 25.0.4.1; Mac: 25.0.5)} \\
-    C++                  & \multicolumn{4}{c}{GCC 14, \texttt{-O2 -std=c++20} (laptop: 14.2.0; Mac: 14.4.0)} \\
+    Python (CPython)     & 3.14.10 & \TBD & 3.14.10 & \TBD \\
+    Java (OpenJDK)       & 25.0.4.1 & \TBD & 25.0.5 & \TBD \\
+    C++ (GCC, \texttt{-O2 -std=c++20}) & 14.2.0 & \TBD & 14.4.0 & \TBD \\
     Energy measurement   & RAPL (\texttt{powercap}) & RAPL (\texttt{powercap}) & \texttt{powermetrics} (100\,ms) & PMIC ADCs (\texttt{vcgencmd}) \\
     Measured scope       & CPU package & CPU package + DRAM & CPU+GPU+ANE (model) & board input \\
     \bottomrule
