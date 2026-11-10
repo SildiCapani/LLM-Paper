@@ -1,5 +1,7 @@
 # Anleitung: Code ausführen und Energie messen (alle Plattformen)
 
+> **Stand 10.11. (D12):** Gemessen werden nur **Laptop** und **Mac M4**. Server (kein direkter Zugriff) und Raspberry Pi (nur Pi 3 vorhanden, ohne auslesbaren PMIC) entfallen. Die Abschnitte zu Server und Pi bleiben nur als Referenz stehen.
+
 **Kurz:** Du bekommst **eine ZIP-Datei**, entpackst sie auf der Plattform, startest **einen Befehl**,
 und am Ende entsteht **eine Ergebnis-ZIP**, die du mir zurückgibst. Alles dazwischen macht das
 Skript: bauen, testen, messen.

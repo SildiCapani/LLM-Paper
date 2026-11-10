@@ -15,7 +15,7 @@ abhängig von
 
 - dem **KI-Assistenten**: Claude, ChatGPT, Gemini (über ihre offiziellen Kommandozeilen-Tools)
 - der **Programmiersprache**: Python, Java, C++
-- der **Hardware**: Laptop, Server, Raspberry Pi bzw. Mac (noch in Klärung)
+- der **Hardware**: Laptop (x86, Linux) und Mac M4 (Arm, macOS); Server und Raspberry Pi entfallen (D12)
 
 Die Kernfrage ist **RQ4**: *Bleibt die Rangfolge der KI-Assistenten gleich, oder hängt sie von
 Sprache und Hardware ab?*
@@ -152,7 +152,7 @@ cd experiment/measure && python3 measure.py check
 | `04-research-questions.tex` | Forschungsfragen + Hypothesen | ✅ ausgearbeitet |
 | `05-experimental-setup.tex` | Setup (LLMs, Aufgaben, Hardware) | ✅ ausgearbeitet, Hardware teils `[TBD]` |
 | `06-methodology.tex` | Methodik (Prompts, Messung, Statistik) | ✅ ausgearbeitet |
-| `07-results.tex` | Ergebnisse | Generierung, Laptop und Mac; Server/Pi offen |
+| `07-results.tex` | Ergebnisse | Generierung, Laptop und Mac; Modelle für RQ3/RQ4 offen |
 | `08-discussion.tex` | Diskussion | leer (nach dem Experiment) |
 | `09-threats.tex` | Threats to Validity | großteils ausgearbeitet |
 | `10-conclusion.tex` | Fazit + Future Work | Entwurf |
@@ -182,7 +182,7 @@ PDFs steht eine Liste aller TODOs.
 
 ## Offene Entscheidungen
 
-- [ ] **Plattformen:** Kommen Raspberry Pi und Server dazu? Der Mac M4 wäre die Alternative für ARM.
+- [x] **Plattformen:** Laptop und Mac M4; Server (kein Zugriff) und Pi (nur Pi 3 ohne PMIC) entfallen (D12).
 - [ ] Seyyids Nachname und die Affiliations für das Paper
 - [ ] Deutscher Abstract zum Übersetzen
 - [ ] Windows-PC: genaues Prozessormodell (nur falls Windows als Plattform genutzt wird)

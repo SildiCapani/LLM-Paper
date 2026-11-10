@@ -30,4 +30,5 @@ When a decision changes, mark the old entry 🔁 and add a new one; never silent
 - Results are hypotheses until measured; never write findings into the paper before data exist.
 - Prompt templates are included verbatim in the paper appendix from `experiment/prompts/`.
 - Verify citations against arXiv/Crossref before adding them to `paper/references.bib`.
+- Cite only literature published 2022 or later (given requirement, decision G14).
 - Build the paper with `cd paper && latexmk -pdf main.tex` (output in `paper/build/`).

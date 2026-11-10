@@ -368,3 +368,9 @@ Copy-&-Paste-Vorgänge. Für die Reproduzierbarkeit, die Gutachter verlangen, is
 
 - Der Mac M4 wurde gemessen und ist jetzt eine eigene Plattform (Laptop, Server, Mac, Pi). Energie: `powermetrics` (`combined`, Modellschätzung, 100 ms). Governor/Turbo lassen sich auf dem Mac nicht festlegen.
 - Mac-Wiederholungen streuen stärker (CV 12 % statt 2,6 %); Aussagen nur über Verhältnisse und Rangfolgen (D3). Details: D11, E19, E20.
+
+## Änderungen v8 (2026-11-10): nur Laptop und Mac
+
+- **Plattformen:** Laptop (Intel i7-1185G7, x86, RAPL) und Mac M4 (Arm, powermetrics). Server (kein direkter Zugriff) und Raspberry Pi (nur Pi 3 ohne PMIC-Messung) entfallen.
+- Der Faktor Plattform hat damit **2 Stufen** (zugleich x86 vs. Arm und RAPL vs. powermetrics – beides lässt sich nicht trennen; deshalb vergleichen wir nur Verhältnisse und Rangfolgen, D3).
+- Literatur im Paper nur ab 2022 (G14). Details: D12.

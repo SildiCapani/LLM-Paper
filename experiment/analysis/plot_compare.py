@@ -3,8 +3,8 @@
     analysis/.venv/bin/python analysis/plot_compare.py laptop mac
 
 Writes to paper/figures/:
-  languages_literature.pdf  energy of Java and Python relative to C++: our generated code,
-                            our EffiBench-X reference solutions, and Pereira et al. (2017)
+  languages_references.pdf  energy of Java and Python relative to C++: generated code per
+                            task group and the human-written EffiBench-X reference solutions
   llm_heatmap.pdf           geometric mean of program energy relative to the task--language
                             median, per LLM x language x platform
   llm_tasks.pdf             per task: median energy of each LLM's five samples relative to
@@ -26,13 +26,6 @@ from matplotlib.ticker import FuncFormatter
 from plot_platform import (ENERGY, FIGS, GRID, INK, LANG_STYLE, LLM_STYLE, MUTED, ROOT,
                            TITLE, joules, style_axis)
 
-# Pereira et al., SLE 2017 (doi:10.1145/3136014.3136031): Table 4 (normalised energy over
-# ten CLBG benchmarks, C = 1) and Table 3 (energy in J per benchmark).
-PEREIRA = {
-    "all": {"cpp": 1.34, "java": 1.98, "python": 75.88},
-    "CLBG03": {"cpp": 41.23, "java": 111.84, "python": 1793.46},   # binary-trees
-    "CLBG04": {"cpp": 219.89, "java": 311.38, "python": 12784.09},  # fannkuch-redux
-}
 TASK_NAME = {"CLBG03": "binary-trees", "CLBG04": "fannkuch-redux"}
 # Diverging blue <-> red with a neutral grey midpoint at 1 (the task median).
 DIVERGING = LinearSegmentedColormap.from_list("div", ["#2a78d6", "#f0efec", "#e34948"])
@@ -66,14 +59,8 @@ def lang_factors(med: dict, tasks) -> dict[str, float]:
     return {l: gm(med[(t, l)] / med[(t, "cpp")] for t in tasks) for l in ("java", "python")}
 
 
-def fig_literature(platforms: dict[str, dict], out) -> None:
-    p_all = PEREIRA["all"]
-    rows = [("Pereira et al.: 10 CLBG tasks", {l: p_all[l] / p_all["cpp"] for l in
-                                                ("java", "python")}, "lit")]
-    for t in ("CLBG03", "CLBG04"):
-        rows.append((f"Pereira et al.: {TASK_NAME[t]}",
-                     {l: PEREIRA[t][l] / PEREIRA[t]["cpp"] for l in ("java", "python")},
-                     "lit"))
+def fig_references(platforms: dict[str, dict], out) -> None:
+    rows = []
     for name, progs in platforms.items():
         gen, ref = cell_medians(progs, False), cell_medians(progs, True)
         tasks = sorted({t for t, _ in gen})
@@ -98,8 +85,8 @@ def fig_literature(platforms: dict[str, dict], out) -> None:
             label, color, marker = LANG_STYLE[lang]
             ax.scatter(f[lang], y, s=24, color=color, marker=marker, zorder=3,
                        edgecolor="white", linewidth=0.7, label=label if y == 0 else None)
-    for y in (2.5, 7.5):
-        ax.axhline(y, color=MUTED, linewidth=0.4, linestyle=":")
+    for k in range(1, len(platforms)):
+        ax.axhline(5 * k - 0.5, color=MUTED, linewidth=0.4, linestyle=":")
     ax.set_xscale("log")
     ax.xaxis.set_major_formatter(FuncFormatter(joules))
     ax.set_yticks(range(len(rows)), [r[0] for r in rows])
@@ -204,10 +191,10 @@ def main() -> None:
     platforms = {n: load_all(n) for n in names}
     gen = {n: {k: p for k, p in v.items() if p["llm"] != "reference"}
            for n, v in platforms.items()}
-    fig_literature(platforms, FIGS / "languages_literature.pdf")
+    fig_references(platforms, FIGS / "languages_references.pdf")
     fig_heatmap(gen, FIGS / "llm_heatmap.pdf")
     fig_tasks(gen, FIGS / "llm_tasks.pdf")
-    print(f"Wrote languages_literature.pdf, llm_heatmap.pdf, llm_tasks.pdf to {FIGS}")
+    print(f"Wrote languages_references.pdf, llm_heatmap.pdf, llm_tasks.pdf to {FIGS}")
 
 
 if __name__ == "__main__":

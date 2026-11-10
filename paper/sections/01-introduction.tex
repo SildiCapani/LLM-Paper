@@ -4,14 +4,14 @@
 Code-generation benchmarks measure correctness, not the energy generated code consumes.
 Prior studies find that this energy varies between
 models~\cite{solovyeva2025powerhungry,islam2025evaluating,apsan2026whereare}, but each
-varies only some factors: several languages on similar
-machines~\cite{solovyeva2025powerhungry,rekhi2026prompting}, or heterogeneous platforms for
+varies only some factors: several languages without platform
+interactions~\cite{solovyeva2025powerhungry,rekhi2026prompting}, or several platforms for
 Python only~\cite{apsan2026whereare}. Whether ``model~A generates more efficient code than
 model~B'' holds beyond one language and machine is untested~\cite{masthanali2026slr}.
 
 In a full factorial experiment, three LLMs, accessed through their official coding CLIs,
-solve 14 tasks in Python, Java, and C++, and every correct program is measured on
-heterogeneous platforms. We ask which LLM generates the most energy-efficient code
+solve 14 tasks in Python, Java, and C++, and every correct program is measured on an
+x86 laptop and an Arm Mac. We ask which LLM generates the most energy-efficient code
 (\RQ{1}), how languages (\RQ{2}) and platforms (\RQ{3}) differ, whether the LLM ranking
 depends on language and platform (\RQ{4}), and how energy, time, and memory relate
 (\RQ{5}).

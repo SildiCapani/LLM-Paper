@@ -7,8 +7,8 @@ Cursaru et al.~\cite{cursaru2024codellama} use one model on a Raspberry~Pi; Apsa
 et al.~\cite{apsan2026whereare} use three platforms, but only Python and without platform
 interactions; Solovyeva et al.~\cite{solovyeva2025powerhungry} cover our three languages on
 two machines with C++ compiled at \texttt{-O0}. Runtime benchmarks such as
-EffiBench-X~\cite{qing2025effibenchx} omit energy, and language rankings concern
-human-written code~\cite{pereira2017energy,pereira2021ranking}. No study crosses languages
+EffiBench-X~\cite{qing2025effibenchx} omit energy, and for human-written code, language energy
+rankings largely reflect execution time~\cite{vankempen2025green}. No study crosses languages
 with heterogeneous platforms and models their interactions (\cref{tab:related-work}).
 
 \begin{table*}[t]
@@ -28,7 +28,7 @@ with heterogeneous platforms and models their interactions (\cref{tab:related-wo
     Apsan et al.~\cite{apsan2026whereare}             & 6  & Py             & Server, PC, RPi       & EnergiBridge, Ext. & partly$^a$ \\
     Rekhi et al.~\cite{rekhi2026prompting}            & 10 & Py, C++        & 1 (x86 cloud)         & RAPL            & no \\
     \midrule
-    \textbf{This study} & 3$^b$ & Py, Java, C++ & Laptop, Server, Mac, RPi & RAPL, powermetrics, PMIC & yes \\
+    \textbf{This study} & 3$^b$ & Py, Java, C++ & Laptop (x86), Mac (M4) & RAPL, powermetrics & yes \\
     \bottomrule
     \multicolumn{6}{@{}p{0.9\textwidth}@{}}{\footnotesize $^a$ LLM $\times$ prompt
       interaction tested within each platform; no interaction with platform.

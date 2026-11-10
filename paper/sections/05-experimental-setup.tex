@@ -67,31 +67,32 @@ reference exceeds 10\,s.
 
 \paragraph{Platforms and measurement.}
 Identical language versions run natively (\cref{tab:platforms}). Energy comes from
-RAPL~\cite{raffin2024rapl}, Apple's \texttt{powermetrics} estimates, or the Raspberry~Pi's
-PMIC; as their scopes differ, platforms are compared only relatively. On Linux we fix the
+RAPL~\cite{raffin2024rapl} (laptop) or Apple's \texttt{powermetrics} estimates (Mac); as
+their scopes differ, platforms are compared only relatively. On the laptop we fix the
 governor at \texttt{performance} and disable turbo; all runs block suspend and record idle
 power every 30\,min.
 
-\begin{table*}[t]
+\begin{table}[t]
   \centering
-  \caption{Hardware and software configuration.}
+  \caption{Platforms (C++: GCC with \texttt{-O2 -std=c++20}).}
   \label{tab:platforms}
   \footnotesize
-  \begin{tabular}{@{}lllll@{}}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lll@{}}
     \toprule
-    & Laptop & Server & Mac & Raspberry~Pi~5 \\
+    & Laptop & Mac \\
     \midrule
-    CPU / ISA            & Intel i7-1185G7 (x86-64) & \TBD{} (x86-64) & Apple M4 (Arm64) & Cortex-A76 (Arm64) \\
-    RAM                  & 32\,GB           & \TBD            & 16\,GB & 8\,GB \\
-    OS / kernel          & Ubuntu 24.04, Linux 7.0 & \TBD            & macOS 26.3 & \TBD \\
-    Python (CPython)     & 3.14.10 & \TBD & 3.14.10 & \TBD \\
-    Java (OpenJDK)       & 25.0.4.1 & \TBD & 25.0.5 & \TBD \\
-    C++ (GCC, \texttt{-O2 -std=c++20}) & 14.2.0 & \TBD & 14.4.0 & \TBD \\
-    Energy measurement   & RAPL (\texttt{powercap}) & RAPL (\texttt{powercap}) & \texttt{powermetrics} (100\,ms) & PMIC ADCs (\texttt{vcgencmd}) \\
-    Measured scope       & CPU package & CPU package + DRAM & CPU+GPU+ANE (model) & board input \\
+    CPU / ISA       & Intel i7-1185G7 (x86-64) & Apple M4 (Arm64) \\
+    RAM             & 32\,GB & 16\,GB \\
+    OS              & Ubuntu 24.04, Linux 7.0 & macOS 26.3 \\
+    Python (CPython) & 3.14.10 & 3.14.10 \\
+    Java (OpenJDK)  & 25.0.4.1 & 25.0.5 \\
+    C++ (GCC)       & 14.2.0 & 14.4.0 \\
+    Energy          & RAPL (\texttt{powercap}) & \texttt{powermetrics} (100\,ms) \\
+    Scope           & CPU package & CPU+GPU+ANE (model) \\
     \bottomrule
   \end{tabular}
-\end{table*}
+\end{table}
 
 \paragraph{Procedure and analysis.}
 On every platform, a program must pass 30 test cases (CLBG: reference output) and match the
