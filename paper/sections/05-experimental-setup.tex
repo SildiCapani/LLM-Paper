@@ -66,11 +66,11 @@ reference exceeds 10\,s.
 \end{table*}
 
 \paragraph{Platforms and measurement.}
-Identical language versions run natively (\cref{tab:platforms}). Energy comes from
+Python 3.14, Java 25, and GCC 14 run natively (\cref{tab:platforms}). Energy comes from
 RAPL~\cite{raffin2024rapl} (laptop) or Apple's \texttt{powermetrics} estimates (Mac); as
 their scopes differ, platforms are compared only relatively. On the laptop we fix the
-governor at \texttt{performance} and disable turbo; all runs block suspend and record idle
-power every 30\,min.
+governor at \texttt{performance} and disable turbo; idle power is recorded every
+30\,min.
 
 \begin{table}[t]
   \centering
@@ -97,6 +97,5 @@ power every 30\,min.
 \paragraph{Procedure and analysis.}
 On every platform, a program must pass 30 test cases (CLBG: reference output) and match the
 reference on the large input. Correct programs run three times in random order, including
-start-up. We plan mixed-effects models on log energy with all interactions and random
-intercepts for task and program, Kendall's~$W$ for rank stability, and Spearman
-correlations (\RQ{5}).
+start-up. We fit linear mixed models on log energy with all interactions
+and random intercepts for task and program, test terms with likelihood-ratio tests, and report Kendall's~$W$ and Spearman correlations (\RQ{5}).

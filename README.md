@@ -63,7 +63,7 @@ LLM-Paper/
     │   ├── make_bundle.py   ← erzeugt llm-energy-bundle.zip
     │   └── data/            ← Testfälle, Eingaben, manifest.json (R/N pro Aufgabe)
     ├── results/             ← entpackte Ergebnisse der Plattformen (results/<name>/)
-    ├── analysis/            ← Grafiken fürs Paper (plot_platform.py → paper/figures/)
+    ├── analysis/            ← Grafiken und Statistik fürs Paper (plot_*.py → paper/figures/, stats_models.py → paper/tables/)
     └── measure/             ← Messskript für Energie, Zeit und Speicher
         ├── ANLEITUNG.md     ← Schritt-für-Schritt-Anleitung zum Messen (Deutsch)
         ├── measure.py, energy.py, test_energy.py

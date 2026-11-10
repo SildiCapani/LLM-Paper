@@ -1,11 +1,11 @@
 \section{Results}
 \label{sec:results}
 
-% Platforms: laptop and Mac (server and Raspberry Pi dropped, D12).
+% Platforms: laptop and Mac (D12). Models: experiment/analysis/stats_models.py.
 
 \paragraph{Generation.}
-All 630 requests returned one code block without tool use. Claude Code answered fastest,
-Antigravity CLI slowest (\cref{tab:gentime}); times include network latency.
+All 630 requests returned one code block without tool use; Claude Code answered fastest
+(\cref{tab:gentime}).
 
 \begin{table}[t]
   \centering
@@ -23,19 +23,59 @@ Antigravity CLI slowest (\cref{tab:gentime}); times include network latency.
   \end{tabular}
 \end{table}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{llms}
+  \caption{Program energy relative to its task--language median; large markers:
+    geometric means.}
+  \label{fig:llms}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{platforms}
+  \caption{Energy per program on laptop and Mac (different scopes).}
+  \label{fig:platforms}
+\end{figure}
+
 \paragraph{Measurements.}
-Of 630 programs, 629 were correct on the laptop and 628 on the Mac, where one Java program printed decimals in the system's German locale.
-Repetitions varied by 2.6\,\% (laptop) and 12\,\% (Mac; median coefficient of variation).
-Generated Python consumed 11 (Mac: 16) times as much energy as C++, Java 2.5 (2.6) times
-(geometric means over tasks; \cref{fig:languages}). Human-written EffiBench-X references show a similar Python gap but a larger Java gap (6.5 times; \cref{fig:refs}). Single algorithmic choices dominate the
-LLM comparison (\cref{fig:llms}): in all five samples, Claude's C++ solutions for EB02 used
-150--300 times the others' energy. Relative to the task median, Gemini's programs used 0.90, GPT's 1.00,
-and Claude's 1.29 on the laptop (Mac: 0.90, 1.01, 1.32); Gemini led in C++ and Java, Gemini
-and GPT tied in Python (\cref{fig:heatmap}), and differences arise in few tasks
-(\cref{fig:tasks}). Program energies correlate across
-platforms ($r=0.974$, log; \cref{fig:platforms}); energy and time correlate with
-$r=0.997$ (laptop) and 0.963 (Mac), as for human-written code~\cite{vankempen2025green}.
-\TODO{Mixed-effects models for RQ3/RQ4.}
+Of 630 programs, 629 were correct on the laptop and 628 on the Mac, where one Java program
+printed German decimal commas. Repetitions varied by a median 2.6\,\% (laptop) and
+12\,\% (Mac). Generated Python consumed 11 (Mac: 16) times as much
+energy as C++, Java 2.5 (2.6) times (geometric means over tasks; \cref{fig:languages});
+human-written EffiBench-X references show a similar Python gap but a larger Java gap
+(6.5 times; \cref{fig:refs}). Single algorithmic choices dominate the LLM comparison
+(\cref{fig:llms,fig:tasks}): in all five samples, Claude's C++ solutions for EB02 used
+150--300 times the others' energy.
+
+\paragraph{Models.}
+The mixed model (\cref{tab:models}; per language: \cref{fig:heatmap}) confirms effects of the LLM ($p<0.001$; Claude 1.31 times
+GPT, Gemini not different) and the language (Java 2.2, Python 12.9 times C++). The LLM
+ranking depends neither on platform ($p=0.88$, \RQ{4}) nor on language ($p=0.12$), but
+Python costs relatively more on the Mac (language $\times$ platform, $p<0.001$, \RQ{3}).
+Without EB02, Claude's excess shrinks to 1.13 (CI 0.99--1.28). The best LLM per
+task--language cell agrees across platforms in 31 of 42 cells, yet rankings vary between
+cells (Kendall's $W=0.09$ and 0.05). Program energies correlate across platforms ($r=0.974$,
+log; \cref{fig:platforms}). Energy follows time ($\rho=0.99$ on both platforms), as for
+human-written code~\cite{vankempen2025green}, but hardly memory ($\rho=0.24$ and 0.37;
+\RQ{5}).
+
+\begin{table*}[t]
+  \centering
+  \caption{Mixed model on log energy (both platforms).}
+  \label{tab:models}
+  \footnotesize
+  \input{tables/models}\\[2pt]
+  \parbox{0.62\textwidth}{\scriptsize Random intercepts for task and program. Factor:
+    energy relative to the baseline; $p$: likelihood-ratio test of the term.}
+\end{table*}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{llm_tasks}
+  \caption{Median of each LLM's five samples relative to the task median.}
+  \label{fig:tasks}
+\end{figure*}
 
 \begin{figure}[t]
   \centering
@@ -58,24 +98,3 @@ $r=0.997$ (laptop) and 0.963 (Mac), as for human-written code~\cite{vankempen202
   \label{fig:heatmap}
 \end{figure}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{llm_tasks}
-  \caption{Median of each LLM's five samples relative to the task median.}
-  \label{fig:tasks}
-\end{figure*}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{llms}
-  \caption{Program energy relative to its task--language median; large markers:
-    geometric means.}
-  \label{fig:llms}
-\end{figure}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{platforms}
-  \caption{Energy per program on laptop and Mac (different scopes).}
-  \label{fig:platforms}
-\end{figure}

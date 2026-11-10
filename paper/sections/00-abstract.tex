@@ -3,7 +3,12 @@ Evaluations of LLM-generated code focus on correctness rather than the energy th
 consumes when executed. We study energy efficiency along three factors: the generating LLM
 (Claude, GPT, and Gemini via their official coding CLIs), the language (Python, Java,
 C++), and the hardware platform. 630 programs for 14 tasks are checked for correctness and
-measured under controlled conditions. \TODO{Final results.}
+measured under controlled conditions on an x86 laptop and an Arm Mac. Language dominates:
+generated Python consumed about 13 times and Java twice the energy of C++. LLMs differ
+less: in a mixed model, Claude's programs needed 31\,\% more energy than GPT's, while
+Gemini's did not differ significantly; the gap stems mainly from algorithmic choices in a
+few tasks. The LLM ranking did not depend on platform or language. Energy correlated
+almost perfectly with execution time but hardly with peak memory.
 \end{abstract}
 
 \begin{IEEEkeywords}
